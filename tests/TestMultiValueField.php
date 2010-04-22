@@ -39,16 +39,25 @@ class TestMultiValueField extends SapphireTest {
 		
 		$page = Object::create('Page');
 		$page->Title = "TEST MV Page";
-		$page->Anniversary = array('One', 'Two', 'Three');
+		$page->AlcAnniversary = array('One', 'Two', 'Three');
+		$page->Cost = array('Currency' => 'AUD', 'Amount' => '100.00');
+		
 		$page->write();
 
 		$this->assertTrue($page->ID > 0);
 
 		$page = DataObject::get_by_id('Page', $page->ID);
 
-		$ann = $page->Anniversary;
+		$ann = $page->AlcAnniversary;
 
-		$this->assertTrue(is_array($page->Anniversary->getValue()));
+		$sing = Singleton('Page');
+
+		$db = Object::combined_static('Page', 'db');
+
+		print_r($db);
+
+		$this->assertNotNull($ann);
+		$this->assertTrue(is_array($ann->getValues()));
 	}
 }
 

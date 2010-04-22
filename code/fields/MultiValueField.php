@@ -47,6 +47,10 @@ class MultiValueField extends DBField implements CompositeDBField {
 		return $this->value;
 	}
 
+	public function getValues() {
+		return $this->getValue();
+	}
+
 	/**
 	 * Set the value on the field.
 	 *
@@ -55,11 +59,15 @@ class MultiValueField extends DBField implements CompositeDBField {
 	 * @param array $record
 	 */
 	function setValue($value, $record = null, $markChanged = true) {
+		if ($record && isset($record[$this->name.'Value'])) {
+			$value = $record[$this->name.'Value'];
+		}
+
 		if ($value && is_string($value)) {
 			$this->value = unserialize($value);
 		} else if ($value) {
 			$this->value = $value;
-		}
+		} 
 		$this->changed = $markChanged;
 	}
 
