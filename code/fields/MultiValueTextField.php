@@ -21,7 +21,7 @@ OF SUCH DAMAGE.
 */
 
 /**
- * 
+ * A text field for multivalued text entry
  *
  * @author Marcus Nyeholt <marcus@silverstripe.com.au>
  */

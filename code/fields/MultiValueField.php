@@ -60,18 +60,17 @@ class MultiValueField extends DBField implements CompositeDBField {
 	 * @param array $record
 	 */
 	function setValue($value, $record = null, $markChanged = true) {
-		if ($markChanged && is_array($value)) {
-			$this->value = $value;
-			$this->changed = true;
+		if ($markChanged) {
+			if (is_array($value)) {
+				$this->value = $value;
+				$this->changed = true;
+			} else if (is_object($value)) {
+				$this->value = isset($value->value) && is_array($value->value) ? $value->value : array();
+				$this->changed = true;
+			}
 			return;
 		}
-
-		if ($markChanged && is_object($value) && isset($value->value) && is_array($value->value)) {
-			$this->value = $value->value;
-			$this->changed = true;
-			return;
-		}
-
+		
 		if (!is_array($value) && $record && isset($record[$this->name.'Value'])) {
 			$value = $record[$this->name.'Value'];
 		}
@@ -135,7 +134,8 @@ class MultiValueField extends DBField implements CompositeDBField {
 		$items = array();
 		foreach ($this->value as $item) {
 			$obj = new stdClass();
-			$obj->Value = $item;
+			$obj->Value = new Varchar('tmp');
+			$obj->Value->setValue($item);
 			$items[] = $obj;
 		}
 
