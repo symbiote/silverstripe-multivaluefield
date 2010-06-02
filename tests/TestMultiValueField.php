@@ -37,9 +37,9 @@ class TestMultiValueField extends SapphireTest {
 		
 		ini_set('error_log', dirname(__FILE__).'/test_errors.log');
 		
-		$page = Object::create('Page');
+		$page = Object::create('TestMVPage');
 		$page->Title = "TEST MV Page";
-		$page->AlcAnniversary = array('One', 'Two', 'Three');
+		$page->Ann = array('One', 'Two', 'Three');
 		
 		$page->write();
 
@@ -47,21 +47,27 @@ class TestMultiValueField extends SapphireTest {
 
 		$page = DataObject::get_by_id('Page', $page->ID);
 
-		$ann = $page->AlcAnniversary;
+		$ann = $page->Ann;
 
 		$this->assertNotNull($ann);
 		$this->assertTrue(is_array($ann->getValues()));
 
 		$newVal = array('Four', 'Five');
 
-		$page->AlcAnniversary = $newVal;
+		$page->Ann = $newVal;
 
 		$page->write();
 
-		$ann = $page->AlcAnniversary;
+		$ann = $page->Ann;
 
 		$this->assertEquals($newVal, $ann->getValues());
 	}
+}
+
+class MVPage extends Page {
+	static $db = array(
+		'Ann' => 'MultiValueField',
+	);
 }
 
 ?>
