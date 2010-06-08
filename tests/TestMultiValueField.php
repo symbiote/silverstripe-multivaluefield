@@ -37,7 +37,7 @@ class TestMultiValueField extends SapphireTest {
 		
 		ini_set('error_log', dirname(__FILE__).'/test_errors.log');
 		
-		$page = Object::create('TestMVPage');
+		$page = Object::create('MVPage');
 		$page->Title = "TEST MV Page";
 		$page->Ann = array('One', 'Two', 'Three');
 		
