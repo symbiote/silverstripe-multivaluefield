@@ -37,7 +37,7 @@ class TestMultiValueField extends SapphireTest {
 		
 		ini_set('error_log', dirname(__FILE__).'/test_errors.log');
 		
-		$page = Object::create('MVPage');
+		$page = Object::create('MVSamplePage');
 		$page->Title = "TEST MV Page";
 		$page->Ann = array('One', 'Two', 'Three');
 		
@@ -63,11 +63,3 @@ class TestMultiValueField extends SapphireTest {
 		$this->assertEquals($newVal, $ann->getValues());
 	}
 }
-
-class MVPage extends Page {
-	static $db = array(
-		'Ann' => 'MultiValueField',
-	);
-}
-
-?>
