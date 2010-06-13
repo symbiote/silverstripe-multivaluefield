@@ -6,7 +6,7 @@
  *
  * @author Marcus Nyeholt <marcus@silverstripe.com.au>
  */
-class MVSamplePage extends Page {
+class MVSamplePage extends Page implements TestOnly {
     static $db = array(
 		'Ann' => 'MultiValueField',
 	);
