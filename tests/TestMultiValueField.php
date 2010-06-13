@@ -64,7 +64,7 @@ class TestMultiValueField extends SapphireTest {
 	}
 }
 
-class MVPage extends Page {
+class MVPage extends Page implements TestOnly {
 	static $db = array(
 		'Ann' => 'MultiValueField',
 	);
