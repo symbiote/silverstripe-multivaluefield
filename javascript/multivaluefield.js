@@ -7,7 +7,7 @@
 			
 			if ($(this).val().length == 0) {
 				// lets also clean up if needbe
-				var nextText = li.find('input[type=text]');
+				var nextText = li.find('input.mventryfield');
 				if (nextText && nextText.val() && nextText.val().length == 0) {
 					li.detach();
 				}
@@ -15,15 +15,24 @@
 				if (li.length) {
 					return;
 				}
-				var parentUl = $(this).parents('ul.multivaluetextfield');
+				var parentUl = $(this).parents('ul.multivaluefieldlist');
 				var newTextfield = $(this).clone();
 				newTextfield.val('');
 				$('<li>').appendTo(parentUl).append(newTextfield);
 			}
 		}
 
-		$('.mvtextfield').livequery(function () {
-			$(this).keyup(addNewTextfield);
+		$('.mventryfield').livequery(function () {
+			if (this.nodeName.toLowerCase() == 'input') {
+				$(this).keyup(addNewTextfield);
+			} else {
+				$(this).change(addNewTextfield);
+			}
+			
 		});
+
+//		$('.mvtextfield').livequery(function () {
+//			$(this).keyup(addNewTextfield);
+//		});
 	});
 })(jQuery);

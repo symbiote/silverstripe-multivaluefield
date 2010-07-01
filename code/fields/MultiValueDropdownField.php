@@ -21,11 +21,17 @@ OF SUCH DAMAGE.
 */
 
 /**
- * A text field for multivalued text entry
+ * A multivalued field that uses dropdown boxes for selecting the value for each
  *
  * @author Marcus Nyeholt <marcus@silverstripe.com.au>
  */
-class MultiValueTextField extends FormField {
+class MultiValueDropdownField extends MultiValueTextField {
+	protected $source;
+
+	public function __construct($name, $title = null, $source = array(), $value=null, $form=null) {
+		parent::__construct($name, ($title===null) ? $name : $title, $value, $form);
+		$this->source = $source;
+	}
 
 	public function Field() {
 		Requirements::javascript('multivaluefield/javascript/multivaluefield.js');
@@ -33,49 +39,48 @@ class MultiValueTextField extends FormField {
 		$name = $this->name . '[]';
 		$fields = array();
 
-		$attributes = array(
-			'type' => 'text',
-			'class' => 'mvtextfield mventryfield ' . ($this->extraClass() ? $this->extraClass() : ''),
-			// 'id' => $this->id(),
-			'name' => $name,
-			// 'value' => $this->Value(),
-		);
-
-		if($this->disabled) $attributes['disabled'] = 'disabled';
-
-		$fieldAttr = $attributes;
+		
 		if ($this->value) {
 			foreach ($this->value as $i => $v) {
-				$fieldAttr['id'] = $this->id().':'.$i;
-				$fieldAttr['value'] = $v;
-				$fields[] = $this->createTag('input', $fieldAttr);
+				$fields[] = $this->createSelectList($i, $name, $this->source, $v);
 			}
+		} else {
+			$i = -1;
 		}
-		
 
-		$fields[] = $this->createTag('input', $attributes);
+		$fields[] = $this->createSelectList($i + 1, $name, $this->source);
 
 		return '<ul id="'.$this->id().'" class="multivaluefieldlist '.$this->extraClass().'"><li>'.implode('</li><li>', $fields).'</li></ul>';
 	}
 
-	public function setValue($v) {
-		if (is_array($v)) {
-			// we've been set directly via the post - lets prune any empty values
-			foreach ($v as $key => $val) {
-				if (!strlen($val)) {
-					unset($v[$key]);
-				}
+	protected function createSelectList($number, $name, $values, $selected = '') {
+		$options = $this->createTag(
+			'option',
+			array(
+				'selected' => $selected == '' ? 'selected' : '',
+				'value' => ''
+			),
+			''
+		);
+
+		foreach ($values as $index => $title) {
+			$attrs = array('value'=>$index);
+			if ($index == $selected) {
+				$attrs['selected'] = 'selected';
 			}
-		}
- 		if ($v instanceof MultiValueField) {
-			$v = $v->getValues();
+			$options .= $this->createTag('option', $attrs, Convert::raw2xml($title));
 		}
 
-		if (!is_array($v)) {
-			$v = array();
-		}
-		
-		parent::setValue($v);
+		$attrs = array(
+			'class' => 'mventryfield ' . ($this->extraClass() ? $this->extraClass() : ''),
+			'id' => $this->id().':'.$number,
+			'name' => $name,
+			'tabindex' => $this->getTabIndex()
+		);
+
+		if($this->disabled) $attrs['disabled'] = 'disabled';
+
+		return $this->createTag('select', $attrs, $options);
 	}
 }
 ?>

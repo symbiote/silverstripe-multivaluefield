@@ -130,12 +130,20 @@ class MultiValueField extends DBField implements CompositeDBField {
 		return $this->changed;
 	}
 
+	/**
+	 * Convert to a textual list of items
+	 */
+	public function csv() {
+		return implode(",", $this->value);
+	}
+
 	public function forTemplate() {
 		$items = array();
 		foreach ($this->value as $item) {
 			$obj = new stdClass();
 			$obj->Value = new Varchar('tmp');
 			$obj->Value->setValue($item);
+			$obj->Title = $item;
 			$items[] = $obj;
 		}
 
