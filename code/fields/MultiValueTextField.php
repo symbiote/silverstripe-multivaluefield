@@ -48,14 +48,26 @@ class MultiValueTextField extends FormField {
 			foreach ($this->value as $i => $v) {
 				$fieldAttr['id'] = $this->id().':'.$i;
 				$fieldAttr['value'] = $v;
-				$fields[] = $this->createTag('input', $fieldAttr);
+				if ($this->readonly) {
+					unset($fieldAttr['value']);
+					$fields[] = $this->createTag('span', $fieldAttr, Convert::raw2htmlatt($v));
+				} else {
+					$fields[] = $this->createTag('input', $fieldAttr);
+				}
 			}
 		}
-		
 
-		$fields[] = $this->createTag('input', $attributes);
+		if (!$this->readonly) {
+			$fields[] = $this->createTag('input', $attributes);
+		}
 
 		return '<ul id="'.$this->id().'" class="multivaluefieldlist '.$this->extraClass().'"><li>'.implode('</li><li>', $fields).'</li></ul>';
+	}
+
+	public function  performReadonlyTransformation() {
+		$new = clone $this;
+		$new->setReadonly(true);
+		return $new;
 	}
 
 	public function setValue($v) {
