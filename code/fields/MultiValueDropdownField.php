@@ -42,13 +42,25 @@ class MultiValueDropdownField extends MultiValueTextField {
 		
 		if ($this->value) {
 			foreach ($this->value as $i => $v) {
-				$fields[] = $this->createSelectList($i, $name, $this->source, $v);
+				if ($this->readonly) {
+					$fieldAttr = array(
+						'class' => 'mventryfield  mvdropdownReadonly ' . ($this->extraClass() ? $this->extraClass() : ''),
+						'id' => $this->id().':'.$i,
+						'name' => $name,
+						'tabindex' => $this->getTabIndex()
+					);
+					$fields[] = $this->createTag('span', $fieldAttr, Convert::raw2htmlatt($v));
+				} else {
+					$fields[] = $this->createSelectList($i, $name, $this->source, $v);
+				}
 			}
 		} else {
 			$i = -1;
 		}
 
-		$fields[] = $this->createSelectList($i + 1, $name, $this->source);
+		if (!$this->readonly) {
+			$fields[] = $this->createSelectList($i + 1, $name, $this->source);
+		}
 
 		return '<ul id="'.$this->id().'" class="multivaluefieldlist '.$this->extraClass().'"><li>'.implode('</li><li>', $fields).'</li></ul>';
 	}
@@ -72,7 +84,7 @@ class MultiValueDropdownField extends MultiValueTextField {
 		}
 
 		$attrs = array(
-			'class' => 'mventryfield ' . ($this->extraClass() ? $this->extraClass() : ''),
+			'class' => 'mventryfield mvdropdown ' . ($this->extraClass() ? $this->extraClass() : ''),
 			'id' => $this->id().':'.$number,
 			'name' => $name,
 			'tabindex' => $this->getTabIndex()
