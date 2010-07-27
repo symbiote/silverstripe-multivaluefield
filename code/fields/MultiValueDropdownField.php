@@ -49,7 +49,7 @@ class MultiValueDropdownField extends MultiValueTextField {
 						'name' => $name,
 						'tabindex' => $this->getTabIndex()
 					);
-					$fields[] = $this->createTag('span', $fieldAttr, Convert::raw2htmlatt($v));
+					$fields[] = $this->createTag('span', $fieldAttr, Convert::raw2xml($v));
 				} else {
 					$fields[] = $this->createSelectList($i, $name, $this->source, $v);
 				}

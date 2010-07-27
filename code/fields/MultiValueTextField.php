@@ -50,7 +50,7 @@ class MultiValueTextField extends FormField {
 				$fieldAttr['value'] = $v;
 				if ($this->readonly) {
 					unset($fieldAttr['value']);
-					$fields[] = $this->createTag('span', $fieldAttr, Convert::raw2htmlatt($v));
+					$fields[] = $this->createTag('span', $fieldAttr, Convert::raw2xml($v));
 				} else {
 					$fields[] = $this->createTag('input', $fieldAttr);
 				}
