@@ -61,7 +61,11 @@ class MultiValueTextField extends FormField {
 			$fields[] = $this->createTag('input', $attributes);
 		}
 
-		return '<ul id="'.$this->id().'" class="multivaluefieldlist '.$this->extraClass().'"><li>'.implode('</li><li>', $fields).'</li></ul>';
+		if (count($fields)) {
+			return '<ul id="'.$this->id().'" class="multivaluefieldlist '.$this->extraClass().'"><li>'.implode('</li><li>', $fields).'</li></ul>';
+		} else {
+			return '<div id="'.$this->id().'" class="multivaluefieldlist '.$this->extraClass().'"></div>';
+		}
 	}
 
 	public function  performReadonlyTransformation() {
