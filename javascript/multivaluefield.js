@@ -20,6 +20,8 @@
 				newTextfield.val('');
 				$('<li>').appendTo(parentUl).append(newTextfield);
 			}
+
+			$(this).trigger('multiValueFieldAdded');
 		}
 
 		$('.mventryfield').livequery(function () {
