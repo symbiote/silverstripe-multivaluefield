@@ -8,17 +8,29 @@
 			if ($(this).val() && $(this).val().length == 0) {
 				// lets also clean up if needbe
 				var nextText = li.find('input.mventryfield');
-				if (nextText && nextText.val() && nextText.val().length == 0) {
+				var detach = true;
+				nextText.each (function () {
+					if ($(this) && $(this).val() && $(this).val().length > 0) {
+						detach = false;
+					}
+				});
+
+				if (detach) {
 					li.detach();
 				}
+					
 			} else {
 				if (li.length) {
 					return;
 				}
 				var parentUl = $(this).parents('ul.multivaluefieldlist');
-				var newTextfield = $(this).clone();
-				newTextfield.val('');
-				$('<li>').appendTo(parentUl).append(newTextfield);
+				var liClone = $(this).closest('li').clone();
+//				var newTextfield = $(this).clone();
+//				newTextfield.val('');
+				liClone.find('input').val('');
+				liClone.find('select').val('');
+//				$('<li>').appendTo(parentUl).append(newTextfield);
+				liClone.appendTo(parentUl);
 			}
 
 			$(this).trigger('multiValueFieldAdded');

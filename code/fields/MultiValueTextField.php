@@ -52,13 +52,13 @@ class MultiValueTextField extends FormField {
 					unset($fieldAttr['value']);
 					$fields[] = $this->createTag('span', $fieldAttr, Convert::raw2xml($v));
 				} else {
-					$fields[] = $this->createTag('input', $fieldAttr);
+					$fields[] = $this->createInput($fieldAttr);
 				}
 			}
 		}
 
 		if (!$this->readonly) {
-			$fields[] = $this->createTag('input', $attributes);
+			$fields[] = $this->createInput($attributes);
 		}
 
 		if (count($fields)) {
@@ -66,6 +66,10 @@ class MultiValueTextField extends FormField {
 		} else {
 			return '<div id="'.$this->id().'" class="multivaluefieldlist '.$this->extraClass().'"></div>';
 		}
+	}
+
+	public function createInput($attributes) {
+		return $this->createTag('input', $attributes);
 	}
 
 	public function  performReadonlyTransformation() {
