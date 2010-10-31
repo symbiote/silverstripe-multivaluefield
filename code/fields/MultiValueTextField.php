@@ -50,7 +50,7 @@ class MultiValueTextField extends FormField {
 				$fieldAttr['value'] = $v;
 				if ($this->readonly) {
 					unset($fieldAttr['value']);
-					$fields[] = $this->createTag('span', $fieldAttr, Convert::raw2xml($v));
+					$fields[] = $this->createReadonlyInput($fieldAttr, $v);
 				} else {
 					$fields[] = $this->createInput($fieldAttr);
 				}
@@ -66,6 +66,10 @@ class MultiValueTextField extends FormField {
 		} else {
 			return '<div id="'.$this->id().'" class="multivaluefieldlist '.$this->extraClass().'"></div>';
 		}
+	}
+
+	public function createReadonlyInput($attributes, $value) {
+		return $this->createTag('span', $attributes, Convert::raw2xml($value));
 	}
 
 	public function createInput($attributes) {
