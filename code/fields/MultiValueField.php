@@ -153,4 +153,3 @@ class MultiValueField extends DBField implements CompositeDBField {
 		return new DataObjectSet($items);
 	}
 }
-?>

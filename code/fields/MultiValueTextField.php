@@ -28,6 +28,7 @@ OF SUCH DAMAGE.
 class MultiValueTextField extends FormField {
 
 	public function Field() {
+		Requirements::javascript(THIRDPARTY_DIR.'/jquery-livequery/jquery.livequery.js');
 		Requirements::javascript('multivaluefield/javascript/multivaluefield.js');
 		
 		$name = $this->name . '[]';
