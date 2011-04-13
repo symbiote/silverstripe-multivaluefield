@@ -141,14 +141,16 @@ class MultiValueField extends DBField implements CompositeDBField {
 		$items = array();
 		if ($this->value) {
 			foreach ($this->value as $item) {
-				$obj = new stdClass();
-				$obj->Value = new Varchar('tmp');
-				$obj->Value->setValue($item);
-				$obj->Title = $item;
+				$v = new Varchar('Value');
+				$v->setValue($item);
+				
+				$obj = new ArrayData(array(
+					'Value' => $v,
+					'Title' => $item
+				));
 				$items[] = $obj;
 			}
 		}
-		
 
 		return new DataObjectSet($items);
 	}
