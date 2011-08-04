@@ -123,7 +123,11 @@ class MultiValueField extends DBField implements CompositeDBField {
 
 	function addToQuery(&$query) {
 		parent::addToQuery($query);
-		$query->select[] = sprintf('"%sValue"', $this->name);
+		$name = sprintf('%sValue', $this->name);
+		$val = sprintf('"%sValue"', $this->name);
+		if (!isset($query->select[$name])) {
+			$query->select[$name] = $val;
+		}
 	}
 
 	function isChanged() {
