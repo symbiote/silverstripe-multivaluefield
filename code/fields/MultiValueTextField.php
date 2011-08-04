@@ -103,4 +103,3 @@ class MultiValueTextField extends FormField {
 		parent::setValue($v);
 	}
 }
-?>

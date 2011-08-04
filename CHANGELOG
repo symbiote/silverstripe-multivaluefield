@@ -1,0 +1,5 @@
+2011-07-12 v0.2.0
+-----------------
+
+* Added a KeyValueField for entering in key/value pairs that get stored in the
+  MultiValueField
