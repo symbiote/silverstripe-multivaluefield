@@ -67,10 +67,13 @@ class MultiValueField extends DBField implements CompositeDBField {
 			} else if (is_object($value)) {
 				$this->value = isset($value->value) && is_array($value->value) ? $value->value : array();
 				$this->changed = true;
+			} else if (!$value) {
+				$this->value   = array();
+				$this->changed = true;
 			}
 			return;
 		}
-		
+
 		if (!is_array($value) && $record && isset($record[$this->name.'Value'])) {
 			$value = $record[$this->name.'Value'];
 		}

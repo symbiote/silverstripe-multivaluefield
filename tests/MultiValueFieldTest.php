@@ -24,6 +24,22 @@ class MultiValueFieldTest extends SapphireTest {
 		$this->assertEquals($second, $obj->MVField->getValues());
 	}
 
+	public function testIsChanged() {
+		$field = new MultiValueField();
+		$this->assertFalse($field->isChanged());
+
+		$field->setValue(array(1, 2, 3));
+		$this->assertTrue($field->isChanged());
+
+		$field = new MultiValueField();
+		$field->setValue(array(1, 2, 3), null, false);
+		$this->assertFalse($field->isChanged());
+
+		$field = DBField::create('MultiValueField', array(1, 2, 3));
+		$field->setValue(null);
+		$this->assertTrue($field->isChanged());
+	}
+
 }
 
 /**
