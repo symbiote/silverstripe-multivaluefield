@@ -51,6 +51,18 @@ class MultiValueField extends DBField implements CompositeDBField {
 	public function getValues() {
 		return $this->getValue();
 	}
+	
+	/**
+	 * Overridden to make sure that the user_error that gets triggered if this is already is set
+	 * ... doesn't. DataObject tries setting this at times that it shouldn't :/
+	 * 
+	 * @param string $name 
+	 */
+	public function setName($name) {
+		if (!$this->name) {
+			parent::setName($name);
+		}
+	}
 
 	/**
 	 * Set the value on the field.

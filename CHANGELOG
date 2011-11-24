@@ -1,3 +1,9 @@
+2011-11-24 v0.2.1
+-----------------
+
+* Change setName to not do anything if there's already a name. DataObject 
+  sometimes calls this (even though it shouldn't...)
+
 2011-07-12 v0.2.0
 -----------------
 
