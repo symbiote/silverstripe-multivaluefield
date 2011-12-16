@@ -34,7 +34,7 @@ class MultiValueDropdownField extends MultiValueTextField {
 	}
 
 	public function Field() {
-		Requirements::javascript(THIRDPARTY_DIR.'/jquery-livequery/jquery.livequery.js');
+		Requirements::javascript(THIRDPARTY_DIR . '/jquery/jquery.js');
 		Requirements::javascript('multivaluefield/javascript/multivaluefield.js');
 		
 		$name = $this->name . '[]';
