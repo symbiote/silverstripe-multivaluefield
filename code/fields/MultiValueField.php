@@ -149,6 +149,10 @@ class MultiValueField extends DBField implements CompositeDBField {
 		return $this->changed;
 	}
 
+	public function scaffoldFormField($title = null) {
+		return new MultiValueTextField($this->name, $title);
+	}
+
 	/**
 	 * Convert to a textual list of items
 	 */
