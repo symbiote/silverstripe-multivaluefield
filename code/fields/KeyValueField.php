@@ -17,7 +17,7 @@ class KeyValueField extends MultiValueTextField {
 	}
 
 	public function Field() {
-		Requirements::javascript(THIRDPARTY_DIR.'/jquery-livequery/jquery.livequery.js');
+		Requirements::javascript(THIRDPARTY_DIR . '/jquery/jquery.js');
 		Requirements::javascript('multivaluefield/javascript/multivaluefield.js');
 
 		$nameKey = $this->name . '[key][]';
@@ -30,7 +30,7 @@ class KeyValueField extends MultiValueTextField {
 					$fieldAttr = array(
 						'class' => 'mventryfield  mvkeyvalReadonly ' . ($this->extraClass() ? $this->extraClass() : ''),
 						'id' => $this->id().':'.$i,
-						'name' => $name,
+						'name' => $this->name,
 						'tabindex' => $this->getTabIndex()
 					);
 

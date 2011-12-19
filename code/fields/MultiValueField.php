@@ -149,11 +149,26 @@ class MultiValueField extends DBField implements CompositeDBField {
 		return $this->changed;
 	}
 
+	public function scaffoldFormField($title = null) {
+		return new MultiValueTextField($this->name, $title);
+	}
+
 	/**
 	 * Convert to a textual list of items
 	 */
 	public function csv() {
-		return implode(",", $this->value);
+		return $this->Implode(',');
+	}
+
+	/**
+	 * Return all items separated by a separator, defaulting to a comma and
+	 * space.
+	 *
+	 * @param  string $separator
+	 * @return string
+	 */
+	public function Implode($separator = ', ') {
+		return implode($separator, $this->getValue());
 	}
 
 	public function forTemplate() {
