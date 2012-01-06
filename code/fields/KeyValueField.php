@@ -30,7 +30,7 @@ class KeyValueField extends MultiValueTextField {
 					$fieldAttr = array(
 						'class' => 'mventryfield  mvkeyvalReadonly ' . ($this->extraClass() ? $this->extraClass() : ''),
 						'id' => $this->id().':'.$i,
-						'name' => $this->name,
+						'name' => $nakeKey,
 						'tabindex' => $this->getTabIndex()
 					);
 
