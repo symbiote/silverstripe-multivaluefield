@@ -5,7 +5,7 @@
 			// check to see if the one after us is there already - if so, we don't need a new one
 			var li = $(this).closest('li').next('li');
 			
-			if ($(this).val() && $(this).val().length == 0) {
+			if (!$(this).val()) {
 				// lets also clean up if needbe
 				var nextText = li.find('input.mventryfield');
 				var detach = true;
@@ -36,17 +36,14 @@
 			$(this).trigger('multiValueFieldAdded');
 		}
 
-		$('.mventryfield').livequery(function () {
-			if (this.nodeName.toLowerCase() == 'input') {
-				$(this).keyup(addNewTextfield);
-			} else {
-				$(this).change(addNewTextfield);
-			}
-			
+		$("input.mventryfield").live("keyup", function() {
+			addNewTextfield.apply(this);
 		});
 
-//		$('.mvtextfield').livequery(function () {
-//			$(this).keyup(addNewTextfield);
-//		});
+		$(".mventryfield").live("change", function() {
+			if (this.nodeName.toLowerCase() != "input") {
+				addNewTextfield.apply(this);
+			}
+		});
 	});
 })(jQuery);
