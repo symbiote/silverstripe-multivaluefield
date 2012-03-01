@@ -174,12 +174,13 @@ class MultiValueField extends DBField implements CompositeDBField {
 	public function forTemplate() {
 		$items = array();
 		if ($this->value) {
-			foreach ($this->value as $item) {
+			foreach ($this->value as $key => $item) {
 				$v = new Varchar('Value');
 				$v->setValue($item);
 				
 				$obj = new ArrayData(array(
 					'Value' => $v,
+					'Key'	=> $key,
 					'Title' => $item
 				));
 				$items[] = $obj;

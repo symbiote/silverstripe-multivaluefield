@@ -1,3 +1,9 @@
+2012-03-02 v0.2.2
+-----------------
+
+* forTemplate() now includes the Key as a property that can be output in 
+  the template
+
 2011-11-24 v0.2.1
 -----------------
 
