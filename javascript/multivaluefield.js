@@ -40,7 +40,7 @@
 			addNewTextfield.apply(this);
 		});
 
-		$(".mventryfield").live("change", function() {
+		$(".mventryfield").livequery("change", function() {
 			if (this.nodeName.toLowerCase() != "input") {
 				addNewTextfield.apply(this);
 			}
