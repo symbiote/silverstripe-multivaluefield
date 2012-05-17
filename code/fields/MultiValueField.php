@@ -22,7 +22,7 @@ class MultiValueField extends DBField implements CompositeDBField {
 	 */
 	function getValue() {
 		// if we're not deserialised yet, do so
-		if ($this->hasValue() && is_string($this->value)) {
+		if ($this->exists() && is_string($this->value)) {
 			$this->value = unserialize($this->value);
 		}
 		return $this->value;
