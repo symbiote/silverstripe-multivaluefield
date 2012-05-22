@@ -45,5 +45,9 @@
 				addNewTextfield.apply(this);
 			}
 		});
+		
+		$(".mventryfield").livequery(function () {
+			$(this).css('max-width', '200px');
+		})
 	});
 })(jQuery);

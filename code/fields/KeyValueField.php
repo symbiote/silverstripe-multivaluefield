@@ -32,7 +32,7 @@ class KeyValueField extends MultiValueTextField {
 						'class' => 'mventryfield  mvkeyvalReadonly ' . ($this->extraClass() ? $this->extraClass() : ''),
 						'id' => $this->id().':'.$i,
 						'name' => $nameKey,
-						'tabindex' => $this->getTabIndex()
+						'tabindex' => $this->getAttribute('tabindex')
 					);
 
 					$keyField = $this->createTag('span', $fieldAttr, Convert::raw2xml($i));
@@ -82,7 +82,7 @@ class KeyValueField extends MultiValueTextField {
 				'class' => 'mventryfield mvdropdown ' . ($this->extraClass() ? $this->extraClass() : ''),
 				'id' => $this->id().':'.$number,
 				'name' => $name,
-				'tabindex' => $this->getTabIndex()
+				'tabindex' => $this->getAttribute('tabindex')
 			);
 
 			if($this->disabled) $attrs['disabled'] = 'disabled';
@@ -94,7 +94,7 @@ class KeyValueField extends MultiValueTextField {
 				'id' => $this->id().':'.$number,
 				'value' => Convert::raw2att($selected),
 				'name' => $name,
-				'tabindex' => $this->getTabIndex(),
+				'tabindex' => $this->getAttribute('tabindex'),
 				'type'	=> 'text',
 			);
 

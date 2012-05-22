@@ -112,7 +112,7 @@ class MultiValueField extends DBField implements CompositeDBField {
 		if($this->getValue()) {
 			$manipulation['fields'][$this->name.'Value'] = $this->prepValueForDB($this->getValue());
 		} else {
-			$manipulation['fields'][$this->name.'Value'] = DBField::create('Text', $this->getValue())->nullValue();
+			$manipulation['fields'][$this->name.'Value'] = DBField::create_field('Text', $this->getValue())->nullValue();
 		}
 	}
 
