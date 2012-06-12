@@ -16,7 +16,7 @@ class KeyValueField extends MultiValueTextField {
 		$this->sourceValues = $sourceValues;
 	}
 
-	public function Field() {
+	public function Field($properties = array()) {
 		Requirements::javascript(THIRDPARTY_DIR . '/jquery/jquery.js');
 		Requirements::javascript(THIRDPARTY_DIR . '/jquery-livequery/jquery.livequery.js');
 		Requirements::javascript('multivaluefield/javascript/multivaluefield.js');
