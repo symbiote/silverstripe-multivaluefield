@@ -20,7 +20,7 @@ class MultiValueCheckboxField extends CheckboxSetField {
 	 * 
 	 * @todo Should use CheckboxField FieldHolder rather than constructing own markup.
 	 */
-	function Field() {
+	function Field($properties = array()) {
 		Requirements::css(SAPPHIRE_DIR . '/css/CheckboxSetField.css');
 
 		$source = $this->source;

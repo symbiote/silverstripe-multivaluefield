@@ -42,7 +42,7 @@ class MultiValueField extends DBField implements CompositeDBField {
 	 */
 	function getValue() {
 		// if we're not deserialised yet, do so
-		if ($this->hasValue() && is_string($this->value)) {
+		if ($this->hasValue($this->value) && is_string($this->value)) {
 			$this->value = unserialize($this->value);
 		}
 		return $this->value;
@@ -140,8 +140,9 @@ class MultiValueField extends DBField implements CompositeDBField {
 		parent::addToQuery($query);
 		$name = sprintf('%sValue', $this->name);
 		$val = sprintf('"%sValue"', $this->name);
-		if (!isset($query->select[$name])) {
-			$query->select[$name] = $val;
+		$select = $query->getSelect();
+		if (!isset($select[$name])) {
+			$query->addSelect(array($name => $val));
 		}
 	}
 
