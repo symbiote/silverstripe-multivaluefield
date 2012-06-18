@@ -100,8 +100,7 @@ class MultiValueField extends DBField implements CompositeDBField {
 	function requireField() {
 		$parts=Array('datatype'=>'mediumtext', 'character set'=>'utf8', 'collate'=>'utf8_general_ci', 'arrayValue'=>$this->arrayValue);
 		$values=Array('type'=>'text', 'parts'=>$parts);
-		DB::requireField($this->tableName, $this->name.$name, $values);
-
+		DB::requireField($this->tableName, $this->name . 'Value', $values);
 	}
 
 	function compositeDatabaseFields() {
@@ -151,6 +150,10 @@ class MultiValueField extends DBField implements CompositeDBField {
 	public function Implode($separator = ', ') {
 		return implode($separator, $this->getValue());
 	}
+	
+	public function Items() {
+		return $this->forTemplate();
+	}
 
 	public function forTemplate() {
 		$items = array();
@@ -168,6 +171,6 @@ class MultiValueField extends DBField implements CompositeDBField {
 			}
 		}
 
-		return new DataObjectSet($items);
+		return new ArrayList($items);
 	}
 }

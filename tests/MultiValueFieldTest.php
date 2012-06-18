@@ -45,7 +45,7 @@ class MultiValueFieldTest extends SapphireTest {
 /**
  * @ignore
  */
-class MultiValueFieldTest_DataObject extends DataObject {
+class MultiValueFieldTest_DataObject extends DataObject implements TestOnly {
 
 	public static $db = array(
 		'MVField' => 'MultiValueField'
