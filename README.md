@@ -1,3 +1,15 @@
+***SS3 NOTICE***
+
+Please be aware that for SS3, you MAY notice some issues on any page type that
+has multivalue fields, with the field values not loading. This is a known 
+issue with SilverStripe core that will be fixed in 3.0.1; 
+
+http://open.silverstripe.org/ticket/7482
+
+until then, you will need to patch the core, or make sure in your code to 
+refer to another field from the specific type that needs lazy loading BEFORE
+referring to the multivalue field. 
+
 # SilverStripe MultiValueField module
 
 A database field type that allows the storage of multiple discrete values in
