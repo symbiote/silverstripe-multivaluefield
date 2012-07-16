@@ -12,6 +12,9 @@ referring to the multivalue field.
 
 # SilverStripe MultiValueField module
 
+Note: The SilverStripe 2.4 compatible version of the module is still available
+in the ss24 branch
+
 A database field type that allows the storage of multiple discrete values in
 a single database field. This also provides form fields for entering multiple 
 values in a simple manner
