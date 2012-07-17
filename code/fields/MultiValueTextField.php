@@ -31,13 +31,14 @@ class MultiValueTextField extends FormField {
 		Requirements::javascript(THIRDPARTY_DIR . '/jquery/jquery.js');
 		Requirements::javascript(THIRDPARTY_DIR . '/jquery-livequery/jquery.livequery.js');
 		Requirements::javascript('multivaluefield/javascript/multivaluefield.js');
-		
+		Requirements::css('multivaluefield/css/multivaluefield.css');
+
 		$name = $this->name . '[]';
 		$fields = array();
 
 		$attributes = array(
 			'type' => 'text',
-			'class' => 'mvtextfield mventryfield ' . ($this->extraClass() ? $this->extraClass() : ''),
+			'class' => 'text mvtextfield mventryfield ' . ($this->extraClass() ? $this->extraClass() : ''),
 			// 'id' => $this->id(),
 			'name' => $name,
 			// 'value' => $this->Value(),
