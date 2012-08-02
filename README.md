@@ -1,5 +1,10 @@
 # SilverStripe MultiValueField module
 
+NOTE: There was a bit of a screwup when switching to ss3; this has meant
+that the ss24 branch actually contained ss3.0 code in it! This has
+been reverted, but if you've previously checked out the ss24 branch, you
+probably want to trash it and re-pull 
+
 A database field type that allows the storage of multiple discrete values in
 a single database field. This also provides form fields for entering multiple 
 values in a simple manner
