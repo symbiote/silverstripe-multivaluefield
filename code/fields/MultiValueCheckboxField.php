@@ -149,7 +149,8 @@ class MultiValueCheckboxField extends CheckboxSetField {
 	 *
 	 * @param DataObject $record The record to save into
 	 */
-	function saveInto(DataObject $record) {
+	function saveInto(DataObjectInterface $record) {
+		
 		$fieldname = $this->name ;
 		if($fieldname && $record) {
 			if($this->value) {
