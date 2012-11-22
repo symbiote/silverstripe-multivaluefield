@@ -91,7 +91,7 @@ class MultiValueCheckboxField extends CheckboxSetField {
 			$odd = ($odd + 1) % 2;
 			$extraClass = $odd ? 'odd' : 'even';
 			$extraClass .= ' val' . str_replace(' ', '', $key);
-			$itemID = $this->id() . '_' . ereg_replace('[^a-zA-Z0-9]+', '', $key);
+			$itemID = $this->id() . '_' . preg_replace('/[^a-zA-Z0-9]+/', '', $key);
 			$checked = '';
 			
 			if(isset($items)) {
