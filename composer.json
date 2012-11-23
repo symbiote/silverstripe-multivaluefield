@@ -1,0 +1,17 @@
+{
+	"name": "silverstripe/multivaluefield",
+	"description": "A DB field + form fields for storing multiple values in a single property (serialized).",
+	"type": "silverstripe-module",
+	"keywords": ["silverstripe", "formfield", "dbfield"],
+	"license": "BSD-3-Clause",
+	"authors": [
+	{
+		"name": "Marcus Nyeholt",
+		"email": "marcus@silverstirpe.com.au"
+	},
+	],
+	"require":
+	{
+		"silverstripe/cms": ">=3.0.0"
+	}
+}
