@@ -79,7 +79,7 @@ class KeyValueField extends MultiValueTextField {
 
 		if (count($values)) {
 			$attrs = array(
-				'class' => 'mventryfield mvdropdown ' . ($this->extraClass() ? $this->extraClass() : ''),
+				'class' => 'text mventryfield mvdropdown ' . ($this->extraClass() ? $this->extraClass() : ''),
 				'id' => $this->id().':'.$number,
 				'name' => $name,
 				'tabindex' => $this->getAttribute('tabindex')
@@ -90,7 +90,7 @@ class KeyValueField extends MultiValueTextField {
 			return $this->createTag('select', $attrs, $options);
 		} else {
 			$attrs = array(
-				'class' => 'mventryfield mvtextfield ' . ($this->extraClass() ? $this->extraClass() : ''),
+				'class' => 'text mventryfield mvtextfield ' . ($this->extraClass() ? $this->extraClass() : ''),
 				'id' => $this->id().':'.$number,
 				'value' => Convert::raw2att($selected),
 				'name' => $name,
