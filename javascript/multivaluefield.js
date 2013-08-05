@@ -26,10 +26,20 @@ jQuery(function($) {
 				return;
 			}
 
-			self.closest("li").clone()
-				.find("input").val("").end()
-				.find("select").val("").end()
-				.appendTo(self.parents("ul.multivaluefieldlist"));
+			var append = self.closest("li").clone()
+				.find(".has-chzn").show().removeClass("").data("chosen", null).end()
+				.find(".chzn-container").remove().end();
+
+			// Assign the new inputs a unique ID, so that chosen picks up
+			// the correct container.
+			append.find("input, select").val("").attr("id", function() {
+				var pos = this.id.lastIndexOf(":");
+				var num = parseInt(this.id.substr(pos + 1));
+
+				return this.id.substr(0, pos + 1) + (num + 1).toString();
+			});
+
+			append.appendTo(self.parents("ul.multivaluefieldlist"));
 		}
 
 		$(this).trigger('multiValueFieldAdded');
