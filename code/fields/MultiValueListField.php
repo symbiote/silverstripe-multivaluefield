@@ -35,7 +35,6 @@ class MultiValueListField extends MultiValueTextField {
 
 	public function Field($properties = array()) {
 		Requirements::javascript(THIRDPARTY_DIR.'/jquery/jquery.js');
-		Requirements::javascript(THIRDPARTY_DIR . '/jquery-livequery/jquery.livequery.js');
 		Requirements::javascript('multivaluefield/javascript/multivaluefield.js');
 		
 		$name = $this->name . '[]';

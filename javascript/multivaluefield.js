@@ -1,53 +1,40 @@
-(function ($) {
-	$().ready(function () {
+jQuery(function($) {
+	function addNewField() {
+		var self = $(this);
+		var val = self.val();
 
-		var addNewTextfield = function () {
-			// check to see if the one after us is there already - if so, we don't need a new one
-			var li = $(this).closest('li').next('li');
-			
-			if (!$(this).val()) {
-				// lets also clean up if needbe
-				var nextText = li.find('input.mventryfield');
-				var detach = true;
-				nextText.each (function () {
-					if ($(this) && $(this).val() && $(this).val().length > 0) {
-						detach = false;
-					}
-				});
+		// check to see if the one after us is there already - if so, we don't need a new one
+		var li = $(this).closest('li').next('li');
 
-				if (detach) {
-					li.detach();
+		if (!val) {
+			// lets also clean up if needbe
+			var nextText = li.find('input.mventryfield');
+			var detach = true;
+
+			nextText.each (function () {
+				if ($(this) && $(this).val() && $(this).val().length > 0) {
+					detach = false;
 				}
-					
-			} else {
-				if (li.length) {
-					return;
-				}
-				var parentUl = $(this).parents('ul.multivaluefieldlist');
-				var liClone = $(this).closest('li').clone();
-//				var newTextfield = $(this).clone();
-//				newTextfield.val('');
-				liClone.find('input').val('');
-				liClone.find('select').val('');
-//				$('<li>').appendTo(parentUl).append(newTextfield);
-				liClone.appendTo(parentUl);
+			});
+
+			if (detach) {
+				li.detach();
 			}
 
-			$(this).trigger('multiValueFieldAdded');
+		} else {
+			if (li.length) {
+				return;
+			}
+
+			self.closest("li").clone()
+				.find("input").val("").end()
+				.find("select").val("").end()
+				.appendTo(self.parents("ul.multivaluefieldlist"));
 		}
 
-		$("input.mventryfield").live("keyup", function() {
-			addNewTextfield.apply(this);
-		});
+		$(this).trigger('multiValueFieldAdded');
+	}
 
-		$(".mventryfield").livequery("change", function() {
-			if (this.nodeName.toLowerCase() != "input") {
-				addNewTextfield.apply(this);
-			}
-		});
-		
-		$(".mventryfield").livequery(function () {
-			$(this).css('max-width', '200px');
-		})
-	});
-})(jQuery);
+	$(document).on("keyup", ".mventryfield", addNewField);
+	$(document).on("change", ".mventryfield:not(input)", addNewField);
+});
