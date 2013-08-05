@@ -45,6 +45,10 @@ class MultiValueDropdownField extends MultiValueTextField {
 		return '<ul id="'.$this->id().'" class="multivaluefieldlist '.$this->extraClass().'"><li>'.implode('</li><li>', $fields).'</li></ul>';
 	}
 
+	public function Type() {
+		return 'dropdown multivaluedropdown';
+	}
+
 	protected function createSelectList($number, $name, $values, $selected = '') {
 		$options = $this->createTag(
 			'option',
