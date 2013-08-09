@@ -12,6 +12,22 @@ class MultiValueDropdownField extends MultiValueTextField {
 		$this->source = $source;
 	}
 
+	/**
+	 * @return array
+	 */
+	public function getSource() {
+		return $this->source;
+	}
+
+	/**
+	 * @param array $source
+	 * @return $this
+	 */
+	public function setSource(array $source) {
+		$this->source = $source;
+		return $this;
+	}
+
 	public function Field($properties = array()) {
 		Requirements::javascript(THIRDPARTY_DIR . '/jquery/jquery.js');
 		Requirements::javascript('multivaluefield/javascript/multivaluefield.js');
