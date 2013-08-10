@@ -12,9 +12,24 @@ class MultiValueDropdownField extends MultiValueTextField {
 		$this->source = $source;
 	}
 
+	/**
+	 * @return array
+	 */
+	public function getSource() {
+		return $this->source;
+	}
+
+	/**
+	 * @param array $source
+	 * @return $this
+	 */
+	public function setSource(array $source) {
+		$this->source = $source;
+		return $this;
+	}
+
 	public function Field($properties = array()) {
 		Requirements::javascript(THIRDPARTY_DIR . '/jquery/jquery.js');
-		Requirements::javascript(THIRDPARTY_DIR . '/jquery-livequery/jquery.livequery.js');
 		Requirements::javascript('multivaluefield/javascript/multivaluefield.js');
 		
 		$name = $this->name . '[]';
@@ -44,6 +59,10 @@ class MultiValueDropdownField extends MultiValueTextField {
 		}
 
 		return '<ul id="'.$this->id().'" class="multivaluefieldlist '.$this->extraClass().'"><li>'.implode('</li><li>', $fields).'</li></ul>';
+	}
+
+	public function Type() {
+		return 'dropdown multivaluedropdown';
 	}
 
 	protected function createSelectList($number, $name, $values, $selected = '') {
