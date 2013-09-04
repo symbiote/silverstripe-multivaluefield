@@ -19,6 +19,7 @@ class KeyValueField extends MultiValueTextField {
 	public function Field($properties = array()) {
 		Requirements::javascript(THIRDPARTY_DIR . '/jquery/jquery.js');
 		Requirements::javascript('multivaluefield/javascript/multivaluefield.js');
+		Requirements::css('multivaluefield/css/multivaluefield.css');
 
 		$nameKey = $this->name . '[key][]';
 		$nameVal = $this->name . '[val][]';
