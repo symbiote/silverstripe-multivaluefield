@@ -1,15 +1,3 @@
-***SS3 NOTICE***
-
-Please be aware that for SS3, you MAY notice some issues on any page type that
-has multivalue fields, with the field values not loading. This is a known 
-issue with SilverStripe core that will be fixed in 3.0.1; 
-
-http://open.silverstripe.org/ticket/7482
-
-until then, you will need to patch the core, or make sure in your code to 
-refer to another field from the specific type that needs lazy loading BEFORE
-referring to the multivalue field. 
-
 # SilverStripe MultiValueField module
 
 Note: The SilverStripe 2.4 compatible version of the module is still available
@@ -32,6 +20,11 @@ properties such as $FirstLast etc are inherited from ViewableData.
 Data is stored in the database in a serialized PHP format. While this is not
 ideal for searching purposes, some external indexing engines (eg the Solr 
 module) are aware of the field type and will index accordingly. 
+
+## Version info
+
+The 1.0 branch is compatible with 3.0 of SilverStripe, with master compatible 
+with 3.1
 
 ## Basic Usage
 
