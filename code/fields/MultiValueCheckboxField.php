@@ -76,7 +76,9 @@ class MultiValueCheckboxField extends CheckboxSetField {
 		
 		if ($source == null) {
 			$source = array();
-			$options = "<li>No options available</li>";
+			$options = "<li>" 
+				. _t('MultiValueCheckboxField.NoOptions', 'No options available')
+				. "</li>";
 		}
 
 		if($source) foreach($source as $index => $item) {
