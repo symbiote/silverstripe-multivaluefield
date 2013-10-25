@@ -23,8 +23,11 @@ module) are aware of the field type and will index accordingly.
 
 ## Version info
 
-The 1.0 branch is compatible with 3.0 of SilverStripe, with master compatible 
-with 3.1
+Version 2.x is compatible with SilverStripe 3.1
+
+* [SilverStripe 3.0 compatible version](https://github.com/nyeholt/silverstripe-queuedjobs/tree/1.0)
+* [SilverStripe 2.4 compatible version](https://github.com/nyeholt/silverstripe-queuedjobs/tree/ss24)
+
 
 ## Basic Usage
 
