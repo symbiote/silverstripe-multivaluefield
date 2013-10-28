@@ -47,7 +47,7 @@ As with all DB fields
 
 ## Requirements
 
-* SilverStripe 2.4+
+* SilverStripe 3.1
 
 ## Contributing
 
