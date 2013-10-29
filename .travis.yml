@@ -1,13 +1,16 @@
 # See https://github.com/silverstripe-labs/silverstripe-travis-support for setup details
 
 language: php 
+
 php: 
  - 5.3
 
+env:
+  matrix:
+    - DB=MYSQL CORE_RELEASE=3.1
+
 matrix:
   include:
-    - php: 5.3
-      env: DB=MYSQL CORE_RELEASE=3.1
     - php: 5.3
       env: DB=PGSQL CORE_RELEASE=3.1
     - php: 5.4
