@@ -1,5 +1,7 @@
 # SilverStripe MultiValueField module
 
+[![Build Status](https://secure.travis-ci.org/silverstripe-australia/silverstripe-multivaluefield.png)](http://travis-ci.org/silverstripe-australia/silverstripe-multivaluefield)
+
 Note: The SilverStripe 2.4 compatible version of the module is still available
 in the ss24 branch
 
@@ -25,8 +27,8 @@ module) are aware of the field type and will index accordingly.
 
 Version 2.x is compatible with SilverStripe 3.1
 
-* [SilverStripe 3.0 compatible version](https://github.com/nyeholt/silverstripe-queuedjobs/tree/1.0)
-* [SilverStripe 2.4 compatible version](https://github.com/nyeholt/silverstripe-queuedjobs/tree/ss24)
+* [SilverStripe 3.0 compatible version](https://github.com/silverstripe-australia/silverstripe-multivaluefield/tree/1.0)
+* [SilverStripe 2.4 compatible version](https://github.com/silverstripe-australia/silverstripe-multivaluefield/tree/ss24)
 
 
 ## Basic Usage
@@ -45,7 +47,7 @@ As with all DB fields
 
 ## Requirements
 
-* SilverStripe 2.4+
+* SilverStripe 3.1
 
 ## Contributing
 
