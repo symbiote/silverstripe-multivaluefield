@@ -4,6 +4,10 @@
  */
 class MultiValueFieldTest extends SapphireTest {
 
+	protected $extraDataObjects = array(
+		'MultiValueFieldTest_DataObject'
+	);
+
 	public function testMultiValueField() {
 		$first = array('One', 'Two', 'Three');
 
@@ -35,7 +39,7 @@ class MultiValueFieldTest extends SapphireTest {
 		$field->setValue(array(1, 2, 3), null, false);
 		$this->assertFalse($field->isChanged());
 
-		$field = DBField::create('MultiValueField', array(1, 2, 3));
+		$field = DBField::create_field('MultiValueField', array(1, 2, 3));
 		$field->setValue(null);
 		$this->assertTrue($field->isChanged());
 	}
