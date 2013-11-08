@@ -25,7 +25,7 @@ module) are aware of the field type and will index accordingly.
 
 ## Version info
 
-Version 2.x is compatible with SilverStripe 3.1
+Version marked as 2.0.x are compatible with SilverStripe 3.1, with 2.0.1 compatible with 3.1.1.
 
 * [SilverStripe 3.0 compatible version](https://github.com/silverstripe-australia/silverstripe-multivaluefield/tree/1.0)
 * [SilverStripe 2.4 compatible version](https://github.com/silverstripe-australia/silverstripe-multivaluefield/tree/ss24)
