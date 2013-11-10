@@ -1,7 +1,6 @@
 {
 	"name": "silverstripe/multivaluefield",
 	"description": "A DB field + form fields for storing multiple values in a single property (serialized).",
-	"version": "2.0.0",
 	"type": "silverstripe-module",
 	"keywords": ["silverstripe", "formfield", "dbfield"],
 	"license": "BSD-3-Clause",
