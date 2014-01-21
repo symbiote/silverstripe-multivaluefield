@@ -15,6 +15,13 @@ class MultiValueCheckboxField extends CheckboxSetField {
 	protected $defaultItems = array();
 	
 	/**
+	 * Do we store keys + values or just the values?
+	 *
+	 * @var boolean
+	 */
+	protected $storeKeys = false;
+	
+	/**
 	 * @todo Explain different source data that can be used with this field,
 	 * e.g. SQLMap, DataObjectSet or an array.
 	 * 
@@ -27,6 +34,11 @@ class MultiValueCheckboxField extends CheckboxSetField {
 		$values = $this->value;
 		if ($values instanceof MultiValueField) {
 			$values = $values->getValues();
+			
+			if ($this->storeKeys && is_array($values)) {
+				// use the keys instead, as that's how we've stored things
+				$values = array_keys($values);
+			}
 		}
 
 		// Get values from the join, if available
@@ -123,6 +135,16 @@ class MultiValueCheckboxField extends CheckboxSetField {
 	}
 	
 	/**
+	 * Do we store keys and values?
+	 * 
+	 * @param boolean $val
+	 */
+	public function setStoreKeys($val) {
+		$this->storeKeys = $val;
+		return $this;
+	}
+	
+	/**
 	 * @return Array
 	 */
 	function getDefaultItems() {
@@ -156,7 +178,20 @@ class MultiValueCheckboxField extends CheckboxSetField {
 		$fieldname = $this->name ;
 		if($fieldname && $record) {
 			if($this->value) {
+				if ($this->storeKeys) {
+					$vals = $this->getSource();
+					if (!is_array($this->value)) {
+						$this->value = array($this->value);
+					}
+					foreach ($this->value as $selected) {
+						if (isset($vals[$selected])) {
+							$this->value[$selected] = $vals[$selected];
+						}
+					}
+				} 
+
 				$record->$fieldname = $this->value;
+				
 //				$this->value = str_replace(',', '{comma}', $this->value);
 //				$record->$fieldname = $this->value;
 			} else {
