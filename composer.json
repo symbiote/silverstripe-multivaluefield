@@ -5,13 +5,17 @@
 	"keywords": ["silverstripe", "formfield", "dbfield"],
 	"license": "BSD-3-Clause",
 	"authors": [
-	{
-		"name": "Marcus Nyeholt",
-		"email": "marcus@silverstripe.com.au"
-	}
+		{
+			"name": "Marcus Nyeholt",
+			"email": "marcus@silverstripe.com.au"
+		}
 	],
-	"require":
-	{
+	"require": {
 		"silverstripe/framework": ">=3.0.0"
+	},
+	"extra": {
+		"branch-alias": {
+			"dev-master": "2.0.x-dev"
+		}
 	}
 }
