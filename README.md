@@ -39,6 +39,21 @@ As with all DB fields
 		'Keywords' 	=> 'MultiValueField',
 	);
 
+To make use of the field on the frontend, you can loop over the Items property
+
+```html
+
+<% loop Keywords %>
+
+<p>$Key $Value</p>
+
+<% end_loop %>
+
+```
+
+In this case, `$Value` is a Varchar object, so you can call all relevant string field methods on it, such as `$Value.Raw`, `$Value.LimitWordCount` etc etc.
+
+Note that to have the `$Key` value available as something other than an integer, use the `KeyValueField` field type to populate the field. 
 
 
 ## Maintainer Contacts
