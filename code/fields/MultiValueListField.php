@@ -30,7 +30,7 @@ class MultiValueListField extends MultiValueTextField {
 			if (in_array($index, $this->value)) {
 				$attrs['selected'] = 'selected';
 			}
-			$options .= $this->createTag('option', $attrs, Convert::raw2xml($title));
+			$options .= FormField::create_tag('option', $attrs, Convert::raw2xml($title));
 		}
 
 		$attrs = array(
@@ -43,6 +43,6 @@ class MultiValueListField extends MultiValueTextField {
 
 		if($this->disabled) $attrs['disabled'] = 'disabled';
 
-		return $this->createTag('select', $attrs, $options);
+		return FormField::create_tag('select', $attrs, $options);
 	}
 }

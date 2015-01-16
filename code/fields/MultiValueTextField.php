@@ -71,11 +71,11 @@ class MultiValueTextField extends FormField {
 	}
 
 	public function createReadonlyInput($attributes, $value) {
-		return $this->createTag('span', $attributes, Convert::raw2xml($value));
+		return FormField::create_tag('span', $attributes, Convert::raw2xml($value));
 	}
 
 	public function createInput($attributes) {
-		return $this->createTag('input', $attributes);
+		return FormField::create_tag('input', $attributes);
 	}
 
 	public function  performReadonlyTransformation() {
