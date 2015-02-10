@@ -91,7 +91,7 @@ class KeyValueField extends MultiValueTextField {
 			$attrs = array(
 				'class' => 'text mventryfield mvtextfield ' . ($this->extraClass() ? $this->extraClass() : ''),
 				'id' => $this->id().':'.$number,
-				'value' => Convert::raw2att($selected),
+				'value' => $selected,
 				'name' => $name,
 				'tabindex' => $this->getAttribute('tabindex'),
 				'type'	=> 'text',
