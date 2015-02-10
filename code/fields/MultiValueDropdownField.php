@@ -46,7 +46,7 @@ class MultiValueDropdownField extends MultiValueTextField {
 						'name' => $name,
 						'tabindex' => $this->getAttribute('tabindex')
 					);
-					$fields[] = $this->createTag('span', $fieldAttr, Convert::raw2xml($v));
+					$fields[] = self::create_tag('span', $fieldAttr, Convert::raw2xml($v));
 				} else {
 					$fields[] = $this->createSelectList($i, $name, $this->source, $v);
 				}
@@ -67,7 +67,7 @@ class MultiValueDropdownField extends MultiValueTextField {
 	}
 
 	protected function createSelectList($number, $name, $values, $selected = '') {
-		$options = $this->createTag(
+		$options = self::create_tag(
 			'option',
 			array(
 				'selected' => $selected == '' ? 'selected' : '',
@@ -81,7 +81,7 @@ class MultiValueDropdownField extends MultiValueTextField {
 			if ($index == $selected) {
 				$attrs['selected'] = 'selected';
 			}
-			$options .= $this->createTag('option', $attrs, Convert::raw2xml($title));
+			$options .= self::create_tag('option', $attrs, Convert::raw2xml($title));
 		}
 
 		$attrs = array(
@@ -93,6 +93,6 @@ class MultiValueDropdownField extends MultiValueTextField {
 
 		if($this->disabled) $attrs['disabled'] = 'disabled';
 
-		return $this->createTag('select', $attrs, $options);
+		return self::create_tag('select', $attrs, $options);
 	}
 }

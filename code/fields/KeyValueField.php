@@ -1,6 +1,5 @@
 <?php
 
-
 /**
  * A field that lets you specify both a key AND a value for each row entry
  *
@@ -35,9 +34,9 @@ class KeyValueField extends MultiValueTextField {
 						'tabindex' => $this->getAttribute('tabindex')
 					);
 
-					$keyField = $this->createTag('span', $fieldAttr, Convert::raw2xml($i));
+					$keyField = self::create_tag('span', $fieldAttr, Convert::raw2xml($i));
 					$fieldAttr['id'] = $this->id().':'.$v;
-					$valField = $this->createTag('span', $fieldAttr, Convert::raw2xml($v));
+					$valField = self::create_tag('span', $fieldAttr, Convert::raw2xml($v));
 					$fields[] = $keyField . $valField;
 				} else {
 					$keyField = $this->createSelectList($i, $nameKey, $this->sourceKeys, $i);
@@ -60,7 +59,7 @@ class KeyValueField extends MultiValueTextField {
 	}
 
 	protected function createSelectList($number, $name, $values, $selected = '') {
-		$options = $this->createTag(
+		$options = self::create_tag(
 			'option',
 			array(
 				'selected' => $selected == '' ? 'selected' : '',
@@ -74,7 +73,7 @@ class KeyValueField extends MultiValueTextField {
 			if ($index == $selected) {
 				$attrs['selected'] = 'selected';
 			}
-			$options .= $this->createTag('option', $attrs, Convert::raw2xml($title));
+			$options .= self::create_tag('option', $attrs, Convert::raw2xml($title));
 		}
 
 		if (count($values)) {
@@ -87,7 +86,7 @@ class KeyValueField extends MultiValueTextField {
 
 			if($this->disabled) $attrs['disabled'] = 'disabled';
 
-			return $this->createTag('select', $attrs, $options);
+			return self::create_tag('select', $attrs, $options);
 		} else {
 			$attrs = array(
 				'class' => 'text mventryfield mvtextfield ' . ($this->extraClass() ? $this->extraClass() : ''),
@@ -100,7 +99,7 @@ class KeyValueField extends MultiValueTextField {
 
 			if($this->disabled) $attrs['disabled'] = 'disabled';
 
-			return $this->createTag('input', $attrs);
+			return self::create_tag('input', $attrs);
 		}
 	}
 	
