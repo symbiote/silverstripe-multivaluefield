@@ -1,4 +1,4 @@
-.multivaluefieldlist > li { margin-bottom: 4px; width: 250px; }
+.multivaluefieldlist > li { margin-bottom: 4px; min-width: 250px; }
 .multivaluefieldlist > li::after { content: '↕'; cursor: pointer; }
 .multivaluefieldlist > li:last-child { margin-bottom: 0; }
 .mventryfield { max-width: 200px !important; display: inline; }
