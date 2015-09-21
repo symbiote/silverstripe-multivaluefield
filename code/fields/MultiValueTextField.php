@@ -80,7 +80,7 @@ class MultiValueTextField extends FormField {
 		if (!is_array($v)) {
 			$v = array();
 		}
-		
+
 		parent::setValue($v);
 	}
 }

@@ -2,7 +2,7 @@
 
 /**
  * A DB field that serialises an array before writing it to the db, and returning the array
- * back to the end user. 
+ * back to the end user.
  *
  * @author Marcus Nyeholt <marcus@silverstripe.com.au>
  */
@@ -31,12 +31,12 @@ class MultiValueField extends DBField implements CompositeDBField {
 	public function getValues() {
 		return $this->getValue();
 	}
-	
+
 	/**
 	 * Overridden to make sure that the user_error that gets triggered if this is already is set
 	 * ... doesn't. DataObject tries setting this at times that it shouldn't :/
-	 * 
-	 * @param string $name 
+	 *
+	 * @param string $name
 	 */
 	public function setName($name) {
 		if (!$this->name) {
@@ -96,7 +96,7 @@ class MultiValueField extends DBField implements CompositeDBField {
 			return parent::prepValueForDB($value);
 		}
 	}
-	
+
 	function requireField() {
 		$parts=Array('datatype'=>'mediumtext', 'character set'=>'utf8', 'collate'=>'utf8_general_ci', 'arrayValue'=>$this->arrayValue);
 		$values=Array('type'=>'text', 'parts'=>$parts);
@@ -121,7 +121,7 @@ class MultiValueField extends DBField implements CompositeDBField {
 		$val = sprintf('"%sValue"', $this->name);
 		$select = $query->getSelect();
 		if (!isset($select[$name])) {
-			$query->addSelect(array($name => $val)); 
+			$query->addSelect(array($name => $val));
 		}
 	}
 
@@ -150,7 +150,7 @@ class MultiValueField extends DBField implements CompositeDBField {
 	public function Implode($separator = ', ') {
 		return implode($separator, $this->getValue());
 	}
-	
+
 	public function Items() {
 		return $this->forTemplate();
 	}
@@ -161,7 +161,7 @@ class MultiValueField extends DBField implements CompositeDBField {
 			foreach ($this->value as $key => $item) {
 				$v = new Varchar('Value');
 				$v->setValue($item);
-				
+
 				$obj = new ArrayData(array(
 					'Value' => $v,
 					'Key'	=> $key,

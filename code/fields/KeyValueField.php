@@ -23,7 +23,7 @@ class KeyValueField extends MultiValueTextField {
 		$nameKey = $this->name . '[key][]';
 		$nameVal = $this->name . '[val][]';
 		$fields = array();
-		
+
 		if ($this->value) {
 			foreach ($this->value as $i => $v) {
 				if ($this->readonly) {
@@ -102,20 +102,20 @@ class KeyValueField extends MultiValueTextField {
 			return self::create_tag('input', $attrs);
 		}
 	}
-	
+
 	public function setValue($v) {
 		if (is_array($v)) {
 			// we've been set directly via the post - lets convert things to an appropriate key -> value
 			// structure
 			if (isset($v['key'])) {
 				$newVal = array();
-				
+
 				for ($i = 0, $c = count($v['key']); $i < $c; $i++) {
 					if (strlen($v['key'][$i]) && strlen($v['val'][$i])) {
 						$newVal[$v['key'][$i]] = $v['val'][$i];
 					}
 				}
-				
+
 				$v = $newVal;
 			}
 		}
@@ -127,7 +127,7 @@ class KeyValueField extends MultiValueTextField {
 		if (!is_array($v)) {
 			$v = array();
 		}
-		
+
 		parent::setValue($v);
 	}
 }
