@@ -8,23 +8,23 @@
  */
 class MultiValueCheckboxField extends CheckboxSetField {
 	protected $disabled = false;
-	
+
 	/**
 	 * @var Array
 	 */
 	protected $defaultItems = array();
-	
+
 	/**
 	 * Do we store keys + values or just the values?
 	 *
 	 * @var boolean
 	 */
 	protected $storeKeys = false;
-	
+
 	/**
 	 * @todo Explain different source data that can be used with this field,
 	 * e.g. SQLMap, DataObjectSet or an array.
-	 * 
+	 *
 	 * @todo Should use CheckboxField FieldHolder rather than constructing own markup.
 	 */
 	function Field($properties = array()) {
@@ -34,7 +34,7 @@ class MultiValueCheckboxField extends CheckboxSetField {
 		$values = $this->value;
 		if ($values instanceof MultiValueField) {
 			$values = $values->getValues();
-			
+
 			if ($this->storeKeys && is_array($values)) {
 				// use the keys instead, as that's how we've stored things
 				$values = array_keys($values);
@@ -78,17 +78,17 @@ class MultiValueCheckboxField extends CheckboxSetField {
 				$items = str_replace('{comma}', ',', $items);
 			}
 		}
-			
+
 		if(is_array($source)) {
 			unset($source['']);
 		}
-		
+
 		$odd = 0;
 		$options = '';
-		
+
 		if ($source == null) {
 			$source = array();
-			$options = "<li>" 
+			$options = "<li>"
 				. _t('MultiValueCheckboxField.NoOptions', 'No options available')
 				. "</li>";
 		}
@@ -101,56 +101,56 @@ class MultiValueCheckboxField extends CheckboxSetField {
 				$key = $index;
 				$value = $item;
 			}
-			
+
 			$odd = ($odd + 1) % 2;
 			$extraClass = $odd ? 'odd' : 'even';
 			$extraClass .= ' val' . str_replace(' ', '', $key);
 			$itemID = $this->id() . '_' . preg_replace('/[^a-zA-Z0-9]+/', '', $key);
 			$checked = '';
-			
+
 			if(isset($items)) {
 				$checked = (in_array($key, $items) || in_array($key, $this->defaultItems)) ? ' checked="checked"' : '';
 			}
 
 			$disabled = ($this->disabled || in_array($key, $this->disabledItems)) ? $disabled = ' disabled="disabled"' : '';
-			$options .= "<li class=\"$extraClass\"><input id=\"$itemID\" name=\"$this->name[$key]\" type=\"checkbox\" value=\"$key\"$checked $disabled class=\"checkbox\" /> <label for=\"$itemID\">$value</label></li>\n"; 
+			$options .= "<li class=\"$extraClass\"><input id=\"$itemID\" name=\"$this->name[$key]\" type=\"checkbox\" value=\"$key\"$checked $disabled class=\"checkbox\" /> <label for=\"$itemID\">$value</label></li>\n";
 		}
-		
-		return "<ul id=\"{$this->id()}\" class=\"optionset checkboxsetfield{$this->extraClass()}\">\n$options</ul>\n"; 
+
+		return "<ul id=\"{$this->id()}\" class=\"optionset checkboxsetfield{$this->extraClass()}\">\n$options</ul>\n";
 	}
-	
+
 	function setDisabled($val) {
 		$this->disabled = $val;
 	}
-	
+
 	/**
 	 * Default selections, regardless of the {@link setValue()} settings.
 	 * Note: Items marked as disabled through {@link setDisabledItems()} can still be
 	 * selected by default through this method.
-	 * 
+	 *
 	 * @param Array $items Collection of array keys, as defined in the $source array
 	 */
 	function setDefaultItems($items) {
 		$this->defaultItems = $items;
 	}
-	
+
 	/**
 	 * Do we store keys and values?
-	 * 
+	 *
 	 * @param boolean $val
 	 */
 	public function setStoreKeys($val) {
 		$this->storeKeys = $val;
 		return $this;
 	}
-	
+
 	/**
 	 * @return Array
 	 */
 	function getDefaultItems() {
 		return $this->defaultItems;
 	}
-	
+
 	/**
 	 * Load a value into this CheckboxSetField
 	 */
@@ -164,7 +164,7 @@ class MultiValueCheckboxField extends CheckboxSetField {
 
 		parent::setValue($value, $obj);
 	}
-	
+
 	/**
 	 * Save the current value of this CheckboxSetField into a DataObject.
 	 * If the field it is saving to is a has_many or many_many relationship,
@@ -174,7 +174,7 @@ class MultiValueCheckboxField extends CheckboxSetField {
 	 * @param DataObject $record The record to save into
 	 */
 	function saveInto(DataObjectInterface $record) {
-		
+
 		$fieldname = $this->name ;
 		if($fieldname && $record) {
 			if($this->value) {
@@ -188,10 +188,10 @@ class MultiValueCheckboxField extends CheckboxSetField {
 							$this->value[$selected] = $vals[$selected];
 						}
 					}
-				} 
+				}
 
 				$record->$fieldname = $this->value;
-				
+
 //				$this->value = str_replace(',', '{comma}', $this->value);
 //				$record->$fieldname = $this->value;
 			} else {
@@ -199,11 +199,11 @@ class MultiValueCheckboxField extends CheckboxSetField {
 			}
 		}
 	}
-	
+
 	/**
-	 * Return the CheckboxSetField value as a string 
+	 * Return the CheckboxSetField value as a string
 	 * selected item keys.
-	 * 
+	 *
 	 * @return string
 	 */
 	function dataValue() {
@@ -214,30 +214,30 @@ class MultiValueCheckboxField extends CheckboxSetField {
 					$filtered[] = str_replace(",", "{comma}", $item);
 				}
 			}
-			
+
 			return implode(',', $filtered);
 		}
-		
+
 		return '';
 	}
 
 	function performDisabledTransformation() {
 		$clone = clone $this;
 		$clone->setDisabled(true);
-		
+
 		return $clone;
 	}
-	
+
 	/**
 	 * Transforms the source data for this CheckboxSetField
 	 * into a comma separated list of values.
-	 * 
+	 *
 	 * @return ReadonlyField
 	 */
 	function performReadonlyTransformation() {
 		$values = '';
 		$data = array();
-		
+
 		$items = $this->value;
 		if($this->source) {
 			foreach($this->source as $source) {
@@ -246,7 +246,7 @@ class MultiValueCheckboxField extends CheckboxSetField {
 				}
 			}
 		}
-		
+
 		if($items) {
 			// Items is a DO Set
 			if(is_a($items, 'DataObjectSet')) {
@@ -254,13 +254,13 @@ class MultiValueCheckboxField extends CheckboxSetField {
 					$data[] = $item->Title;
 				}
 				if($data) $values = implode(', ', $data);
-				
+
 			// Items is an array or single piece of string (including comma seperated string)
 			} else {
 				if(!is_array($items)) {
 					$items = preg_split('/ *, */', trim($items));
 				}
-				
+
 				foreach($items as $item) {
 					if(is_array($item)) {
 						$data[] = $item['Title'];
@@ -272,19 +272,19 @@ class MultiValueCheckboxField extends CheckboxSetField {
 						$data[] = $item;
 					}
 				}
-				
+
 				$values = implode(', ', $data);
 			}
 		}
-		
+
 		$title = ($this->title) ? $this->title : '';
-		
+
 		$field = new ReadonlyField($this->name, $title, $values);
 		$field->setForm($this->form);
-		
+
 		return $field;
 	}
-	
+
 	function ExtraOptions() {
 		return FormField::ExtraOptions();
 	}

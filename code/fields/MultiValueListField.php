@@ -1,7 +1,7 @@
 <?php
 
 /**
- * A multivalued field that uses a multi choice select box for selecting the value 
+ * A multivalued field that uses a multi choice select box for selecting the value
  *
  * @author Marcus Nyeholt <marcus@silverstripe.com.au>
  */
@@ -17,7 +17,7 @@ class MultiValueListField extends MultiValueTextField {
 		Requirements::javascript(THIRDPARTY_DIR.'/jquery/jquery.js');
 		Requirements::javascript('multivaluefield/javascript/multivaluefield.js');
 		Requirements::css('multivaluefield/css/multivaluefield.css');
-		
+
 		$name = $this->name . '[]';
 
 		$options = '';
