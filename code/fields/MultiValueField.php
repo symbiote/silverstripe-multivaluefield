@@ -144,7 +144,7 @@ class MultiValueField extends DBField implements CompositeDBField {
 	 * Return all items separated by a separator, defaulting to a comma and
 	 * space.
 	 *
-	 * @param  string $separator
+	 * @param string $separator
 	 * @return string
 	 */
 	public function Implode($separator = ', ') {
