@@ -20,7 +20,7 @@ class MultiValueField extends DBField implements CompositeDBField {
 	 * Returns the value of this field.
 	 * @return mixed
 	 */
-	function getValue() {
+	public function getValue() {
 		// if we're not deserialised yet, do so
 		if ($this->exists() && is_string($this->value)) {
 			$this->value = unserialize($this->value);
@@ -51,7 +51,7 @@ class MultiValueField extends DBField implements CompositeDBField {
 	 * @param mixed $value
 	 * @param array $record
 	 */
-	function setValue($value, $record = null, $markChanged = true) {
+	public function setValue($value, $record = null, $markChanged = true) {
 		if ($markChanged) {
 			if (is_array($value)) {
 				$this->value = $value;
@@ -83,7 +83,7 @@ class MultiValueField extends DBField implements CompositeDBField {
 	 * (non-PHPdoc)
 	 * @see core/model/fieldtypes/DBField#prepValueForDB($value)
 	 */
-	function prepValueForDB($value) {
+	public function prepValueForDB($value) {
 		if (!$this->nullifyEmpty && $value === '') {
 			return "'" . Convert::raw2sql($value) . "'";
 		} else {
@@ -97,17 +97,17 @@ class MultiValueField extends DBField implements CompositeDBField {
 		}
 	}
 
-	function requireField() {
+	public function requireField() {
 		$parts=Array('datatype'=>'mediumtext', 'character set'=>'utf8', 'collate'=>'utf8_general_ci', 'arrayValue'=>$this->arrayValue);
 		$values=Array('type'=>'text', 'parts'=>$parts);
 		DB::requireField($this->tableName, $this->name . 'Value', $values);
 	}
 
-	function compositeDatabaseFields() {
+	public function compositeDatabaseFields() {
 		return self::$composite_db;
 	}
 
-	function writeToManipulation(&$manipulation) {
+	public function writeToManipulation(&$manipulation) {
 		if($this->getValue()) {
 			$manipulation['fields'][$this->name.'Value'] = $this->prepValueForDB($this->getValue());
 		} else {
@@ -115,7 +115,7 @@ class MultiValueField extends DBField implements CompositeDBField {
 		}
 	}
 
-	function addToQuery(&$query) {
+	public function addToQuery(&$query) {
 		parent::addToQuery($query);
 		$name = sprintf('%sValue', $this->name);
 		$val = sprintf('"%sValue"', $this->name);
@@ -125,7 +125,7 @@ class MultiValueField extends DBField implements CompositeDBField {
 		}
 	}
 
-	function isChanged() {
+	public function isChanged() {
 		return $this->changed;
 	}
 
