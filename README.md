@@ -35,8 +35,8 @@ Version marked as 2.0.x are compatible with SilverStripe 3.1, with 2.0.1 compati
 
 As with all DB fields
 
-	public static $db = array(
-		'Keywords' => 'MultiValueField',
+	private static $db = array(
+		'Keywords' 	=> 'MultiValueField',
 	);
 
 To make use of the field on the frontend, you can loop over the Items property
