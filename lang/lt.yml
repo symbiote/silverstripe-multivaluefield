@@ -1,0 +1,3 @@
+lt:
+  MultiValueCheckboxField:
+    NoOptions: 'Nėra galimų pasirinkimų'
