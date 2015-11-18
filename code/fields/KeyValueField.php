@@ -5,129 +5,138 @@
  *
  * @author Marcus Nyeholt <marcus@silverstripe.com.au>
  */
-class KeyValueField extends MultiValueTextField {
-	protected $sourceKeys;
-	protected $sourceValues;
+class KeyValueField extends MultiValueTextField
+{
+    protected $sourceKeys;
+    protected $sourceValues;
 
-	public function __construct($name, $title = null, $sourceKeys = array(), $sourceValues = array(), $value=null, $form=null) {
-		parent::__construct($name, ($title===null) ? $name : $title, $value, $form);
-		$this->sourceKeys = $sourceKeys;
-		$this->sourceValues = $sourceValues;
-	}
+    public function __construct($name, $title = null, $sourceKeys = array(), $sourceValues = array(), $value=null, $form=null)
+    {
+        parent::__construct($name, ($title===null) ? $name : $title, $value, $form);
+        $this->sourceKeys = $sourceKeys;
+        $this->sourceValues = $sourceValues;
+    }
 
-	public function Field($properties = array()) {
-		Requirements::javascript(THIRDPARTY_DIR . '/jquery/jquery.js');
-		Requirements::javascript('multivaluefield/javascript/multivaluefield.js');
-		Requirements::css('multivaluefield/css/multivaluefield.css');
+    public function Field($properties = array())
+    {
+        Requirements::javascript(THIRDPARTY_DIR . '/jquery/jquery.js');
+        Requirements::javascript('multivaluefield/javascript/multivaluefield.js');
+        Requirements::css('multivaluefield/css/multivaluefield.css');
 
-		$nameKey = $this->name . '[key][]';
-		$nameVal = $this->name . '[val][]';
-		$fields = array();
+        $nameKey = $this->name . '[key][]';
+        $nameVal = $this->name . '[val][]';
+        $fields = array();
 
-		if ($this->value) {
-			foreach ($this->value as $i => $v) {
-				if ($this->readonly) {
-					$fieldAttr = array(
-						'class' => 'mventryfield  mvkeyvalReadonly ' . ($this->extraClass() ? $this->extraClass() : ''),
-						'id' => $this->id().':'.$i,
-						'name' => $nameKey,
-						'tabindex' => $this->getAttribute('tabindex')
-					);
+        if ($this->value) {
+            foreach ($this->value as $i => $v) {
+                if ($this->readonly) {
+                    $fieldAttr = array(
+                        'class' => 'mventryfield  mvkeyvalReadonly ' . ($this->extraClass() ? $this->extraClass() : ''),
+                        'id' => $this->id().':'.$i,
+                        'name' => $nameKey,
+                        'tabindex' => $this->getAttribute('tabindex')
+                    );
 
-					$keyField = self::create_tag('span', $fieldAttr, Convert::raw2xml($i));
-					$fieldAttr['id'] = $this->id().':'.$v;
-					$valField = self::create_tag('span', $fieldAttr, Convert::raw2xml($v));
-					$fields[] = $keyField . $valField;
-				} else {
-					$keyField = $this->createSelectList($i, $nameKey, $this->sourceKeys, $i);
-					$valField = $this->createSelectList($i, $nameVal, $this->sourceValues, $v);
-					$fields[] = $keyField . ' ' . $valField;
-				}
-			}
-		} else {
-			$i = -1;
-		}
+                    $keyField = self::create_tag('span', $fieldAttr, Convert::raw2xml($i));
+                    $fieldAttr['id'] = $this->id().':'.$v;
+                    $valField = self::create_tag('span', $fieldAttr, Convert::raw2xml($v));
+                    $fields[] = $keyField . $valField;
+                } else {
+                    $keyField = $this->createSelectList($i, $nameKey, $this->sourceKeys, $i);
+                    $valField = $this->createSelectList($i, $nameVal, $this->sourceValues, $v);
+                    $fields[] = $keyField . ' ' . $valField;
+                }
+            }
+        } else {
+            $i = -1;
+        }
 
-		if (!$this->readonly) {
-			$keyField = $this->createSelectList('new', $nameKey, $this->sourceKeys);
-			$valField = $this->createSelectList('new', $nameVal, $this->sourceValues);
-			$fields[] = $keyField . ' ' . $valField;
+        if (!$this->readonly) {
+            $keyField = $this->createSelectList('new', $nameKey, $this->sourceKeys);
+            $valField = $this->createSelectList('new', $nameVal, $this->sourceValues);
+            $fields[] = $keyField . ' ' . $valField;
 //			$fields[] = $this->createSelectList('new', $name, $this->source);
-		}
+        }
 
-		return '<ul id="'.$this->id().'" class="multivaluefieldlist mvkeyvallist '.$this->extraClass().'"><li>'.implode('</li><li>', $fields).'</li></ul>';
-	}
+        return '<ul id="'.$this->id().'" class="multivaluefieldlist mvkeyvallist '.$this->extraClass().'"><li>'.implode('</li><li>', $fields).'</li></ul>';
+    }
 
-	protected function createSelectList($number, $name, $values, $selected = '') {
-		$options = self::create_tag(
-			'option',
-			array(
-				'selected' => $selected == '' ? 'selected' : '',
-				'value' => ''
-			),
-			''
-		);
+    protected function createSelectList($number, $name, $values, $selected = '')
+    {
+        $options = self::create_tag(
+            'option',
+            array(
+                'selected' => $selected == '' ? 'selected' : '',
+                'value' => ''
+            ),
+            ''
+        );
 
-		foreach ($values as $index => $title) {
-			$attrs = array('value'=>$index);
-			if ($index == $selected) {
-				$attrs['selected'] = 'selected';
-			}
-			$options .= self::create_tag('option', $attrs, Convert::raw2xml($title));
-		}
+        foreach ($values as $index => $title) {
+            $attrs = array('value'=>$index);
+            if ($index == $selected) {
+                $attrs['selected'] = 'selected';
+            }
+            $options .= self::create_tag('option', $attrs, Convert::raw2xml($title));
+        }
 
-		if (count($values)) {
-			$attrs = array(
-				'class' => 'text mventryfield mvdropdown ' . ($this->extraClass() ? $this->extraClass() : ''),
-				'id' => $this->id().':'.$number,
-				'name' => $name,
-				'tabindex' => $this->getAttribute('tabindex')
-			);
+        if (count($values)) {
+            $attrs = array(
+                'class' => 'text mventryfield mvdropdown ' . ($this->extraClass() ? $this->extraClass() : ''),
+                'id' => $this->id().':'.$number,
+                'name' => $name,
+                'tabindex' => $this->getAttribute('tabindex')
+            );
 
-			if($this->disabled) $attrs['disabled'] = 'disabled';
+            if ($this->disabled) {
+                $attrs['disabled'] = 'disabled';
+            }
 
-			return self::create_tag('select', $attrs, $options);
-		} else {
-			$attrs = array(
-				'class' => 'text mventryfield mvtextfield ' . ($this->extraClass() ? $this->extraClass() : ''),
-				'id' => $this->id().':'.$number,
-				'value' => $selected,
-				'name' => $name,
-				'tabindex' => $this->getAttribute('tabindex'),
-				'type'	=> 'text',
-			);
+            return self::create_tag('select', $attrs, $options);
+        } else {
+            $attrs = array(
+                'class' => 'text mventryfield mvtextfield ' . ($this->extraClass() ? $this->extraClass() : ''),
+                'id' => $this->id().':'.$number,
+                'value' => $selected,
+                'name' => $name,
+                'tabindex' => $this->getAttribute('tabindex'),
+                'type'    => 'text',
+            );
 
-			if($this->disabled) $attrs['disabled'] = 'disabled';
+            if ($this->disabled) {
+                $attrs['disabled'] = 'disabled';
+            }
 
-			return self::create_tag('input', $attrs);
-		}
-	}
+            return self::create_tag('input', $attrs);
+        }
+    }
 
-	public function setValue($v) {
-		if (is_array($v)) {
-			// we've been set directly via the post - lets convert things to an appropriate key -> value
-			// structure
-			if (isset($v['key'])) {
-				$newVal = array();
+    public function setValue($v)
+    {
+        if (is_array($v)) {
+            // we've been set directly via the post - lets convert things to an appropriate key -> value
+            // structure
+            if (isset($v['key'])) {
+                $newVal = array();
 
-				for ($i = 0, $c = count($v['key']); $i < $c; $i++) {
-					if (strlen($v['key'][$i]) && strlen($v['val'][$i])) {
-						$newVal[$v['key'][$i]] = $v['val'][$i];
-					}
-				}
+                for ($i = 0, $c = count($v['key']); $i < $c; $i++) {
+                    if (strlen($v['key'][$i]) && strlen($v['val'][$i])) {
+                        $newVal[$v['key'][$i]] = $v['val'][$i];
+                    }
+                }
 
-				$v = $newVal;
-			}
-		}
+                $v = $newVal;
+            }
+        }
 
- 		if ($v instanceof MultiValueField) {
-			$v = $v->getValues();
-		}
+        if ($v instanceof MultiValueField) {
+            $v = $v->getValues();
+        }
 
-		if (!is_array($v)) {
-			$v = array();
-		}
+        if (!is_array($v)) {
+            $v = array();
+        }
 
-		parent::setValue($v);
-	}
+        parent::setValue($v);
+    }
 }
