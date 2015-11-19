@@ -2,57 +2,57 @@
 /**
  * @author Marcus Nyeholt <marcus@silverstripe.com.au>
  */
-class MultiValueFieldTest extends SapphireTest
-{
-    protected $extraDataObjects = array(
-        'MultiValueFieldTest_DataObject'
-    );
+class MultiValueFieldTest extends SapphireTest {
 
-    public function testMultiValueField()
-    {
-        $first = array('One', 'Two', 'Three');
+	protected $extraDataObjects = array(
+		'MultiValueFieldTest_DataObject'
+	);
 
-        $obj = new MultiValueFieldTest_DataObject();
-        $obj->MVField = $first;
-        $obj->write();
+	public function testMultiValueField() {
+		$first = array('One', 'Two', 'Three');
 
-        $this->assertTrue($obj->isInDB());
-        $obj = DataObject::get_by_id('MultiValueFieldTest_DataObject', $obj->ID);
+		$obj = new MultiValueFieldTest_DataObject();
+		$obj->MVField = $first;
+		$obj->write();
 
-        $this->assertNotNull($obj->MVField);
-        $this->assertEquals($first, $obj->MVField->getValues());
+		$this->assertTrue($obj->isInDB());
+		$obj = DataObject::get_by_id('MultiValueFieldTest_DataObject', $obj->ID);
 
-        $second = array('Four', 'Five');
-        $obj->MVField = $second;
-        $obj->write();
+		$this->assertNotNull($obj->MVField);
+		$this->assertEquals($first, $obj->MVField->getValues());
 
-        $this->assertEquals($second, $obj->MVField->getValues());
-    }
+		$second = array('Four', 'Five');
+		$obj->MVField = $second;
+		$obj->write();
 
-    public function testIsChanged()
-    {
-        $field = new MultiValueField();
-        $this->assertFalse($field->isChanged());
+		$this->assertEquals($second, $obj->MVField->getValues());
+	}
 
-        $field->setValue(array(1, 2, 3));
-        $this->assertTrue($field->isChanged());
+	public function testIsChanged() {
+		$field = new MultiValueField();
+		$this->assertFalse($field->isChanged());
 
-        $field = new MultiValueField();
-        $field->setValue(array(1, 2, 3), null, false);
-        $this->assertFalse($field->isChanged());
+		$field->setValue(array(1, 2, 3));
+		$this->assertTrue($field->isChanged());
 
-        $field = DBField::create_field('MultiValueField', array(1, 2, 3));
-        $field->setValue(null);
-        $this->assertTrue($field->isChanged());
-    }
+		$field = new MultiValueField();
+		$field->setValue(array(1, 2, 3), null, false);
+		$this->assertFalse($field->isChanged());
+
+		$field = DBField::create_field('MultiValueField', array(1, 2, 3));
+		$field->setValue(null);
+		$this->assertTrue($field->isChanged());
+	}
+
 }
 
 /**
  * @ignore
  */
-class MultiValueFieldTest_DataObject extends DataObject implements TestOnly
-{
-    private static $db = array(
-        'MVField' => 'MultiValueField'
-    );
+class MultiValueFieldTest_DataObject extends DataObject implements TestOnly {
+
+	private static $db = array(
+		'MVField' => 'MultiValueField'
+	);
+
 }
