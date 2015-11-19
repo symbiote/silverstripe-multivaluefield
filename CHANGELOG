@@ -1,3 +1,73 @@
+2015-11-20 v2.2.1
+-----------------
+
+* Added standard Scrutinizer config
+* Update translations
+* DOC Composer branch-alias bump
+
+2015-11-02 v2.2.0
+-----------------
+
+* 3.2 compatibility
+* FIX phpdoc blocks referring to Objects to built-in types of PHP
+* Remove trailing spaces in the codebase
+* FIX Adjust width to being 'min' width instead of fixed
+* FIX some layout issues with drag icon
+
+2015-08-20 v2.1.1
+-----------------
+
+* Update translations
+
+2015-06-03 v2.1.0
+-----------------
+
+* NEW Re-order multivalue fields
+
+2015-05-18 v2.0.6
+-----------------
+
+* Making sure the LICENSE existed.
+
+2015-02-24 v2.0.5
+-----------------
+
+* Update translations
+* FIX remove explicit raw2att call
+* FIX Swap to using self::create_tag to avoid using deprecated method
+
+2015-01-16 v2.0.4
+-----------------
+
+* Update docs
+* Update composer.json
+
+2014-08-21 v2.0.3
+-----------------
+
+* Update translations
+
+2014-01-27 v2.0.2
+-----------------
+
+* Add new lang strings
+* API Added store keys for MultiValueCheckboxField
+
+2013-11-08 v2.0.1
+-----------------
+
+* Update composer.json
+* Update docs
+
+2013-11-08 v2.0.0
+-----------------
+
+* Fixed unit tests
+* Travis CI support
+* Update docs
+* Transifex support
+* FIX Remove call to getTabIndex
+
 2013-09-04 v1.0.0
 -----------------
 
