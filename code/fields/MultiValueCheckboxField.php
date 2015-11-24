@@ -27,7 +27,7 @@ class MultiValueCheckboxField extends CheckboxSetField {
 	 *
 	 * @todo Should use CheckboxField FieldHolder rather than constructing own markup.
 	 */
-	function Field($properties = array()) {
+	public function Field($properties = array()) {
 		Requirements::css(SAPPHIRE_DIR . '/css/CheckboxSetField.css');
 
 		$source = $this->source;
@@ -119,7 +119,7 @@ class MultiValueCheckboxField extends CheckboxSetField {
 		return "<ul id=\"{$this->id()}\" class=\"optionset checkboxsetfield{$this->extraClass()}\">\n$options</ul>\n";
 	}
 
-	function setDisabled($val) {
+	public function setDisabled($val) {
 		$this->disabled = $val;
 	}
 
@@ -130,7 +130,7 @@ class MultiValueCheckboxField extends CheckboxSetField {
 	 *
 	 * @param Array $items Collection of array keys, as defined in the $source array
 	 */
-	function setDefaultItems($items) {
+	public function setDefaultItems($items) {
 		$this->defaultItems = $items;
 	}
 
@@ -147,14 +147,14 @@ class MultiValueCheckboxField extends CheckboxSetField {
 	/**
 	 * @return Array
 	 */
-	function getDefaultItems() {
+	public function getDefaultItems() {
 		return $this->defaultItems;
 	}
 
 	/**
 	 * Load a value into this CheckboxSetField
 	 */
-	function setValue($value, $obj = null) {
+	public function setValue($value, $obj = null) {
 		// If we're not passed a value directly, we can look for it in a relation method on the object passed as a second arg
 //		if(!$value && $obj && $obj instanceof DataObject && $obj->hasMethod($this->name)) {
 //			$funcName = $this->name;
@@ -173,7 +173,7 @@ class MultiValueCheckboxField extends CheckboxSetField {
 	 *
 	 * @param DataObject $record The record to save into
 	 */
-	function saveInto(DataObjectInterface $record) {
+	public function saveInto(DataObjectInterface $record) {
 
 		$fieldname = $this->name ;
 		if($fieldname && $record) {
@@ -206,7 +206,7 @@ class MultiValueCheckboxField extends CheckboxSetField {
 	 *
 	 * @return string
 	 */
-	function dataValue() {
+	public function dataValue() {
 		if($this->value && is_array($this->value)) {
 			$filtered = array();
 			foreach($this->value as $item) {
@@ -221,7 +221,7 @@ class MultiValueCheckboxField extends CheckboxSetField {
 		return '';
 	}
 
-	function performDisabledTransformation() {
+	public function performDisabledTransformation() {
 		$clone = clone $this;
 		$clone->setDisabled(true);
 
@@ -234,7 +234,7 @@ class MultiValueCheckboxField extends CheckboxSetField {
 	 *
 	 * @return ReadonlyField
 	 */
-	function performReadonlyTransformation() {
+	public function performReadonlyTransformation() {
 		$values = '';
 		$data = array();
 
@@ -285,7 +285,7 @@ class MultiValueCheckboxField extends CheckboxSetField {
 		return $field;
 	}
 
-	function ExtraOptions() {
+	public function ExtraOptions() {
 		return FormField::ExtraOptions();
 	}
 }
