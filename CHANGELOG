@@ -1,3 +1,12 @@
+2016-02-04 v2.2.2
+-----------------
+
+* Adding public for better readability
+* Added standard Travis config
+* Added standard editor config
+* Added standard code of conduct
+* Added standard git attributes
+
 2015-11-20 v2.2.1
 -----------------
 
