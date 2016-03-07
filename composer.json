@@ -11,11 +11,6 @@
 		}
 	],
 	"require": {
-		"silverstripe/framework": ">=3.0.0"
-	},
-	"extra": {
-		"branch-alias": {
-			"dev-master": "2.1.x-dev"
-		}
+		"silverstripe/framework": "~3.0"
 	}
 }
