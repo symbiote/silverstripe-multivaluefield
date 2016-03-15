@@ -150,6 +150,13 @@ class MultiValueField extends DBField implements CompositeDBField {
 	public function Implode($separator = ', ') {
 		return implode($separator, $this->getValue());
 	}
+    
+    public function __toString() {
+        if ($this->getValue()) {
+            return $this->csv();
+        }
+        return '';
+    }
 
 	public function Items() {
 		return $this->forTemplate();
