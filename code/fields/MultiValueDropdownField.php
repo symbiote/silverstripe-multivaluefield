@@ -42,7 +42,7 @@ class MultiValueDropdownField extends MultiValueTextField {
 				if ($this->readonly) {
 					$fieldAttr = array(
 						'class' => 'mventryfield  mvdropdownReadonly ' . ($this->extraClass() ? $this->extraClass() : ''),
-						'id' => $this->id().':'.$i,
+						'id' => $this->id().MultiValueTextField::KEY_SEP.$i,
 						'name' => $name,
 						'tabindex' => $this->getAttribute('tabindex')
 					);
@@ -86,7 +86,7 @@ class MultiValueDropdownField extends MultiValueTextField {
 
 		$attrs = array(
 			'class' => 'mventryfield mvdropdown ' . ($this->extraClass() ? $this->extraClass() : ''),
-			'id' => $this->id().':'.$number,
+			'id' => $this->id().MultiValueTextField::KEY_SEP.$number,
 			'name' => $name,
 			'tabindex' => $this->getAttribute('tabindex')
 		);

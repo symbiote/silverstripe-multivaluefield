@@ -6,6 +6,7 @@
  * @author Marcus Nyeholt <marcus@silverstripe.com.au>
  */
 class MultiValueTextField extends FormField {
+    const KEY_SEP = '__';
 
 	public function Field($properties = array()) {
 		Requirements::javascript(THIRDPARTY_DIR . '/jquery/jquery.js');
@@ -28,7 +29,7 @@ class MultiValueTextField extends FormField {
 		$fieldAttr = $attributes;
 		if ($this->value) {
 			foreach ($this->value as $i => $v) {
-				$fieldAttr['id'] = $this->id().':'.$i;
+				$fieldAttr['id'] = $this->id().MultiValueTextField::KEY_SEP.$i;
 				$fieldAttr['value'] = $v;
 				if ($this->readonly) {
 					unset($fieldAttr['value']);
