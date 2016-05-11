@@ -1,6 +1,6 @@
 # SilverStripe MultiValueField module
 
-[![Build Status](https://secure.travis-ci.org/silverstripe-australia/silverstripe-multivaluefield.png)](http://travis-ci.org/silverstripe-australia/silverstripe-multivaluefield)
+[![Build Status](https://travis-ci.org/silverstripe-australia/silverstripe-multivaluefield.svg?branch=master)](https://travis-ci.org/silverstripe-australia/silverstripe-multivaluefield)
 
 Note: The SilverStripe 2.4 compatible version of the module is still available
 in the ss24 branch
