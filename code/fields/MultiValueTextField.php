@@ -6,7 +6,10 @@
  * @author Marcus Nyeholt <marcus@silverstripe.com.au>
  */
 class MultiValueTextField extends FormField {
-    const KEY_SEP = '__';
+
+	const KEY_SEP = '__';
+
+	protected $tag = 'input';
 
 	public function Field($properties = array()) {
 		Requirements::javascript(THIRDPARTY_DIR . '/jquery/jquery.js');
@@ -56,10 +59,10 @@ class MultiValueTextField extends FormField {
 	}
 
 	public function createInput($attributes) {
-		return self::create_tag('input', $attributes);
+		return self::create_tag($this->tag, $attributes);
 	}
 
-	public function  performReadonlyTransformation() {
+	public function performReadonlyTransformation() {
 		$new = clone $this;
 		$new->setReadonly(true);
 		return $new;
@@ -84,4 +87,10 @@ class MultiValueTextField extends FormField {
 
 		parent::setValue($v);
 	}
+
+	public function setTag($tag) {
+		$this->tag = $tag;
+		return $this;
+	}
+
 }

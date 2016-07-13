@@ -32,7 +32,7 @@ jQuery(function($) {
 
 			// Assign the new inputs a unique ID, so that chosen picks up
 			// the correct container.
-			append.find("input, select").val("").attr("id", function() {
+			append.find("input, select, textarea").val("").attr("id", function() {
 				var pos = this.id.lastIndexOf("__");
 				var num = parseInt(this.id.substr(pos + 1));
 
