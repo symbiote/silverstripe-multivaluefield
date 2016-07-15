@@ -38,7 +38,7 @@ class MultiValueTextField extends FormField {
 					unset($fieldAttr['value']);
 					$fields[] = $this->createReadonlyInput($fieldAttr, $v);
 				} else {
-					$fields[] = $this->createInput($fieldAttr);
+					$fields[] = $this->createInput($fieldAttr, $v);
 				}
 			}
 		}
@@ -58,8 +58,8 @@ class MultiValueTextField extends FormField {
 		return self::create_tag('span', $attributes, Convert::raw2xml($value));
 	}
 
-	public function createInput($attributes) {
-		return self::create_tag($this->tag, $attributes);
+	public function createInput($attributes, $value = null) {
+		return self::create_tag($this->tag, $attributes, $value);
 	}
 
 	public function performReadonlyTransformation() {
