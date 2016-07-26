@@ -1,5 +1,5 @@
 .multivaluefieldlist > li { margin-bottom: 4px; min-width: 250px; }
-.multivaluefieldlist > li::after { content: '↕'; cursor: pointer; display: block; }
+.multivaluefieldlist > li::after { content: '↕'; cursor: pointer; }
 .multivaluefieldlist > li:last-child { margin-bottom: 0; }
 .mventryfield { max-width: 200px !important; display: inline; }
 textarea.mventryfield { max-width: none !important; vertical-align: top; }
