@@ -1,18 +1,27 @@
 <?php
 
+namespace SilverStripe\MultiValueField\Fields;
+
+use SilverStripe\View\Requirements;
+use SilverStripe\ORM\DataObjectInterface;
+use SilverStripe\Forms\CheckboxSetField;
+use SilverStripe\Forms\ReadonlyField;
+use SilverStripe\Forms\FormField;
+
 /**
  * A checkboxset that uses a multivalue field for key / val pairs
  *
  * @author marcus@silverstripe.com.au
  * @license BSD License http://silverstripe.org/bsd-license/
  */
-class MultiValueCheckboxField extends CheckboxSetField {
+class MultiValueCheckboxField extends CheckboxSetField
+{
 	protected $disabled = false;
 
 	/**
 	 * @var Array
 	 */
-	protected $defaultItems = array();
+	protected $defaultItems = [];
 
 	/**
 	 * Do we store keys + values or just the values?
@@ -27,7 +36,8 @@ class MultiValueCheckboxField extends CheckboxSetField {
 	 *
 	 * @todo Should use CheckboxField FieldHolder rather than constructing own markup.
 	 */
-	public function Field($properties = array()) {
+	public function Field($properties = [])
+    {
 		Requirements::css(SAPPHIRE_DIR . '/css/CheckboxSetField.css');
 
 		$source = $this->source;
@@ -87,7 +97,7 @@ class MultiValueCheckboxField extends CheckboxSetField {
 		$options = '';
 
 		if ($source == null) {
-			$source = array();
+			$source = [];
 			$options = "<li>"
 				. _t('MultiValueCheckboxField.NoOptions', 'No options available')
 				. "</li>";
@@ -119,7 +129,8 @@ class MultiValueCheckboxField extends CheckboxSetField {
 		return "<ul id=\"{$this->id()}\" class=\"optionset checkboxsetfield{$this->extraClass()}\">\n$options</ul>\n";
 	}
 
-	public function setDisabled($val) {
+	public function setDisabled($val)
+    {
 		$this->disabled = $val;
 	}
 
@@ -130,7 +141,8 @@ class MultiValueCheckboxField extends CheckboxSetField {
 	 *
 	 * @param Array $items Collection of array keys, as defined in the $source array
 	 */
-	public function setDefaultItems($items) {
+	public function setDefaultItems($items)
+    {
 		$this->defaultItems = $items;
 	}
 
@@ -139,7 +151,8 @@ class MultiValueCheckboxField extends CheckboxSetField {
 	 *
 	 * @param boolean $val
 	 */
-	public function setStoreKeys($val) {
+	public function setStoreKeys($val)
+    {
 		$this->storeKeys = $val;
 		return $this;
 	}
@@ -147,14 +160,16 @@ class MultiValueCheckboxField extends CheckboxSetField {
 	/**
 	 * @return Array
 	 */
-	public function getDefaultItems() {
+	public function getDefaultItems()
+    {
 		return $this->defaultItems;
 	}
 
 	/**
 	 * Load a value into this CheckboxSetField
 	 */
-	public function setValue($value, $obj = null) {
+	public function setValue($value, $obj = null)
+    {
 		// If we're not passed a value directly, we can look for it in a relation method on the object passed as a second arg
 //		if(!$value && $obj && $obj instanceof DataObject && $obj->hasMethod($this->name)) {
 //			$funcName = $this->name;
@@ -173,8 +188,8 @@ class MultiValueCheckboxField extends CheckboxSetField {
 	 *
 	 * @param DataObject $record The record to save into
 	 */
-	public function saveInto(DataObjectInterface $record) {
-
+	public function saveInto(DataObjectInterface $record)
+    {
 		$fieldname = $this->name ;
 		if($fieldname && $record) {
 			if($this->value) {
@@ -195,7 +210,7 @@ class MultiValueCheckboxField extends CheckboxSetField {
 //				$this->value = str_replace(',', '{comma}', $this->value);
 //				$record->$fieldname = $this->value;
 			} else {
-				$record->$fieldname = array();
+				$record->$fieldname = [];
 			}
 		}
 	}
@@ -206,9 +221,10 @@ class MultiValueCheckboxField extends CheckboxSetField {
 	 *
 	 * @return string
 	 */
-	public function dataValue() {
+	public function dataValue()
+    {
 		if($this->value && is_array($this->value)) {
-			$filtered = array();
+			$filtered = [];
 			foreach($this->value as $item) {
 				if($item) {
 					$filtered[] = str_replace(",", "{comma}", $item);
@@ -221,7 +237,8 @@ class MultiValueCheckboxField extends CheckboxSetField {
 		return '';
 	}
 
-	public function performDisabledTransformation() {
+	public function performDisabledTransformation()
+    {
 		$clone = clone $this;
 		$clone->setDisabled(true);
 
@@ -234,9 +251,10 @@ class MultiValueCheckboxField extends CheckboxSetField {
 	 *
 	 * @return ReadonlyField
 	 */
-	public function performReadonlyTransformation() {
+	public function performReadonlyTransformation()
+    {
 		$values = '';
-		$data = array();
+		$data = [];
 
 		$items = $this->value;
 		if($this->source) {
@@ -285,7 +303,8 @@ class MultiValueCheckboxField extends CheckboxSetField {
 		return $field;
 	}
 
-	public function ExtraOptions() {
+	public function ExtraOptions()
+    {
 		return FormField::ExtraOptions();
 	}
 }

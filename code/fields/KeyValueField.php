@@ -1,38 +1,46 @@
 <?php
 
+namespace SilverStripe\MultiValueField\Fields;
+
+use SilverStripe\View\Requirements;
+use SilverStripe\Core\Convert;
+
 /**
  * A field that lets you specify both a key AND a value for each row entry
  *
  * @author Marcus Nyeholt <marcus@silverstripe.com.au>
  */
-class KeyValueField extends MultiValueTextField {
+class KeyValueField extends MultiValueTextField
+{
 	protected $sourceKeys;
 	protected $sourceValues;
 
-	public function __construct($name, $title = null, $sourceKeys = array(), $sourceValues = array(), $value=null, $form=null) {
+	public function __construct($name, $title = null, $sourceKeys = [], $sourceValues = [], $value=null, $form=null)
+    {
 		parent::__construct($name, ($title===null) ? $name : $title, $value, $form);
 		$this->sourceKeys = $sourceKeys;
 		$this->sourceValues = $sourceValues;
 	}
 
-	public function Field($properties = array()) {
+	public function Field($properties = [])
+    {
 		Requirements::javascript(THIRDPARTY_DIR . '/jquery/jquery.js');
 		Requirements::javascript('multivaluefield/javascript/multivaluefield.js');
 		Requirements::css('multivaluefield/css/multivaluefield.css');
 
 		$nameKey = $this->name . '[key][]';
 		$nameVal = $this->name . '[val][]';
-		$fields = array();
+		$fields = [];
 
 		if ($this->value) {
 			foreach ($this->value as $i => $v) {
 				if ($this->readonly) {
-					$fieldAttr = array(
+					$fieldAttr = [
 						'class' => 'mventryfield  mvkeyvalReadonly ' . ($this->extraClass() ? $this->extraClass() : ''),
 						'id' => $this->id().MultiValueTextField::KEY_SEP.$i,
 						'name' => $nameKey,
 						'tabindex' => $this->getAttribute('tabindex')
-					);
+					];
 
 					$keyField = self::create_tag('span', $fieldAttr, Convert::raw2xml($i));
 					$fieldAttr['id'] = $this->id().MultiValueTextField::KEY_SEP.$v;
@@ -58,18 +66,19 @@ class KeyValueField extends MultiValueTextField {
 		return '<ul id="'.$this->id().'" class="multivaluefieldlist mvkeyvallist '.$this->extraClass().'"><li>'.implode('</li><li>', $fields).'</li></ul>';
 	}
 
-	protected function createSelectList($number, $name, $values, $selected = '') {
+	protected function createSelectList($number, $name, $values, $selected = '')
+    {
 		$options = self::create_tag(
 			'option',
-			array(
+			[
 				'selected' => $selected == '' ? 'selected' : '',
 				'value' => ''
-			),
+			],
 			''
 		);
 
 		foreach ($values as $index => $title) {
-			$attrs = array('value'=>$index);
+			$attrs = ['value'=>$index];
 			if ($index == $selected) {
 				$attrs['selected'] = 'selected';
 			}
@@ -77,25 +86,25 @@ class KeyValueField extends MultiValueTextField {
 		}
 
 		if (count($values)) {
-			$attrs = array(
+			$attrs = [
 				'class' => 'text mventryfield mvdropdown ' . ($this->extraClass() ? $this->extraClass() : ''),
 				'id' => $this->id().MultiValueTextField::KEY_SEP.$number,
 				'name' => $name,
 				'tabindex' => $this->getAttribute('tabindex')
-			);
+			];
 
 			if($this->disabled) $attrs['disabled'] = 'disabled';
 
 			return self::create_tag('select', $attrs, $options);
 		} else {
-			$attrs = array(
+			$attrs = [
 				'class' => 'text mventryfield mvtextfield ' . ($this->extraClass() ? $this->extraClass() : ''),
 				'id' => $this->id().MultiValueTextField::KEY_SEP.$number,
 				'value' => $selected,
 				'name' => $name,
 				'tabindex' => $this->getAttribute('tabindex'),
 				'type'	=> 'text',
-			);
+			];
 
 			if($this->disabled) $attrs['disabled'] = 'disabled';
 
@@ -103,12 +112,13 @@ class KeyValueField extends MultiValueTextField {
 		}
 	}
 
-	public function setValue($v) {
+	public function setValue($v)
+    {
 		if (is_array($v)) {
 			// we've been set directly via the post - lets convert things to an appropriate key -> value
 			// structure
 			if (isset($v['key'])) {
-				$newVal = array();
+				$newVal = [];
 
 				for ($i = 0, $c = count($v['key']); $i < $c; $i++) {
 					if (strlen($v['key'][$i]) && strlen($v['val'][$i])) {
@@ -125,7 +135,7 @@ class KeyValueField extends MultiValueTextField {
 		}
 
 		if (!is_array($v)) {
-			$v = array();
+			$v = [];
 		}
 
 		parent::setValue($v);
