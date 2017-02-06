@@ -81,7 +81,7 @@ class MultiValueField extends DBComposite
 			return;
 		}
 
-		if (!is_array($value) && $record && isset($record[$this->name.'Value'])) {
+		if (!is_array($value) && $record && is_array($record) && isset($record[$this->name.'Value'])) {
 			$value = $record[$this->name.'Value'];
 		}
 
