@@ -150,7 +150,7 @@ class MultiValueField extends DBComposite
 		return $this->changed;
 	}
 
-	public function scaffoldFormField($title = null)
+	public function scaffoldFormField($title = null, $params = null)
     {
 		return new MultiValueTextField($this->name, $title);
 	}
