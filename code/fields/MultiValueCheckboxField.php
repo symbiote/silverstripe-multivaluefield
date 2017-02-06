@@ -38,7 +38,7 @@ class MultiValueCheckboxField extends CheckboxSetField
 	 */
 	public function Field($properties = [])
     {
-		Requirements::css(SAPPHIRE_DIR . '/css/CheckboxSetField.css');
+		// Requirements::css(SAPPHIRE_DIR . '/css/CheckboxSetField.css');
 
 		$source = $this->source;
 		$values = $this->value;
