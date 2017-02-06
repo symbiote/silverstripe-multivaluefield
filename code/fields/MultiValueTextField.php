@@ -2,6 +2,10 @@
 
 namespace SilverStripe\MultiValueField\Fields;
 
+use SilverStripe\Forms\FormField;
+use SilverStripe\View\Requirements;
+use SilverStripe\Core\Convert;
+
 /**
  * A text field for multivalued text entry
  *
@@ -89,7 +93,7 @@ class MultiValueTextField extends FormField
 		}
 
 		if (!is_array($v)) {
-			$v = []
+			$v = [];
 		}
 
 		parent::setValue($v);
