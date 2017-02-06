@@ -16,7 +16,7 @@ use SilverStripe\View\ArrayData;
  *
  * @author Marcus Nyeholt <marcus@silverstripe.com.au>
  */
-class MultiValueField extends DBField implements DBComposite
+class MultiValueField extends DBComposite
 {
 	protected $changed = false;
 
