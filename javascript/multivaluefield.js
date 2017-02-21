@@ -47,15 +47,17 @@ jQuery(function($) {
 
 	$(document).on("keyup", ".mventryfield", addNewField);
 	$(document).on("change", ".mventryfield:not(input)", addNewField);
-	
-	if ($.entwine) {
-		$('ul.multivaluefieldlist').entwine({
-			onmatch: function () {
-				$(this).sortable();
-			}
-		})
-	} else {
-		$('ul.multivaluefieldlist').sortable();
+
+	if ($.fn.sortable) {
+		if ($.entwine) {
+			$('ul.multivaluefieldlist').entwine({
+				onmatch: function () {
+					$(this).sortable();
+				}
+			})
+		} else {
+			$('ul.multivaluefieldlist').sortable();
+		}
 	}
-	
+
 });
