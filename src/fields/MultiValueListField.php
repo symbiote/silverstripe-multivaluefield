@@ -1,6 +1,6 @@
 <?php
 
-namespace SilverStripe\MultiValueField\Fields;
+namespace SilverStripeAustralia\MultiValueField\Fields;
 
 use SilverStripe\View\Requirements;
 use SilverStripe\Core\Convert
