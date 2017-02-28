@@ -1,0 +1,6 @@
+---
+Name: mvfieldtypes
+---
+SilverStripe\Core\Injector\Injector:
+  MultiValueField:
+    class: SilverStripeAustralia\MultiValueField\Fields\MultiValueField
