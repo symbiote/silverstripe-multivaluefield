@@ -1,31 +1,38 @@
 <?php
 
+namespace SilverStripeAustralia\MultiValueField\Fields;
+
+use SilverStripe\Forms\FormField;
+use SilverStripe\View\Requirements;
+use SilverStripe\Core\Convert;
+
 /**
  * A text field for multivalued text entry
  *
  * @author Marcus Nyeholt <marcus@silverstripe.com.au>
  */
-class MultiValueTextField extends FormField {
-
+class MultiValueTextField extends FormField
+{
 	const KEY_SEP = '__';
 
 	protected $tag = 'input';
 
-	public function Field($properties = array()) {
+	public function Field($properties = [])
+    {
 		Requirements::javascript(THIRDPARTY_DIR . '/jquery/jquery.js');
 		Requirements::javascript('multivaluefield/javascript/multivaluefield.js');
 		Requirements::css('multivaluefield/css/multivaluefield.css');
 
 		$name = $this->name . '[]';
-		$fields = array();
+		$fields = [];
 
-		$attributes = array(
+		$attributes = [
 			'type' => 'text',
 			'class' => 'text mvtextfield mventryfield ' . ($this->extraClass() ? $this->extraClass() : ''),
 			// 'id' => $this->id(),
 			'name' => $name,
 			// 'value' => $this->Value(),
-		);
+		];
 
 		if($this->disabled) $attributes['disabled'] = 'disabled';
 
@@ -54,21 +61,25 @@ class MultiValueTextField extends FormField {
 		}
 	}
 
-	public function createReadonlyInput($attributes, $value) {
+	public function createReadonlyInput($attributes, $value)
+    {
 		return self::create_tag('span', $attributes, Convert::raw2xml($value));
 	}
 
-	public function createInput($attributes, $value = null) {
+	public function createInput($attributes, $value = null)
+    {
 		return self::create_tag($this->tag, $attributes, $value);
 	}
 
-	public function performReadonlyTransformation() {
+	public function performReadonlyTransformation()
+    {
 		$new = clone $this;
 		$new->setReadonly(true);
 		return $new;
 	}
 
-	public function setValue($v) {
+	public function setValue($v)
+    {
 		if (is_array($v)) {
 			// we've been set directly via the post - lets prune any empty values
 			foreach ($v as $key => $val) {
@@ -82,15 +93,15 @@ class MultiValueTextField extends FormField {
 		}
 
 		if (!is_array($v)) {
-			$v = array();
+			$v = [];
 		}
 
 		parent::setValue($v);
 	}
 
-	public function setTag($tag) {
+	public function setTag($tag)
+    {
 		$this->tag = $tag;
 		return $this;
 	}
-
 }
