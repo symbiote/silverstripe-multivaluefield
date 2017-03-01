@@ -40,7 +40,7 @@ class MultiValueDropdownField extends MultiValueTextField
 
 	public function Field($properties = [])
     {
-		Requirements::javascript(THIRDPARTY_DIR . '/jquery/jquery.js');
+		Requirements::javascript(ADMIN_THIRDPARTY_DIR . '/jquery/jquery.js');
 		Requirements::javascript('multivaluefield/javascript/multivaluefield.js');
 		Requirements::css('multivaluefield/css/multivaluefield.css');
 

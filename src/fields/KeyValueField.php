@@ -24,7 +24,7 @@ class KeyValueField extends MultiValueTextField
 
     public function Field($properties = [])
     {
-        Requirements::javascript(THIRDPARTY_DIR . '/jquery/jquery.js');
+        Requirements::javascript(ADMIN_THIRDPARTY_DIR . '/jquery/jquery.js');
         Requirements::javascript('multivaluefield/javascript/multivaluefield.js');
         Requirements::css('multivaluefield/css/multivaluefield.css');
 
@@ -112,7 +112,7 @@ class KeyValueField extends MultiValueTextField
         }
     }
 
-    public function setValue($v)
+    public function setValue($v, $data = NULL)
     {
         if (is_array($v)) {
             // we've been set directly via the post - lets convert things to an appropriate key -> value

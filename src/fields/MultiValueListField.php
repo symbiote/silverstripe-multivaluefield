@@ -3,7 +3,7 @@
 namespace SilverStripeAustralia\MultiValueField\Fields;
 
 use SilverStripe\View\Requirements;
-use SilverStripe\Core\Convert
+use SilverStripe\Core\Convert;
 
 /**
  * A multivalued field that uses a multi choice select box for selecting the value
@@ -22,7 +22,7 @@ class MultiValueListField extends MultiValueTextField
 
 	public function Field($properties = [])
     {
-		Requirements::javascript(THIRDPARTY_DIR.'/jquery/jquery.js');
+		Requirements::javascript(ADMIN_THIRDPARTY_DIR.'/jquery/jquery.js');
 		Requirements::javascript('multivaluefield/javascript/multivaluefield.js');
 		Requirements::css('multivaluefield/css/multivaluefield.css');
 

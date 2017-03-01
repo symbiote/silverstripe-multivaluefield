@@ -19,7 +19,7 @@ class MultiValueTextField extends FormField
 
 	public function Field($properties = [])
     {
-		Requirements::javascript(THIRDPARTY_DIR . '/jquery/jquery.js');
+		Requirements::javascript(ADMIN_THIRDPARTY_DIR . '/jquery/jquery.js');
 		Requirements::javascript('multivaluefield/javascript/multivaluefield.js');
 		Requirements::css('multivaluefield/css/multivaluefield.css');
 
@@ -78,7 +78,7 @@ class MultiValueTextField extends FormField
 		return $new;
 	}
 
-	public function setValue($v)
+	public function setValue($v, $data = NULL)
     {
 		if (is_array($v)) {
 			// we've been set directly via the post - lets prune any empty values
