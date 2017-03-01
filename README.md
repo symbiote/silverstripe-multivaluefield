@@ -29,10 +29,9 @@ module) are aware of the field type and will index accordingly.
 
 This version of MultiValueField supports SilverStripe 4.0.0
 
-Version marked as 2.0.x are compatible with SilverStripe 3.1, with 2.0.1 compatible with 3.1.1.
+Older versions of SilverStripe are supported on minor version branches below
 
-* [SilverStripe 3.0 compatible version](https://github.com/silverstripe-australia/silverstripe-multivaluefield/tree/1.0)
-* [SilverStripe 2.4 compatible version](https://github.com/silverstripe-australia/silverstripe-multivaluefield/tree/ss24)
+* [SilverStripe 3.1+ compatible version](https://github.com/silverstripe-australia/silverstripe-multivaluefield/tree/2.4)
 
 
 ## Basic Usage
