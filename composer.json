@@ -20,7 +20,8 @@
 	},
     "autoload": {
         "psr-4": {
-            "SilverStripe\\MultiValueField\\": "src/"
+            "SilverStripe\\MultiValueField\\": "src/",
+            "SilverStripe\\MultiValueField\\Tests\\": "tests/"
         }
     }
 }

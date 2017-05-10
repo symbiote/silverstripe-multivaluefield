@@ -1,11 +1,18 @@
 <?php
+namespace SilverStripeAustralia\MultiValueField\Tests;
+
+use SilverStripe\Dev\SapphireTest;
+use SilverStripe\ORM\FieldType\DBField;
+use SilverStripeAustralia\MultiValueField\Fields\MultiValueField;
+
+
 /**
  * @author Marcus Nyeholt <marcus@silverstripe.com.au>
  */
 class MultiValueFieldTest extends SapphireTest {
 
-	protected $extraDataObjects = array(
-		'MultiValueFieldTest_DataObject'
+	protected static $extra_dataobjects = array(
+        MultiValueFieldTest_DataObject::class
 	);
 
 	public function testMultiValueField() {
@@ -16,7 +23,7 @@ class MultiValueFieldTest extends SapphireTest {
 		$obj->write();
 
 		$this->assertTrue($obj->isInDB());
-		$obj = DataObject::get_by_id('MultiValueFieldTest_DataObject', $obj->ID);
+		$obj = MultiValueFieldTest_DataObject::get()->byID($obj->ID);
 
 		$this->assertNotNull($obj->MVField);
 		$this->assertEquals($first, $obj->MVField->getValues());
@@ -43,16 +50,5 @@ class MultiValueFieldTest extends SapphireTest {
 		$field->setValue(null);
 		$this->assertTrue($field->isChanged());
 	}
-
-}
-
-/**
- * @ignore
- */
-class MultiValueFieldTest_DataObject extends DataObject implements TestOnly {
-
-	private static $db = array(
-		'MVField' => 'MultiValueField'
-	);
 
 }
