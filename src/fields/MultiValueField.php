@@ -3,10 +3,8 @@
 namespace SilverStripeAustralia\MultiValueField\Fields;
 
 use SilverStripe\Core\Convert;
-use SilverStripe\ORM\FieldType\DBComposite;
+use SilverStripe\ORM\FieldType\DBText;
 use SilverStripe\ORM\FieldType\DBVarchar;
-use SilverStripe\ORM\FieldType\DBField;
-use SilverStripe\ORM\DB;
 use SilverStripe\ORM\ArrayList;
 use SilverStripe\View\ArrayData;
 
@@ -16,16 +14,8 @@ use SilverStripe\View\ArrayData;
  *
  * @author Marcus Nyeholt <marcus@silverstripe.com.au>
  */
-class MultiValueField extends DBComposite
+class MultiValueField extends DBText
 {
-    protected $changed = false;
-
-    /**
-     * @param array
-     */
-    static $composite_db = [
-        "Value" => "Text",
-    ];
 
     /**
      * Returns the value of this field.
@@ -34,7 +24,7 @@ class MultiValueField extends DBComposite
     public function getValue()
     {
         // if we're not deserialised yet, do so
-        if ($this->exists() && is_string($this->value)) {
+        if (is_string($this->value)) {
             $this->value = unserialize($this->value);
         }
         return $this->value;
@@ -67,31 +57,11 @@ class MultiValueField extends DBComposite
      */
     public function setValue($value, $record = null, $markChanged = true)
     {
-        if ($markChanged) {
-            if (is_array($value)) {
-                $this->value = $value;
-                $this->changed = true;
-            } else if (is_object($value)) {
-                $this->value = isset($value->value) && is_array($value->value) ? $value->value : [];
-                $this->changed = true;
-            } else if (!$value) {
-                $this->value   = [];
-                $this->changed = true;
-            }
-            return;
-        }
-
-        if (!is_array($value) && $record && is_array($record) && isset($record[$this->name.'Value'])) {
-            $value = $record[$this->name.'Value'];
-        }
-
         if ($value && is_string($value)) {
-            $this->value = unserialize($value);
-        } else if ($value) {
-            $this->value = $value;
+            $value = unserialize($value);
         }
 
-        $this->changed = $this->changed || $markChanged;
+        parent::setValue($value, $record, $markChanged);
     }
 
     /**
@@ -110,38 +80,6 @@ class MultiValueField extends DBComposite
                 $value = serialize($value);
             }
             return parent::prepValueForDB($value);
-        }
-    }
-
-    public function requireField()
-    {
-        $parts= ['datatype'=>'mediumtext', 'character set'=>'utf8', 'collate'=>'utf8_general_ci', 'arrayValue'=>$this->arrayValue];
-        $values= ['type'=>'text', 'parts'=>$parts];
-        DB::requireField($this->tableName, $this->name . 'Value', $values);
-    }
-
-    public function compositeDatabaseFields()
-    {
-        return self::$composite_db;
-    }
-
-    public function writeToManipulation(&$manipulation)
-    {
-        if($this->getValue()) {
-            $manipulation['fields'][$this->name.'Value'] = $this->prepValueForDB($this->getValue());
-        } else {
-            $manipulation['fields'][$this->name.'Value'] = DBField::create_field('Text', $this->getValue())->nullValue();
-        }
-    }
-
-    public function addToQuery(&$query)
-    {
-        parent::addToQuery($query);
-        $name = sprintf('%sValue', $this->name);
-        $val = sprintf('"%sValue"', $this->name);
-        $select = $query->getSelect();
-        if (!isset($select[$name])) {
-            $query->addSelect([$name => $val]);
         }
     }
 
