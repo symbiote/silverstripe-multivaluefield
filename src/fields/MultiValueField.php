@@ -1,6 +1,6 @@
 <?php
 
-namespace SilverStripeAustralia\MultiValueField\Fields;
+namespace Symbiote\MultiValueField\Fields;
 
 use SilverStripe\Core\Convert;
 use SilverStripe\ORM\FieldType\DBComposite;

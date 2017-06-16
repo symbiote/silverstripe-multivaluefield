@@ -1,6 +1,6 @@
 <?php
 
-namespace SilverStripeAustralia\MultiValueField\Fields;
+namespace Symbiote\MultiValueField\Fields;
 
 use SilverStripe\Forms\FormField;
 use SilverStripe\View\Requirements;
