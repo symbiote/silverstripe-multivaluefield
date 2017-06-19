@@ -1,5 +1,5 @@
 {
-	"name": "silverstripe/multivaluefield",
+	"name": "symbiote/silverstripe-multivaluefield",
 	"description": "A DB field + form fields for storing multiple values in a single property (serialized).",
 	"type": "silverstripe-module",
 	"keywords": ["silverstripe", "formfield", "dbfield"],
