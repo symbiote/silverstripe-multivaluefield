@@ -8,7 +8,7 @@ use SilverStripe\Core\Convert;
 /**
  * A field that lets you specify both a key AND a value for each row entry
  *
- * @author Marcus Nyeholt <marcus@silverstripe.com.au>
+ * @author Marcus Nyeholt <marcus@symbiote.com.au>
  */
 class KeyValueField extends MultiValueTextField
 {

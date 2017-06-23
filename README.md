@@ -1,6 +1,6 @@
 # SilverStripe MultiValueField module
 
-[![Build Status](https://travis-ci.org/silverstripe-australia/silverstripe-multivaluefield.svg?branch=master)](https://travis-ci.org/silverstripe-australia/silverstripe-multivaluefield)
+[![Build Status](https://travis-ci.org/symbiote/silverstripe-multivaluefield.svg?branch=master)](https://travis-ci.org/symbiote/silverstripe-multivaluefield)
 
 Notes:
 The SilverStripe 2.4 compatible version of the module is still available
@@ -31,7 +31,7 @@ This version of MultiValueField supports SilverStripe 4.0.0
 
 Older versions of SilverStripe are supported on minor version branches below
 
-* [SilverStripe 3.1+ compatible version](https://github.com/silverstripe-australia/silverstripe-multivaluefield/tree/2.4)
+* [SilverStripe 3.1+ compatible version](https://github.com/symbiote/silverstripe-multivaluefield/tree/2.4)
 
 
 ## Basic Usage
@@ -61,7 +61,7 @@ Note that to have the `$Key` value available as something other than an integer,
 
 ## Maintainer Contacts
 
-* Marcus Nyeholt <marcus@silverstripe.com.au>
+* Marcus Nyeholt <marcus@symbiote.com.au>
 
 ## Requirements
 

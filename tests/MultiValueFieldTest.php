@@ -1,6 +1,6 @@
 <?php
 /**
- * @author Marcus Nyeholt <marcus@silverstripe.com.au>
+ * @author Marcus Nyeholt <marcus@symbiote.com.au>
  */
 class MultiValueFieldTest extends SapphireTest {
 

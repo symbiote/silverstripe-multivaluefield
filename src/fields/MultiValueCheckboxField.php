@@ -11,7 +11,7 @@ use SilverStripe\Forms\FormField;
 /**
  * A checkboxset that uses a multivalue field for key / val pairs
  *
- * @author marcus@silverstripe.com.au
+ * @author marcus@symbiote.com.au
  * @license BSD License http://silverstripe.org/bsd-license/
  */
 class MultiValueCheckboxField extends CheckboxSetField

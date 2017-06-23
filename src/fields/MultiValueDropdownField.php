@@ -8,7 +8,7 @@ use SilverStripe\Core\Convert;
 /**
  * A multivalued field that uses dropdown boxes for selecting the value for each
  *
- * @author Marcus Nyeholt <marcus@silverstripe.com.au>
+ * @author Marcus Nyeholt <marcus@symbiote.com.au>
  */
 class MultiValueDropdownField extends MultiValueTextField
 {
