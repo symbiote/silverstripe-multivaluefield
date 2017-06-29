@@ -18,6 +18,9 @@
 			"dev-master": "4.x-dev"
 		}
 	},
+	"replace": {
+		"silverstripe/multivaluefield": "self.version"
+	},
     "autoload": {
         "psr-4": {
             "SilverStripe\\MultiValueField\\": "src/"
