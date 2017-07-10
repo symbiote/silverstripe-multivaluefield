@@ -1,58 +1,86 @@
 <?php
+namespace SilverStripeAustralia\MultiValueField\Tests;
+
+use SilverStripe\Dev\SapphireTest;
+use SilverStripe\ORM\FieldType\DBField;
+use SilverStripeAustralia\MultiValueField\Fields\MultiValueField;
+
+
 /**
  * @author Marcus Nyeholt <marcus@symbiote.com.au>
  */
 class MultiValueFieldTest extends SapphireTest {
 
-	protected $extraDataObjects = array(
-		'MultiValueFieldTest_DataObject'
-	);
+    protected static $extra_dataobjects = array(
+        MultiValueFieldTest_DataObject::class
+    );
 
-	public function testMultiValueField() {
-		$first = array('One', 'Two', 'Three');
+    public function testUpdate() {
+        $obj = new MultiValueFieldTest_DataObject();
+        $obj->MVField = ['One', 'Two'];
+        $obj->write();
 
-		$obj = new MultiValueFieldTest_DataObject();
-		$obj->MVField = $first;
-		$obj->write();
+        $obj = MultiValueFieldTest_DataObject::get()->byID($obj->ID);
+        $obj->MVField = ['Three'];
+        $obj->write();
 
-		$this->assertTrue($obj->isInDB());
-		$obj = DataObject::get_by_id('MultiValueFieldTest_DataObject', $obj->ID);
+        $this->assertEquals(['Three'], $obj->obj('MVField')->getValues());
+    }
 
-		$this->assertNotNull($obj->MVField);
-		$this->assertEquals($first, $obj->MVField->getValues());
+    public function testSetArrayAsProperty() {
+        $obj = new MultiValueFieldTest_DataObject();
+        $obj->MVField = ['One', 'Two'];
+        $obj->write();
 
-		$second = array('Four', 'Five');
-		$obj->MVField = $second;
-		$obj->write();
+        $obj = MultiValueFieldTest_DataObject::get()->byID($obj->ID);
+        $this->assertNotNull($obj->MVField);
+        $this->assertEquals(['One', 'Two'], $obj->obj('MVField')->getValues());
+    }
 
-		$this->assertEquals($second, $obj->MVField->getValues());
-	}
+    public function testSetSerialisedStringAsProperty() {
+        $obj = new MultiValueFieldTest_DataObject();
+        $obj->MVField = serialize(['One', 'Two']);
+        $obj->write();
 
-	public function testIsChanged() {
-		$field = new MultiValueField();
-		$this->assertFalse($field->isChanged());
+        $obj = MultiValueFieldTest_DataObject::get()->byID($obj->ID);
+        $this->assertNotNull($obj->MVField);
+        $this->assertEquals(['One', 'Two'], $obj->obj('MVField')->getValues());
+    }
 
-		$field->setValue(array(1, 2, 3));
-		$this->assertTrue($field->isChanged());
+    public function testSetSerialisedStringWithSetValue() {
+        $obj = new MultiValueFieldTest_DataObject();
+        $obj->obj('MVField')->setValue(serialize(['One', 'Two']));
+        $obj->write();
 
-		$field = new MultiValueField();
-		$field->setValue(array(1, 2, 3), null, false);
-		$this->assertFalse($field->isChanged());
+        $obj = MultiValueFieldTest_DataObject::get()->byID($obj->ID);
+        $this->assertNotNull($obj->MVField);
+        $this->assertEquals(['One', 'Two'], $obj->obj('MVField')->getValues());
+    }
 
-		$field = DBField::create_field('MultiValueField', array(1, 2, 3));
-		$field->setValue(null);
-		$this->assertTrue($field->isChanged());
-	}
+    public function testSetArrayWithSetValue() {
+        $obj = new MultiValueFieldTest_DataObject();
+        $obj->obj('MVField')->setValue(['One', 'Two']);
+        $obj->write();
 
-}
+        $obj = MultiValueFieldTest_DataObject::get()->byID($obj->ID);
+        $this->assertNotNull($obj->MVField);
+        $this->assertEquals(['One', 'Two'], $obj->obj('MVField')->getValues());
+    }
 
-/**
- * @ignore
- */
-class MultiValueFieldTest_DataObject extends DataObject implements TestOnly {
+    public function testIsChanged() {
+        $field = new MultiValueField();
+        $this->assertFalse($field->isChanged());
 
-	private static $db = array(
-		'MVField' => 'MultiValueField'
-	);
+        $field->setValue(['One', 'Two']);
+        $this->assertTrue($field->isChanged());
+
+        $field = new MultiValueField();
+        $field->setValue(['One', 'Two'], null, false);
+        $this->assertFalse($field->isChanged());
+
+        $field = DBField::create_field('MultiValueField', ['One', 'Two']);
+        $field->setValue(null);
+        $this->assertTrue($field->isChanged());
+    }
 
 }
