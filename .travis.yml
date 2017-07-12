@@ -15,8 +15,6 @@ matrix:
     - php: 5.6
       env: DB=MYSQL CORE_RELEASE=4
     - php: 5.6
-      env: DB=MYSQL CORE_RELEASE=4
-    - php: 5.6
       env: DB=PGSQL CORE_RELEASE=4
 
 before_script:
