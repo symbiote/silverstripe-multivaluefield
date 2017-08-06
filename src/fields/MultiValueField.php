@@ -23,12 +23,13 @@ class MultiValueField extends DBComposite
     /**
      * @param array
      */
-    static $composite_db = [
-        "Value" => "Text",
+    private static $composite_db = [
+        'Value' => 'Text',
     ];
 
     /**
      * Returns the value of this field.
+     *
      * @return mixed
      */
     public function getValue()
@@ -37,6 +38,7 @@ class MultiValueField extends DBComposite
         if ($this->exists() && is_string($this->value)) {
             $this->value = unserialize($this->value);
         }
+
         return $this->value;
     }
 
@@ -47,7 +49,7 @@ class MultiValueField extends DBComposite
 
     /**
      * Overridden to make sure that the user_error that gets triggered if this is already is set
-     * ... doesn't. DataObject tries setting this at times that it shouldn't :/
+     * ... doesn't. DataObject tries setting this at times that it shouldn't :/.
      *
      * @param string $name
      */
@@ -62,6 +64,7 @@ class MultiValueField extends DBComposite
      * Set the value on the field.
      *
      * For a multivalue field, this will deserialise the value if it is a string
+     *
      * @param mixed $value
      * @param array $record
      */
@@ -71,13 +74,14 @@ class MultiValueField extends DBComposite
             if (is_array($value)) {
                 $this->value = $value;
                 $this->changed = true;
-            } else if (is_object($value)) {
+            } elseif (is_object($value)) {
                 $this->value = isset($value->value) && is_array($value->value) ? $value->value : [];
                 $this->changed = true;
-            } else if (!$value) {
-                $this->value   = [];
+            } elseif (!$value) {
+                $this->value = [];
                 $this->changed = true;
             }
+
             return;
         }
 
@@ -87,7 +91,7 @@ class MultiValueField extends DBComposite
 
         if ($value && is_string($value)) {
             $this->value = unserialize($value);
-        } else if ($value) {
+        } elseif ($value) {
             $this->value = $value;
         }
 
@@ -95,29 +99,31 @@ class MultiValueField extends DBComposite
     }
 
     /**
-     * (non-PHPdoc)
+     * (non-PHPdoc).
+     *
      * @see core/model/fieldtypes/DBField#prepValueForDB($value)
      */
     public function prepValueForDB($value)
     {
         if (!$this->nullifyEmpty && $value === '') {
-            return "'" . Convert::raw2sql($value) . "'";
+            return "'".Convert::raw2sql($value)."'";
         } else {
-            if ($value instanceof MultiValueField) {
+            if ($value instanceof self) {
                 $value = $value->getValue();
             }
             if (is_object($value) || is_array($value)) {
                 $value = serialize($value);
             }
+
             return parent::prepValueForDB($value);
         }
     }
 
     public function requireField()
     {
-        $parts= ['datatype'=>'mediumtext', 'character set'=>'utf8', 'collate'=>'utf8_general_ci', 'arrayValue'=>$this->arrayValue];
-        $values= ['type'=>'text', 'parts'=>$parts];
-        DB::requireField($this->tableName, $this->name . 'Value', $values);
+        $parts = ['datatype' => 'mediumtext', 'character set' => 'utf8', 'collate' => 'utf8_general_ci', 'arrayValue' => $this->arrayValue];
+        $values = ['type' => 'text', 'parts' => $parts];
+        DB::requireField($this->tableName, $this->name.'Value', $values);
     }
 
     public function compositeDatabaseFields()
@@ -127,7 +133,7 @@ class MultiValueField extends DBComposite
 
     public function writeToManipulation(&$manipulation)
     {
-        if($this->getValue()) {
+        if ($this->getValue()) {
             $manipulation['fields'][$this->name.'Value'] = $this->prepValueForDB($this->getValue());
         } else {
             $manipulation['fields'][$this->name.'Value'] = DBField::create_field('Text', $this->getValue())->nullValue();
@@ -156,7 +162,7 @@ class MultiValueField extends DBComposite
     }
 
     /**
-     * Convert to a textual list of items
+     * Convert to a textual list of items.
      */
     public function csv()
     {
@@ -168,6 +174,7 @@ class MultiValueField extends DBComposite
      * space.
      *
      * @param string $separator
+     *
      * @return string
      */
     public function Implode($separator = ', ')
@@ -180,6 +187,7 @@ class MultiValueField extends DBComposite
         if ($this->getValue()) {
             return $this->csv();
         }
+
         return '';
     }
 
@@ -198,8 +206,8 @@ class MultiValueField extends DBComposite
 
                 $obj = new ArrayData([
                     'Value' => $v,
-                    'Key'   => $key,
-                    'Title' => $item
+                    'Key' => $key,
+                    'Title' => $item,
                 ]);
                 $items[] = $obj;
             }
