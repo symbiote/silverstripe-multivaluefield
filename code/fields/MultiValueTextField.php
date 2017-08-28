@@ -3,7 +3,7 @@
 /**
  * A text field for multivalued text entry
  *
- * @author Marcus Nyeholt <marcus@silverstripe.com.au>
+ * @author Marcus Nyeholt <marcus@symbiote.com.au>
  */
 class MultiValueTextField extends FormField {
 
