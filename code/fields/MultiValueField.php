@@ -54,29 +54,23 @@ class MultiValueField extends DBField implements CompositeDBField {
 	function setValue($value, $record = null, $markChanged = true) {
 		if ($markChanged) {
 			if (is_array($value)) {
-				$this->value = $value;
 				$this->changed = true;
 			} else if (is_object($value)) {
-				$this->value = isset($value->value) && is_array($value->value) ? $value->value : array();
+				$value = isset($value->value) && is_array($value->value) ? $value->value : array();
 				$this->changed = true;
 			} else if (!$value) {
-				$this->value   = array();
+				$value   = array();
 				$this->changed = true;
 			}
-			return;
-		}
-
-		if (!is_array($value) && $record && isset($record[$this->name.'Value'])) {
+		} elseif (!is_array($value) && $record && isset($record[$this->name.'Value'])) {
 			$value = $record[$this->name.'Value'];
-		}
-
-		if ($value && is_string($value)) {
-			$this->value = unserialize($value);
-		} else if ($value) {
-			$this->value = $value;
+		} elseif ($value && is_string($value)) {
+			$value = unserialize($value);
 		}
 
 		$this->changed = $this->changed || $markChanged;
+
+		return parent::setValue($value);
 	}
 
 	/**
