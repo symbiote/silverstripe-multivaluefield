@@ -162,7 +162,7 @@ class MultiValueCheckboxField extends CheckboxSetField {
 //			$value = $selected->toDropdownMap('ID', 'ID');
 //		}
 
-		parent::setValue($value, $obj);
+		return parent::setValue($value, $obj);
 	}
 	
 	/**

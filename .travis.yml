@@ -1,8 +1,10 @@
 # See https://github.com/silverstripe-labs/silverstripe-travis-support for setup details
 
-language: php 
+language: php
 
-php: 
+dist: precise
+
+php:
  - 5.3
 
 env:
@@ -14,9 +16,9 @@ matrix:
     - php: 5.3
       env: DB=PGSQL CORE_RELEASE=3.1
     - php: 5.4
-      env: DB=MYSQL CORE_RELEASE=master
+      env: DB=MYSQL CORE_RELEASE=3
     - php: 5.5
-      env: DB=MYSQL CORE_RELEASE=master
+      env: DB=MYSQL CORE_RELEASE=3
 
 before_script:
  - phpenv rehash
@@ -24,5 +26,5 @@ before_script:
  - php ~/travis-support/travis_setup.php --source `pwd` --target ~/builds/ss
  - cd ~/builds/ss
 
-script: 
+script:
  - phpunit multivaluefield/tests/
