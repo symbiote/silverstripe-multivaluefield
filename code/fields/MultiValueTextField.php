@@ -82,6 +82,6 @@ class MultiValueTextField extends FormField {
 			$v = array();
 		}
 
-		parent::setValue($v);
+		return parent::setValue($v);
 	}
 }
