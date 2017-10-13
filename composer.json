@@ -10,6 +10,10 @@
 			"email": "marcus@symbiote.com.au"
 		}
 	],
+	"extra": {
+               "installer-name": "multivaluefield"
+	},
+
 	"require": {
 		"silverstripe/framework": "~3.1"
 	},
