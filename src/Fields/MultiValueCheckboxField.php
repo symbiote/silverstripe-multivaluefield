@@ -2,6 +2,8 @@
 
 namespace Symbiote\MultiValueField\Fields;
 
+use Symbiote\MultiValueField\ORM\FieldType\MultiValueField;
+
 use SilverStripe\ORM\DataObjectInterface;
 use SilverStripe\Forms\CheckboxSetField;
 use SilverStripe\Forms\ReadonlyField;
@@ -19,7 +21,7 @@ class MultiValueCheckboxField extends CheckboxSetField
     protected $disabled = false;
 
     /**
-     * @var Array
+     * @var array
      */
     protected $defaultItems = [];
 
@@ -140,7 +142,7 @@ class MultiValueCheckboxField extends CheckboxSetField
      * Note: Items marked as disabled through {@link setDisabledItems()} can still be
      * selected by default through this method.
      *
-     * @param Array $items Collection of array keys, as defined in the $source array
+     * @param array $items Collection of array keys, as defined in the $source array
      */
     public function setDefaultItems($items)
     {
@@ -253,7 +255,7 @@ class MultiValueCheckboxField extends CheckboxSetField
 
         if ($items) {
             // Items is a DO Set
-            if (is_a($items, 'DataObjectSet')) {
+            if (is_a($items, 'DataList')) {
                 foreach ($items as $item) {
                     $data[] = $item->Title;
                 }
@@ -270,7 +272,7 @@ class MultiValueCheckboxField extends CheckboxSetField
                         $data[] = $item['Title'];
                     } elseif (is_array($this->source) && !empty($this->source[$item])) {
                         $data[] = $this->source[$item];
-                    } elseif (is_a($this->source, 'DataObjectSet')) {
+                    } elseif (is_a($this->source, 'DataList')) {
                         $data[] = $sourceTitles[$item];
                     } else {
                         $data[] = $item;
