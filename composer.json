@@ -27,5 +27,7 @@
             "Symbiote\\MultiValueField\\": "src/",
             "Symbiote\\MultiValueField\\Tests\\": "tests/"
         }
-    }
+    },
+    "prefer-stable": true,
+	"minimum-stability": "dev"
 }
