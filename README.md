@@ -69,6 +69,11 @@ Note that to have the `$Key` value available as something other than an integer,
 
 ## Contributing
 
+### Thanks
+
+* [Ingo's initial work](https://github.com/symbiote/silverstripe-multivaluefield/pull/44) to getting this SS4 ready
+* [muskie9's work](https://github.com/muskie9) on updating UI fields
+
 ### Translations
 
 Translations of the natural language strings are managed through a third party translation interface, transifex.com. Newly added strings will be periodically uploaded there for translation, and any new translations will be merged back to the project source code.
