@@ -48,8 +48,8 @@ class MultiValueDropdownField extends MultiValueTextField
         if (Controller::curr() instanceof ContentController) {
             Requirements::javascript('silverstripe/admin: thirdparty/jquery/jquery.js');
         }
-        Requirements::javascript('symbiote/silverstripe-multivaluefield: javascript/multivaluefield.js');
-        Requirements::css('symbiote/silverstripe-multivaluefield: css/multivaluefield.css');
+        Requirements::javascript('symbiote/silverstripe-multivaluefield: client/javascript/multivaluefield.js');
+        Requirements::css('symbiote/silverstripe-multivaluefield: client/css/multivaluefield.css');
 
         $name   = $this->name.'[]';
         $fields = [];

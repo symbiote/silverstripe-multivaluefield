@@ -1,7 +1,7 @@
 {
     "name": "symbiote/silverstripe-multivaluefield",
     "description": "A DB field + form fields for storing multiple values in a single property (serialized).",
-    "type": "silverstripe-module",
+    "type": "silverstripe-vendormodule",
     "keywords": ["silverstripe", "formfield", "dbfield"],
     "license": "BSD-3-Clause",
     "authors": [
@@ -16,7 +16,7 @@
     "extra": {
         "installer-name": "multivaluefield",
         "branch-alias": {
-            "dev-master": "4.1.x-dev"
+            "dev-master": "5.0.x-dev"
         }
     },
     "replace": {
