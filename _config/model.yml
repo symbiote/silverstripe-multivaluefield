@@ -3,4 +3,6 @@ Name: mvfieldtypes
 ---
 SilverStripe\Core\Injector\Injector:
   MultiValueField:
-    class: Symbiote\MultiValueField\Fields\MultiValueField
+    class: Symbiote\MultiValueField\ORM\FieldType\MultiValueField
+  MultiValueFieldTest_DataObject:
+    class: Symbiote\MultiValueField\Tests\MultiValueFieldTest_DataObject
