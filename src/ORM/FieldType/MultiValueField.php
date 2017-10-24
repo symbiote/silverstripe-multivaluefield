@@ -3,7 +3,7 @@
 namespace Symbiote\MultiValueField\ORM\FieldType;
 
 use SilverStripe\Core\Convert;
-use SilverStripe\ORM\FieldType\DBText;
+use SilverStripe\ORM\FieldType\DBComposite;
 use SilverStripe\ORM\FieldType\DBVarchar;
 use SilverStripe\ORM\FieldType\DBField;
 use SilverStripe\ORM\DB;
@@ -16,8 +16,15 @@ use SilverStripe\View\ArrayData;
  *
  * @author Marcus Nyeholt <marcus@symbiote.com.au>
  */
-class MultiValueField extends DBText
+class MultiValueField extends DBComposite
 {
+    /**
+     * @param array
+     */
+    private static $composite_db = array(
+        "Value" => "Text",
+    );
+
     /**
      *
      * @var boolean
@@ -30,15 +37,11 @@ class MultiValueField extends DBText
      */
     public function getValue()
     {
-        // if we're not deserialised yet, do so
-        if (is_string($this->value) && strlen($this->value) > 1) {
-            // are we json encoded?
-            if ($this->value{1} === ':') {
-                $this->value = \unserialize($this->value);
-            } else {
-                $this->value = \json_decode($this->value, true);
-            }
+        $value = $this->value;
+        if (is_null($value)) {
+            $value = $this->getField('Value');
         }
+        $this->value = $this->unserializeData($value);
         return $this->value;
     }
 
@@ -48,40 +51,64 @@ class MultiValueField extends DBText
     }
 
     /**
-     * Overridden to make sure that the user_error that gets triggered if this is already is set
-     * ... doesn't. DataObject tries setting this at times that it shouldn't :/.
+     * Set the value on the field. Ensures the underlying composite field
+     * logic that looks for Value will trigger if the value set is
      *
-     * @param string $name
-     */
-    public function setName($name)
-    {
-        if (!$this->name) {
-            parent::setName($name);
-        }
-    }
-
-    /**
-     * Set the value on the field.
      *
      * For a multivalue field, this will deserialise the value if it is a string
      *
      * @param mixed $value
      * @param array $record
+     * @return $this
      */
     public function setValue($value, $record = null, $markChanged = true)
     {
-        if ($value && is_string($value) && strlen($value)) {
-            if ($value{1} === ':') {
-                $value = \unserialize($value);
+        $this->changed = $this->changed || $markChanged;
+        if ($value) {
+            if (!is_string($value)) {
+                $value = $this->serializeValue($value);
+            }
+            $value = ['Value' => $value];
+        }
+        return parent::setValue($value, $record, $markChanged);
+    }
+
+    /**
+     * Serializes a value object to a json string
+     *
+     * @param array|object $value
+     * @return string
+     */
+    protected function serializeValue($value)
+    {
+        if (is_string($value)) {
+            return $value;
+        }
+        if (is_object($value) || is_array($value)) {
+            return json_encode($value);
+        }
+    }
+
+    /**
+     * Unserialises data, depending on new or old format
+     *
+     * @param string $data
+     *
+     * @return array
+     */
+    protected function unserializeData($data)
+    {
+        $value = null;
+        // if we're not deserialised yet, do so
+        if (is_string($data) && strlen($data) > 1) {
+            // are we json encoded?
+            if ($data{1} === ':') {
+                $value = \unserialize($data);
             } else {
-                $value = \json_decode($value, true);
+                $value = \json_decode($data, true);
             }
         }
-        if ($markChanged) {
-            $this->changed = $markChanged;
-        }
-
-        return parent::setValue($value, $record, $markChanged);
+        return $value;
     }
 
     /**
@@ -97,7 +124,7 @@ class MultiValueField extends DBText
         if (is_object($value) || is_array($value)) {
             $value = json_encode($value);
         }
-        
+
         return parent::prepValueForDB($value);
     }
 
