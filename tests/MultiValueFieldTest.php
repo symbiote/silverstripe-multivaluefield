@@ -5,6 +5,7 @@ namespace Symbiote\MultiValueField\Tests;
 use SilverStripe\Dev\SapphireTest;
 use SilverStripe\ORM\FieldType\DBField;
 use Symbiote\MultiValueField\ORM\FieldType\MultiValueField;
+use SilverStripe\CMS\Tests\Controllers\CMSBatchActionsTest;
 
 /**
  * @author Marcus Nyeholt <marcus@symbiote.com.au>

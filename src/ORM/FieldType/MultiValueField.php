@@ -2,11 +2,8 @@
 
 namespace Symbiote\MultiValueField\ORM\FieldType;
 
-use SilverStripe\Core\Convert;
 use SilverStripe\ORM\FieldType\DBComposite;
 use SilverStripe\ORM\FieldType\DBVarchar;
-use SilverStripe\ORM\FieldType\DBField;
-use SilverStripe\ORM\DB;
 use SilverStripe\ORM\ArrayList;
 use SilverStripe\View\ArrayData;
 
