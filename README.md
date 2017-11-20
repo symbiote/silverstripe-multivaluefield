@@ -3,9 +3,9 @@
 [![Build Status](https://travis-ci.org/symbiote/silverstripe-multivaluefield.svg?branch=master)](https://travis-ci.org/symbiote/silverstripe-multivaluefield)
 
 Notes:
-The SilverStripe 2.4 compatible version of the module is still available
-in the ss24 branch
-The SilverStripe 3.x compatible versions are still available in the 2.x branches. (see version info)
+
+* The SilverStripe 2.4 compatible version of the module is still available in the ss24 branch
+* The SilverStripe 3.x compatible versions are still available in the 2.x branches. (see version info)
 
 A database field type that allows the storage of multiple discrete values in
 a single database field. This also provides form fields for entering multiple
@@ -65,7 +65,7 @@ Note that to have the `$Key` value available as something other than an integer,
 
 ## Requirements
 
-* SilverStripe 3.1
+* SilverStripe 4.0
 
 ## Contributing
 
