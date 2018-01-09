@@ -64,7 +64,9 @@ class MultiValueField extends DBField implements CompositeDBField {
 			}
 		} elseif (!is_array($value) && $record && isset($record[$this->name.'Value'])) {
 			$value = $record[$this->name.'Value'];
-		} elseif ($value && is_string($value)) {
+		}
+
+        if ($value && is_string($value)) {
 			$value = unserialize($value);
 		}
 
