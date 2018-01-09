@@ -38,7 +38,7 @@ class MultiValueField extends DBComposite
         if (is_null($value)) {
             $value = $this->getField('Value');
         }
-        $this->value = $this->unserializeData($value);
+        $this->value = is_string($value) ? $this->unserializeData($value) : $value;
         return $this->value;
     }
 
