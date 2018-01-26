@@ -173,8 +173,9 @@ class MultiValueField extends DBComposite
     public function forTemplate()
     {
         $items = [];
-        if ($this->value) {
-            foreach ($this->value as $key => $item) {
+        $value = $this->getValue();
+        if ($value) {
+            foreach ($value as $key => $item) {
                 $v = new DBVarchar('Value');
                 $v->setValue($item);
 
