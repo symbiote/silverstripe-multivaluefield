@@ -59,8 +59,9 @@ class MultiValueTextField extends FormField {
 	}
 
 	public function createInput($attributes, $value = null) {
-        $attributes['value'] = $value;
-		return self::create_tag($this->tag, $attributes);
+		$attributes['value'] = $value;
+		$content = (($this->tag !== 'input') ? $value : null);
+		return self::create_tag($this->tag, $attributes, $content);
 	}
 
 	public function performReadonlyTransformation() {
