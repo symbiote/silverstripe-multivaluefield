@@ -15,7 +15,10 @@
         }
     ],
     "extra": {
-        "installer-name": "multivaluefield"
+        "installer-name": "multivaluefield",
+        "branch-alias": {
+            "3.x-dev": "3.1.x-dev"
+        }
     },
     "require": {
         "silverstripe/framework": "~3.1"
