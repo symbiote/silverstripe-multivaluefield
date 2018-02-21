@@ -145,6 +145,6 @@ class KeyValueField extends MultiValueTextField
             $v = [];
         }
 
-        parent::setValue($v);
+        return parent::setValue($v);
     }
 }

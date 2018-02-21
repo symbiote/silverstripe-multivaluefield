@@ -33,7 +33,6 @@ Older versions of SilverStripe are supported on minor version branches below
 
 * [SilverStripe 3.1+ compatible version](https://github.com/symbiote/silverstripe-multivaluefield/tree/2.4)
 
-
 ## Basic Usage
 
 As with all DB fields

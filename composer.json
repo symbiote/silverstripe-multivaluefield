@@ -2,7 +2,11 @@
     "name": "symbiote/silverstripe-multivaluefield",
     "description": "A DB field + form fields for storing multiple values in a single property (serialized).",
     "type": "silverstripe-vendormodule",
-    "keywords": ["silverstripe", "formfield", "dbfield"],
+    "keywords": [
+        "silverstripe",
+        "formfield",
+        "dbfield"
+    ],
     "license": "BSD-3-Clause",
     "authors": [
         {

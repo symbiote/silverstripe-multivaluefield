@@ -18,7 +18,7 @@ matrix:
       env: DB=MYSQL CORE_RELEASE=4
     - php: 7.1
       env: DB=MYSQL CORE_RELEASE=4 PHPUNIT_TEST=1
-      
+
 before_script:
   - phpenv rehash
   - phpenv config-rm xdebug.ini
