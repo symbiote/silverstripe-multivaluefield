@@ -1,0 +1,3 @@
+hr:
+  MultiValueCheckboxField:
+    NoOptions: 'Nema dostupnih opcija'
