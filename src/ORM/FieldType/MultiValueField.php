@@ -61,7 +61,9 @@ class MultiValueField extends DBComposite
     public function setValue($value, $record = null, $markChanged = true)
     {
         $this->changed = $this->changed || $markChanged;
-        if ($value) {
+        if (!is_null($value)) {
+            // so that subsequent getValue calls re-load the value item correctly
+            $this->value = null;
             if (!is_string($value)) {
                 $value = $this->serializeValue($value);
             }
