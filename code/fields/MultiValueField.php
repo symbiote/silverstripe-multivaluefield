@@ -6,7 +6,19 @@
  *
  * @author Marcus Nyeholt <marcus@symbiote.com.au>
  */
-class MultiValueField extends DBField implements CompositeDBField {
+class MultiValueField extends DBField implements CompositeDBField
+{
+
+    /**
+     * As blindly unserialising unknown values is a major security risk you might wish to disable unserialising with
+     * this config setting.
+     *
+     * Note that this field does not serialise values with PHP any more so new fields should never use `unserialize`
+     *
+     * @var bool
+     */
+    private static $disable_serialise = false;
+
 	protected $changed = false;
 
 	/**
@@ -22,9 +34,7 @@ class MultiValueField extends DBField implements CompositeDBField {
 	 */
 	public function getValue() {
 		// if we're not deserialised yet, do so
-		if ($this->exists() && is_string($this->value)) {
-			$this->value = unserialize($this->value);
-		}
+        $this->value = $this->restoreValueFromDb($this->value);
 		return $this->value;
 	}
 
@@ -66,11 +76,9 @@ class MultiValueField extends DBField implements CompositeDBField {
 			$value = $record[$this->name.'Value'];
 		}
 
-        if ($value && is_string($value)) {
-			$value = unserialize($value);
-		}
+        $value = $this->restoreValueFromDb($value);
 
-		$this->changed = $this->changed || $markChanged;
+        $this->changed = $this->changed || $markChanged;
 
 		return parent::setValue($value);
 	}
@@ -86,8 +94,11 @@ class MultiValueField extends DBField implements CompositeDBField {
 			if ($value instanceof MultiValueField) {
 				$value = $value->getValue();
 			}
-			if (is_object($value) || is_array($value)) {
-				$value = serialize($value);
+			if (is_object($value)) {
+                throw new LogicException(__CLASS__ . ' values must not be objects');
+            }
+			if (is_array($value)) {
+				$value = Convert::array2json($value);
 			}
 			return parent::prepValueForDB($value);
 		}
@@ -176,4 +187,28 @@ class MultiValueField extends DBField implements CompositeDBField {
 
 		return new ArrayList($items);
 	}
+
+    /**
+     * @param mixed $value
+     * @return array
+     */
+    protected function restoreValueFromDb($value)
+    {
+        if ($value && is_string($value)) {
+            $decoded = Convert::json2array($value);
+
+            if (
+                $decoded === null &&
+                $value !== 'null' &&
+                !self::config()->get('disable_unserialize') &&
+                strpos($value, 'a:') === 0 &&
+                !preg_match('/(^|;|{)O:\d+:"/', $value)
+            ) {
+                $value = unserialize($value);
+            } else {
+                $value = $decoded;
+            }
+        }
+        return $value ?: array();
+    }
 }
