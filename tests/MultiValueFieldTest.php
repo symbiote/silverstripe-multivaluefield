@@ -1,6 +1,8 @@
 <?php
 /**
  * @author Marcus Nyeholt <marcus@symbiote.com.au>
+ *
+ * @mixin PHPUnit_Framework_TestCase
  */
 class MultiValueFieldTest extends SapphireTest {
 
@@ -43,6 +45,87 @@ class MultiValueFieldTest extends SapphireTest {
 		$field->setValue(null);
 		$this->assertTrue($field->isChanged());
 	}
+
+    public function testSerializeIsNotUsed()
+    {
+        $obj = new MultiValueFieldTest_DataObject();
+        $obj->MVField = array(1, 2, 3);
+        $obj->write();
+
+        $query = new DataQuery('MultiValueFieldTest_DataObject');
+        $query->where(array('"ID" = ?' => $obj->ID));
+        $row = $query->execute()->first();
+        $this->assertJson($row['MVFieldValue']);
+	}
+
+    public function testSerializeFallback()
+    {
+        $obj = new MultiValueFieldTest_DataObject();
+        $obj->write();
+
+        $array = array(1, 2, 3);
+
+        $id = $obj->ID;
+
+        SQLUpdate::create(
+            '"MultiValueFieldTest_DataObject"',
+            array('"MVFieldValue"' => serialize($array)),
+            array('"ID" = ?' => $id)
+        )->execute();
+
+        $obj = MultiValueFieldTest_DataObject::get()->byID($id);
+        $this->assertEquals($array, $obj->MVField->getValues());
+
+        SQLUpdate::create(
+            '"MultiValueFieldTest_DataObject"',
+            array('"MVFieldValue"' => serialize(array(1, new stdClass(), 3))),
+            array('"ID" = ?' => $id)
+        )->execute();
+
+        $obj = MultiValueFieldTest_DataObject::get()->byID($id);
+        $this->assertEquals(array(), $obj->MVField->getValues());
+
+        Config::nest();
+        Config::inst()->update('MultiValueField', 'disable_unserialize', true);
+        SQLUpdate::create(
+            '"MultiValueFieldTest_DataObject"',
+            array('"MVFieldValue"' => serialize($array)),
+            array('"ID" = ?' => $id)
+        )->execute();
+
+        $obj = MultiValueFieldTest_DataObject::get()->byID($id);
+        $this->assertEquals(array(), $obj->MVField->getValues());
+        Config::unnest();
+
+        SQLUpdate::create(
+            '"MultiValueFieldTest_DataObject"',
+            array('"MVFieldValue"' => serialize(new stdClass())),
+            array('"ID" = ?' => $id)
+        )->execute();
+
+        $obj = MultiValueFieldTest_DataObject::get()->byID($id);
+        $this->assertEquals(array(), $obj->MVField->getValues());
+
+        $array = array(1, 'O:23:"Why would anyone write this', 3);
+        SQLUpdate::create(
+            '"MultiValueFieldTest_DataObject"',
+            array('"MVFieldValue"' => serialize($array)),
+            array('"ID" = ?' => $id)
+        )->execute();
+
+        $obj = MultiValueFieldTest_DataObject::get()->byID($id);
+        $this->assertEquals($array, $obj->MVField->getValues());
+
+        $array = array(1, ';O:23:"Why would anyone write this', 3);
+        SQLUpdate::create(
+            '"MultiValueFieldTest_DataObject"',
+            array('"MVFieldValue"' => serialize($array)),
+            array('"ID" = ?' => $id)
+        )->execute();
+
+        $obj = MultiValueFieldTest_DataObject::get()->byID($id);
+        $this->assertEquals(array(), $obj->MVField->getValues());
+    }
 
 }
 

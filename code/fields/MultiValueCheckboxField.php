@@ -7,13 +7,6 @@
  * @license BSD License http://silverstripe.org/bsd-license/
  */
 class MultiValueCheckboxField extends CheckboxSetField {
-	protected $disabled = false;
-
-	/**
-	 * @var Array
-	 */
-	protected $defaultItems = array();
-
 	/**
 	 * Do we store keys + values or just the values?
 	 *
@@ -21,17 +14,29 @@ class MultiValueCheckboxField extends CheckboxSetField {
 	 */
 	protected $storeKeys = false;
 
-	/**
-	 * @todo Explain different source data that can be used with this field,
-	 * e.g. SQLMap, DataObjectSet or an array.
-	 *
-	 * @todo Should use CheckboxField FieldHolder rather than constructing own markup.
-	 */
-	public function Field($properties = array()) {
-		Requirements::css(SAPPHIRE_DIR . '/css/CheckboxSetField.css');
+	public function Field($properties = array())
+    {
+        Requirements::css(FRAMEWORK_DIR . '/css/CheckboxSetField.css');
 
+        $this->addExtraClass('checkboxsetfieldoptionset');
+
+        return parent::Field($properties);
+    }
+
+    /**
+     * Overloaded from the parent CheckboxSetField::getOptions in order to handle MultiValueField
+     * values and relationship field values. The customised part of this function are annotated
+     * with "Custom" comment lines, and the rest of copied through.
+     *
+     * {@inheritDoc}
+     */
+    public function getOptions()
+    {
 		$source = $this->source;
 		$values = $this->value;
+		$items = array();
+
+		// Custom: handle MultiValueField values
 		if ($values instanceof MultiValueField) {
 			$values = $values->getValues();
 
@@ -42,96 +47,108 @@ class MultiValueCheckboxField extends CheckboxSetField {
 		}
 
 		// Get values from the join, if available
-		if(is_object($this->form)) {
-			$record = $this->form->getRecord();
-			if(!$values && $record && $record->{$this->name}) {
-				$prop = $record->{$this->name};
-				if ($prop &&  $prop instanceof MultiValueField) {
-					$values = $prop->getValues();
-				}
+		if (is_object($this->form)) {
+            $record = $this->form->getRecord();
+            if (!$values && $record && $record->hasMethod($this->name)) {
+                $funcName = $this->name;
+                $join = $record->$funcName();
+                if ($join) {
+                    // Custom: Handle MultiValueField relations
+                    if ($join instanceof MultiValueField) {
+                        $values = $join->getValues();
+                    } else {
+                        // Default core logic
+                        foreach ($join as $joinItem) {
+                            $values[] = $joinItem->ID;
+                        }
+                    }
+                }
 			}
 		}
 
 		// Source is not an array
-		if(!is_array($source) && !is_a($source, 'SQLMap')) {
-			if(is_array($values)) {
-				$items = $values;
-			} else {
-				// Source and values are DataObject sets.
-				if($values && is_a($values, 'DataObjectSet')) {
-					foreach($values as $object) {
-						if(is_a($object, 'DataObject')) {
-							$items[] = $object->ID;
-						}
-				   }
-				} elseif($values && is_string($values)) {
-					$items = explode(',', $values);
-					$items = str_replace('{comma}', ',', $items);
-				}
-			}
-		} else {
-			// Sometimes we pass a singluar default value thats ! an array && !DataObjectSet
-			if(is_a($values, 'DataObjectSet') || is_array($values)) {
-				$items = $values;
-			} else {
-				$items = explode(',', $values);
-				$items = str_replace('{comma}', ',', $items);
-			}
-		}
+        if (!is_array($source)) {
+            if (is_array($values)) {
+                $items = $values;
+            } else {
+                // Source and values are DataObject sets.
+                if ($values && $values instanceof SS_List) {
+                    foreach ($values as $object) {
+                        if ($object instanceof DataObject) {
+                            $items[] = $object->ID;
+                        }
+                    }
+                } elseif ($values && is_string($values)) {
+                    if (!empty($values)) {
+                        $items = explode(',', $values);
+                        $items = str_replace('{comma}', ',', $items);
+                    } else {
+                        $items = array();
+                    }
+                }
+            }
+        } else {
+            // Sometimes we pass a singluar default value thats ! an array && !SS_List
+            if ($values instanceof SS_List || is_array($values)) {
+                $items = $values;
+            } else {
+                if ($values === null) {
+                    $items = array();
+                } else {
+                    if (!empty($values)) {
+                        $items = explode(',', $values);
+                        $items = str_replace('{comma}', ',', $items);
+                    } else {
+                        $items = array();
+                    }
+                }
+            }
+        }
 
-		if(is_array($source)) {
+		if (is_array($source)) {
 			unset($source['']);
 		}
 
-		$odd = 0;
-		$options = '';
+		$options = array();
 
 		if ($source == null) {
 			$source = array();
-			$options = "<li>"
-				. _t('MultiValueCheckboxField.NoOptions', 'No options available')
-				. "</li>";
 		}
 
-		if($source) foreach($source as $index => $item) {
-			if(is_a($item, 'DataObject')) {
-				$key = $item->ID;
-				$value = $item->Title;
-			} else {
-				$key = $index;
-				$value = $item;
-			}
+		// See CheckboxSetField::getOptions from here on
+        $odd = false;
+		foreach ($source as $index => $item) {
+            // Ensure $title is cast for template
+            if ($item instanceof DataObject) {
+                $value = $item->ID;
+                $title = $item->obj('Title');
+            } elseif ($item instanceof DBField) {
+                $title = $item;
+            } else {
+                $title = DBField::create_field('Text', $item);
+            }
 
-			$odd = ($odd + 1) % 2;
-			$extraClass = $odd ? 'odd' : 'even';
-			$extraClass .= ' val' . str_replace(' ', '', $key);
-			$itemID = $this->id() . '_' . preg_replace('/[^a-zA-Z0-9]+/', '', $key);
-			$checked = '';
+            $itemID = $this->ID() . '_' . preg_replace('/[^a-zA-Z0-9]/', '', $value);
+            $extraClass = $odd ? 'odd' : 'even';
+            $odd = !$odd;
+            $extraClass .= ' val' . preg_replace('/[^a-zA-Z0-9\-\_]/', '_', $value);
 
-			if(isset($items)) {
-				$checked = (in_array($key, $items) || in_array($key, $this->defaultItems)) ? ' checked="checked"' : '';
-			}
-
-			$disabled = ($this->disabled || in_array($key, $this->disabledItems)) ? $disabled = ' disabled="disabled"' : '';
-			$options .= "<li class=\"$extraClass\"><input id=\"$itemID\" name=\"$this->name[$key]\" type=\"checkbox\" value=\"$key\"$checked $disabled class=\"checkbox\" /> <label for=\"$itemID\">$value</label></li>\n";
+            $options[] = ArrayData::create(array(
+                'ID' => $itemID,
+                'Class' => $extraClass,
+                'Name' => "{$this->name}[{$value}]",
+                'Value' => $value,
+                'Title' => $title,
+                'isChecked' => in_array($value, $items) || in_array($value, $this->defaultItems),
+                'isDisabled' => $this->disabled || in_array($value, $this->disabledItems)
+            ));
 		}
 
-		return "<ul id=\"{$this->id()}\" class=\"optionset checkboxsetfield{$this->extraClass()}\">\n$options</ul>\n";
-	}
+        $options = ArrayList::create($options);
 
-	public function setDisabled($val) {
-		$this->disabled = $val;
-	}
+        $this->extend('updateGetOptions', $options);
 
-	/**
-	 * Default selections, regardless of the {@link setValue()} settings.
-	 * Note: Items marked as disabled through {@link setDisabledItems()} can still be
-	 * selected by default through this method.
-	 *
-	 * @param Array $items Collection of array keys, as defined in the $source array
-	 */
-	public function setDefaultItems($items) {
-		$this->defaultItems = $items;
+        return $options;
 	}
 
 	/**
@@ -142,27 +159,6 @@ class MultiValueCheckboxField extends CheckboxSetField {
 	public function setStoreKeys($val) {
 		$this->storeKeys = $val;
 		return $this;
-	}
-
-	/**
-	 * @return Array
-	 */
-	public function getDefaultItems() {
-		return $this->defaultItems;
-	}
-
-	/**
-	 * Load a value into this CheckboxSetField
-	 */
-	public function setValue($value, $obj = null) {
-		// If we're not passed a value directly, we can look for it in a relation method on the object passed as a second arg
-//		if(!$value && $obj && $obj instanceof DataObject && $obj->hasMethod($this->name)) {
-//			$funcName = $this->name;
-//			$selected = $obj->$funcName();
-//			$value = $selected->toDropdownMap('ID', 'ID');
-//		}
-
-		return parent::setValue($value, $obj);
 	}
 
 	/**
@@ -198,94 +194,5 @@ class MultiValueCheckboxField extends CheckboxSetField {
 				$record->$fieldname = array();
 			}
 		}
-	}
-
-	/**
-	 * Return the CheckboxSetField value as a string
-	 * selected item keys.
-	 *
-	 * @return string
-	 */
-	public function dataValue() {
-		if($this->value && is_array($this->value)) {
-			$filtered = array();
-			foreach($this->value as $item) {
-				if($item) {
-					$filtered[] = str_replace(",", "{comma}", $item);
-				}
-			}
-
-			return implode(',', $filtered);
-		}
-
-		return '';
-	}
-
-	public function performDisabledTransformation() {
-		$clone = clone $this;
-		$clone->setDisabled(true);
-
-		return $clone;
-	}
-
-	/**
-	 * Transforms the source data for this CheckboxSetField
-	 * into a comma separated list of values.
-	 *
-	 * @return ReadonlyField
-	 */
-	public function performReadonlyTransformation() {
-		$values = '';
-		$data = array();
-
-		$items = $this->value;
-		if($this->source) {
-			foreach($this->source as $source) {
-				if(is_object($source)) {
-					$sourceTitles[$source->ID] = $source->Title;
-				}
-			}
-		}
-
-		if($items) {
-			// Items is a DO Set
-			if(is_a($items, 'DataObjectSet')) {
-				foreach($items as $item) {
-					$data[] = $item->Title;
-				}
-				if($data) $values = implode(', ', $data);
-
-			// Items is an array or single piece of string (including comma seperated string)
-			} else {
-				if(!is_array($items)) {
-					$items = preg_split('/ *, */', trim($items));
-				}
-
-				foreach($items as $item) {
-					if(is_array($item)) {
-						$data[] = $item['Title'];
-					} elseif(is_array($this->source) && !empty($this->source[$item])) {
-						$data[] = $this->source[$item];
-					} elseif(is_a($this->source, 'DataObjectSet')) {
-						$data[] = $sourceTitles[$item];
-					} else {
-						$data[] = $item;
-					}
-				}
-
-				$values = implode(', ', $data);
-			}
-		}
-
-		$title = ($this->title) ? $this->title : '';
-
-		$field = new ReadonlyField($this->name, $title, $values);
-		$field->setForm($this->form);
-
-		return $field;
-	}
-
-	public function ExtraOptions() {
-		return FormField::ExtraOptions();
 	}
 }
