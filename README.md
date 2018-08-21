@@ -36,26 +36,26 @@ Older versions of SilverStripe are supported on minor version branches below
 
 ## Installation
 
-	composer require silverstripe/multivaluefield
+```
+composer require symbiote/silverstripe-multivaluefield
+```
 
 ## Basic Usage
 
 As with all DB fields
 
-    private static $db = array(
-        'Keywords'  => 'MultiValueField',
-    );
+```
+private static $db = array(
+    'Keywords' 	=> 'MultiValueField',
+);
+```
 
 To make use of the field on the frontend, you can loop over the Items property
 
 ```html
-
 <% loop $Keywords.Items %>
-
-<p>$Key $Value</p>
-
+    <p>$Key $Value</p>
 <% end_loop %>
-
 ```
 
 In this case, `$Value` is a Varchar object, so you can call all relevant string field methods on it, such as `$Value.Raw`, `$Value.LimitWordCount` etc etc.
