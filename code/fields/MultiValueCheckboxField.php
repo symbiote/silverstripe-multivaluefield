@@ -118,6 +118,8 @@ class MultiValueCheckboxField extends CheckboxSetField {
 		// See CheckboxSetField::getOptions from here on
         $odd = false;
 		foreach ($source as $index => $item) {
+            $value = '';
+
             // Ensure $title is cast for template
             if ($item instanceof DataObject) {
                 $value = $item->ID;
