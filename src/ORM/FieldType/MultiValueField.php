@@ -6,6 +6,7 @@ use SilverStripe\ORM\FieldType\DBComposite;
 use SilverStripe\ORM\FieldType\DBVarchar;
 use SilverStripe\ORM\ArrayList;
 use SilverStripe\View\ArrayData;
+use SilverStripe\ORM\DataObject;
 
 /**
  * A DB field that serialises an array before writing it to the db, and returning the array
@@ -63,7 +64,12 @@ class MultiValueField extends DBComposite
         $this->changed = $this->changed || $markChanged;
         if (!is_null($value)) {
             // so that subsequent getValue calls re-load the value item correctly
+            // from the Value field serialised below.
             $this->value = null;
+            if ($record instanceof DataObject) {
+                $record->setField($this->getName(), $this->value);
+            }
+
             if (!is_string($value)) {
                 $value = $this->serializeValue($value);
             }
