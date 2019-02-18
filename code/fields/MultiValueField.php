@@ -211,4 +211,9 @@ class MultiValueField extends DBField implements CompositeDBField
         }
         return $value ?: array();
     }
+
+    public function scalarValueOnly()
+    {
+        return false;
+    }
 }
