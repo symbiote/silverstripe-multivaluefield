@@ -176,4 +176,9 @@ class MultiValueField extends DBField implements CompositeDBField {
 
 		return new ArrayList($items);
 	}
+
+	public function scalarValueOnly()
+    {
+        return false;
+    }
 }
