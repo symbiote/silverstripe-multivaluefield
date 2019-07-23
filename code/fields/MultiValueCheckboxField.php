@@ -123,8 +123,10 @@ class MultiValueCheckboxField extends CheckboxSetField {
                 $value = $item->ID;
                 $title = $item->obj('Title');
             } elseif ($item instanceof DBField) {
+                $value = $index;
                 $title = $item;
             } else {
+                $value = $index;
                 $title = DBField::create_field('Text', $item);
             }
 
