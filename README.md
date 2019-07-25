@@ -62,6 +62,16 @@ In this case, `$Value` is a Varchar object, so you can call all relevant string 
 
 Note that to have the `$Key` value available as something other than an integer, use the `KeyValueField` field type to populate the field.
 
+You can set the key and value placeholder values of the KeyValueField in your field like this:
+```
+$kvf = KeyValueField::create(
+    'MultiChoiceAnswer',
+    'Multiple Choice Answers'
+);
+$kvf->setValueFieldPlaceholder('Value');
+$kvf->setKeyFieldPlaceholder('Label');
+```
+
 
 ## Maintainer Contacts
 
