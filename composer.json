@@ -18,16 +18,13 @@
         "silverstripe/framework": "~4.0"
     },
     "require-dev": {
-        "phpunit/PHPUnit": "^5.7"
+        "phpunit/phpunit": "^5.7"
     },
     "extra": {
         "expose": [
             "client"
         ],
-        "installer-name": "multivaluefield",
-        "branch-alias": {
-            "dev-master": "5.0.x-dev"
-        }
+        "installer-name": "multivaluefield"
     },
     "replace": {
         "silverstripe/multivaluefield": "self.version"
