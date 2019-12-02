@@ -101,7 +101,7 @@ class MultiValueField extends DBComposite
         // if we're not deserialised yet, do so
         if (is_string($data) && strlen($data) > 1) {
             // are we json encoded?
-            if ($data{1} === ':') {
+            if ($data[1] === ':') {
                 $value = \unserialize($data);
             } else {
                 $value = \json_decode($data, true);
