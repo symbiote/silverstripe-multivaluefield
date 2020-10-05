@@ -20,6 +20,57 @@ class KeyValueField extends MultiValueTextField
     protected $sourceKeys;
     protected $sourceValues;
 
+    /**
+     * keyFieldPlaceholder
+     *
+     * @var string
+     */
+    protected $keyFieldPlaceholder;
+
+    /**
+     * valueFieldPlaceholder
+     *
+     * @var string
+     */
+    protected $valueFieldPlaceholder;
+
+
+    /**
+     * Returns the KeyPlaceholder value
+     **/
+    public function getKeyFieldPlaceholder()
+    {
+        return $this->keyFieldPlaceholder;
+    }
+
+    /**
+     * Sets the KeyPlaceholder value
+     **/
+    public function setKeyFieldPlaceholder($value)
+    {
+        $this->keyFieldPlaceholder = $value;
+        return $this;
+    }
+
+    /**
+     * Returns the ValuePlaceholder value
+     **/
+    public function getValueFieldPlaceholder()
+    {
+        return $this->valueFieldPlaceholder;
+    }
+
+    /**
+     * Sets the ValuePlaceholder value
+     **/
+    public function setValueFieldPlaceholder($value)
+    {
+        $this->valueFieldPlaceholder = $value;
+        return $this;
+    }
+
+
+
     public function __construct($name, $title = null, $sourceKeys = [], $sourceValues = [], $value = null)
     {
         parent::__construct($name, ($title === null) ? $name : $title, $value);
@@ -54,8 +105,8 @@ class KeyValueField extends MultiValueTextField
                     $valField        = HTML::createTag('span', $fieldAttr, Convert::raw2xml($v));
                     $fields[]        = $keyField.$valField;
                 } else {
-                    $keyField = $this->createSelectList($i, $nameKey, $this->sourceKeys, $i);
-                    $valField = $this->createSelectList($i, $nameVal, $this->sourceValues, $v);
+                    $keyField = $this->createSelectList($i, $nameKey, $this->sourceKeys, $i, $this->getKeyFieldPlaceholder());
+                    $valField = $this->createSelectList($i, $nameVal, $this->sourceValues, $v, $this->getValueFieldPlaceholder());
                     $fields[] = $keyField.' '.$valField;
                 }
             }
@@ -64,8 +115,8 @@ class KeyValueField extends MultiValueTextField
         }
 
         if (!$this->readonly) {
-            $keyField = $this->createSelectList('new', $nameKey, $this->sourceKeys);
-            $valField = $this->createSelectList('new', $nameVal, $this->sourceValues);
+            $keyField = $this->createSelectList('new', $nameKey, $this->sourceKeys, '', $this->getKeyFieldPlaceholder());
+            $valField = $this->createSelectList('new', $nameVal, $this->sourceValues, '', $this->getValueFieldPlaceholder());
             $fields[] = $keyField.' '.$valField;
 //          $fields[] = $this->createSelectList('new', $name, $this->source);
         }
@@ -74,7 +125,7 @@ class KeyValueField extends MultiValueTextField
                 $fields).'</li></ul>';
     }
 
-    protected function createSelectList($number, $name, $values, $selected = '')
+    protected function createSelectList($number, $name, $values, $selected = '', $placeholder = '')
     {
         $options = HTML::createTag(
                 'option',
@@ -111,6 +162,7 @@ class KeyValueField extends MultiValueTextField
                 'name' => $name,
                 'tabindex' => $this->getAttribute('tabindex'),
                 'type' => 'text',
+                'placeholder' => $placeholder,
             ];
 
             if ($this->disabled) $attrs['disabled'] = 'disabled';
