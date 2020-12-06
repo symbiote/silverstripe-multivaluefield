@@ -105,8 +105,8 @@ class MultiValueCheckboxField extends CheckboxSetField
                 ."</li>";
         }
 
-        if ($source)
-                foreach ($source as $index => $item) {
+        if ($source) {
+            foreach ($source as $index => $item) {
                 if (is_a($item, DataObject::class)) {
                     $key   = $item->ID;
                     $value = $item->Title;
@@ -115,19 +115,24 @@ class MultiValueCheckboxField extends CheckboxSetField
                     $value = $item;
                 }
 
-                $odd        = ($odd + 1) % 2;
-                $extraClass = $odd ? 'odd' : 'even';
-                $extraClass .= ' val'.str_replace(' ', '', $key);
-                $itemID     = $this->id().'_'.preg_replace('/[^a-zA-Z0-9]+/', '', $key);
-                $checked    = '';
+                    $odd        = ($odd + 1) % 2;
+                    $extraClass = $odd ? 'odd' : 'even';
+                    $extraClass .= ' val'.str_replace(' ', '', $key);
+                    $itemID     = $this->id().'_'.preg_replace('/[^a-zA-Z0-9]+/', '', $key);
+                    $checked    = '';
                 if (isset($items)) {
-                    $checked = (in_array($key, $items) || in_array($key, $this->defaultItems)) ? ' checked="checked"' : '';
+                    $checked = (in_array($key, $items) || in_array($key, $this->defaultItems))
+                        ? ' checked="checked"' : '';
                 }
 
-                $disabled = ($this->disabled || in_array($key, $this->disabledItems)) ? $disabled = ' disabled="disabled"'
-                        : '';
-                $options  .= "<li class=\"$extraClass\"><input id=\"$itemID\" name=\"$this->name[$key]\" type=\"checkbox\" value=\"$key\"$checked $disabled class=\"checkbox\" /> <label for=\"$itemID\">$value</label></li>\n";
+                    $disabled = ($this->disabled || in_array($key, $this->disabledItems))
+                        ? $disabled = ' disabled="disabled"'
+                : '';
+                    $options .= "<li class=\"$extraClass\"><input id=\"$itemID\" name=\"$this->name[$key]\""
+                        . " type=\"checkbox\" value=\"$key\"$checked $disabled class=\"checkbox\" /> <label"
+                        . " for=\"$itemID\">$value</label></li>\n";
             }
+        }
 
         return "<ul id=\"{$this->id()}\" class=\"optionset checkboxsetfield{$this->extraClass()}\">\n$options</ul>\n";
     }
@@ -259,7 +264,9 @@ class MultiValueCheckboxField extends CheckboxSetField
                 foreach ($items as $item) {
                     $data[] = $item->Title;
                 }
-                if ($data) $values = implode(', ', $data);
+                if ($data) {
+                    $values = implode(', ', $data);
+                }
 
                 // Items is an array or single piece of string (including comma seperated string)
             } else {

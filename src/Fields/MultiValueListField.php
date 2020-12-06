@@ -56,7 +56,9 @@ class MultiValueListField extends MultiValueTextField
             'multiple' => 'multiple',
         ];
 
-        if ($this->disabled) $attrs['disabled'] = 'disabled';
+        if ($this->disabled) {
+            $attrs['disabled'] = 'disabled';
+        }
 
         return HTML::createTag('select', $attrs, $options);
     }

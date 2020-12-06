@@ -41,7 +41,9 @@ class MultiValueTextField extends FormField
             // 'value' => $this->Value(),
         ];
 
-        if ($this->disabled) $attributes['disabled'] = 'disabled';
+        if ($this->disabled) {
+            $attributes['disabled'] = 'disabled';
+        }
 
         $fieldAttr = $attributes;
         if ($this->value) {
@@ -62,8 +64,10 @@ class MultiValueTextField extends FormField
         }
 
         if (count($fields)) {
-            return '<ul id="'.$this->id().'" class="multivaluefieldlist '.$this->extraClass().'"><li>'.implode('</li><li>',
-                    $fields).'</li></ul>';
+            return '<ul id="'.$this->id().'" class="multivaluefieldlist '.$this->extraClass().'"><li>'.implode(
+                '</li><li>',
+                $fields
+            ).'</li></ul>';
         } else {
             return '<div id="'.$this->id().'" class="multivaluefieldlist '.$this->extraClass().'"></div>';
         }
@@ -87,7 +91,7 @@ class MultiValueTextField extends FormField
         return $new;
     }
 
-    public function setValue($v, $data = NULL)
+    public function setValue($v, $data = null)
     {
         if (is_array($v)) {
             // we've been set directly via the post - lets prune any empty values

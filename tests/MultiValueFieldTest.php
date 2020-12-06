@@ -59,7 +59,8 @@ class MultiValueFieldTest extends SapphireTest
         $this->assertEquals(['One', 'Two'], $obj->obj('MVField')->getValues());
     }
 
-    public function testSetEmptyArrayAsValue() {
+    public function testSetEmptyArrayAsValue()
+    {
 
         $field = new MultiValueField();
 
