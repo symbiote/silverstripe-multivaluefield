@@ -70,18 +70,21 @@ class KeyValueField extends MultiValueTextField
 //          $fields[] = $this->createSelectList('new', $name, $this->source);
         }
 
-        return '<ul id="'.$this->id().'" class="multivaluefieldlist mvkeyvallist '.$this->extraClass().'"><li>'.implode('</li><li>',
-                $fields).'</li></ul>';
+        return '<ul id="'.$this->id().'" class="multivaluefieldlist mvkeyvallist '.$this->extraClass().'"><li>'.implode(
+            '</li><li>',
+            $fields
+        ).'</li></ul>';
     }
 
     protected function createSelectList($number, $name, $values, $selected = '')
     {
         $options = HTML::createTag(
-                'option',
-                [
+            'option',
+            [
                 'selected' => $selected == '' ? 'selected' : '',
                 'value' => ''
-                ], ''
+                ],
+            ''
         );
 
         foreach ($values as $index => $title) {
@@ -100,7 +103,9 @@ class KeyValueField extends MultiValueTextField
                 'tabindex' => $this->getAttribute('tabindex')
             ];
 
-            if ($this->disabled) $attrs['disabled'] = 'disabled';
+            if ($this->disabled) {
+                $attrs['disabled'] = 'disabled';
+            }
 
             return HTML::createTag('select', $attrs, $options);
         } else {
@@ -113,13 +118,15 @@ class KeyValueField extends MultiValueTextField
                 'type' => 'text',
             ];
 
-            if ($this->disabled) $attrs['disabled'] = 'disabled';
+            if ($this->disabled) {
+                $attrs['disabled'] = 'disabled';
+            }
 
             return HTML::createTag('input', $attrs);
         }
     }
 
-    public function setValue($v, $data = NULL)
+    public function setValue($v, $data = null)
     {
         if (is_array($v)) {
             // we've been set directly via the post - lets convert things to an appropriate key -> value

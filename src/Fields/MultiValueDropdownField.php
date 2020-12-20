@@ -77,8 +77,10 @@ class MultiValueDropdownField extends MultiValueTextField
             $fields[] = $this->createSelectList($i + 1, $name, $this->source);
         }
 
-        return '<ul id="'.$this->id().'" class="multivaluefieldlist '.$this->extraClass().'"><li>'.implode('</li><li>',
-                $fields).'</li></ul>';
+        return '<ul id="'.$this->id().'" class="multivaluefieldlist '.$this->extraClass().'"><li>'.implode(
+            '</li><li>',
+            $fields
+        ).'</li></ul>';
     }
 
     public function Type()
@@ -89,10 +91,12 @@ class MultiValueDropdownField extends MultiValueTextField
     protected function createSelectList($number, $name, $values, $selected = '')
     {
         $options = HTML::createTag(
-                'option', [
+            'option',
+            [
                 'selected' => $selected == '' ? 'selected' : '',
                 'value' => ''
-                ], ''
+                ],
+            ''
         );
 
         foreach ($values as $index => $title) {
@@ -110,7 +114,9 @@ class MultiValueDropdownField extends MultiValueTextField
             'tabindex' => $this->getAttribute('tabindex')
         ];
 
-        if ($this->disabled) $attrs['disabled'] = 'disabled';
+        if ($this->disabled) {
+            $attrs['disabled'] = 'disabled';
+        }
 
         return HTML::createTag('select', $attrs, $options);
     }
