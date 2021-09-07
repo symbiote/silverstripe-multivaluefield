@@ -38,7 +38,7 @@ jQuery(function($) {
 				if (pos !== -1) {
 					pos = pos + keySep.length;
 
-					var maxId  = this.id.substr(pos);
+					var maxId  = parseInt(this.id.substr(pos));
 					var nextId = maxId + 1;
 
 					this.id = this.id.substr(0, pos) + nextId; // nextId auto-converted to string here
