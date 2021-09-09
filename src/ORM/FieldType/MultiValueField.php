@@ -166,12 +166,13 @@ class MultiValueField extends DBComposite
 
         return '';
     }
-    
+
     public function ItemByKey()
     {
         $values = $this->getValue();
-        if(array_keys($values) == range(0, count($values) - 1))
+        if (array_keys($values) == range(0, count($values) - 1)) {
             $values = [];
+        }
         return new ArrayData($values);
     }
 
