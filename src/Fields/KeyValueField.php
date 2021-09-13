@@ -89,6 +89,8 @@ class KeyValueField extends MultiValueTextField
         $nameKey = $this->name.'[key][]';
         $nameVal = $this->name.'[val][]';
         $fields  = [];
+        $keyFieldPlaceholder = $this->getKeyFieldPlaceholder();
+        $valueFieldPlaceholder = $this->getValueFieldPlaceholder();
 
         if ($this->value) {
             foreach ($this->value as $i => $v) {
@@ -105,8 +107,8 @@ class KeyValueField extends MultiValueTextField
                     $valField        = HTML::createTag('span', $fieldAttr, Convert::raw2xml($v));
                     $fields[]        = $keyField.$valField;
                 } else {
-                    $keyField = $this->createSelectList($i, $nameKey, $this->sourceKeys, $i, $this->getKeyFieldPlaceholder());
-                    $valField = $this->createSelectList($i, $nameVal, $this->sourceValues, $v, $this->getValueFieldPlaceholder());
+                    $keyField = $this->createSelectList($i, $nameKey, $this->sourceKeys, $i, $keyFieldPlaceholder);
+                    $valField = $this->createSelectList($i, $nameVal, $this->sourceValues, $v, $valueFieldPlaceholder);
                     $fields[] = $keyField.' '.$valField;
                 }
             }
@@ -115,8 +117,8 @@ class KeyValueField extends MultiValueTextField
         }
 
         if (!$this->readonly) {
-            $keyField = $this->createSelectList('new', $nameKey, $this->sourceKeys, '', $this->getKeyFieldPlaceholder());
-            $valField = $this->createSelectList('new', $nameVal, $this->sourceValues, '', $this->getValueFieldPlaceholder());
+            $keyField = $this->createSelectList('new', $nameKey, $this->sourceKeys, '', $keyFieldPlaceholder);
+            $valField = $this->createSelectList('new', $nameVal, $this->sourceValues, '', $valueFieldPlaceholder);
             $fields[] = $keyField.' '.$valField;
 //          $fields[] = $this->createSelectList('new', $name, $this->source);
         }
