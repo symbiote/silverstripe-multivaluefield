@@ -29,7 +29,7 @@ class KeyValueFieldTest extends Sapphiretest
         $field->setKeyFieldPlaceholder('Key Placeholder');
         $field->setValueFieldPlaceholder('Value Placeholder');
         $html = $field->Field();
-        $this->assertContains('placeholder="Key Placeholder"', $html);
-        $this->assertContains('placeholder="Value Placeholder"', $html);
+        $this->assertStringContainsString('placeholder="Key Placeholder"', $html);
+        $this->assertStringContainsString('placeholder="Value Placeholder"', $html);
     }
 }
