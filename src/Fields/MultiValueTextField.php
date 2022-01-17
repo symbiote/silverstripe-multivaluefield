@@ -59,7 +59,10 @@ class MultiValueTextField extends FormField
             }
         }
 
+        // add an empty row
         if (!$this->readonly) {
+            // assume next pos equals to the number of existing fields which gives index+1 in a zero-indexed list
+            $attributes['id'] = $this->id().MultiValueTextField::KEY_SEP.count($fields);
             $fields[] = $this->createInput($attributes);
         }
 
