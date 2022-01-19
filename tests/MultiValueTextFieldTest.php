@@ -17,16 +17,17 @@ class MultiValueTextFieldTest extends SapphireTest
     public function testAttributesGeneration()
     {
         $field = MultiValueTextField::create('TestTextField', 'Test Text Field');
+        $keySep = MultiValueTextField::KEY_SEP;
 
-        $this->assertContains('id="' . $field->ID() . '"', $field->forTemplate());
-        $this->assertContains('id="' . $field->ID() . MultiValueTextField::KEY_SEP . '0"', $field->forTemplate());
-        $this->assertNotContains('id="' . $field->ID() . MultiValueTextField::KEY_SEP . '1"', $field->forTemplate());
+        $this->assertStringContainsString('id="' . $field->ID() . '"', $field->forTemplate());
+        $this->assertStringContainsString('id="' . $field->ID() . $keySep . '0"', $field->forTemplate());
+        $this->assertStringNotContainsString('id="' . $field->ID() . $keySep . '1"', $field->forTemplate());
 
         $field->setValue(['one']);
-        $this->assertContains('id="' . $field->ID() . MultiValueTextField::KEY_SEP . '1"', $field->forTemplate());
-        $this->assertNotContains('id="' . $field->ID() . MultiValueTextField::KEY_SEP . '2"', $field->forTemplate());
+        $this->assertStringContainsString('id="' . $field->ID() . $keySep . '1"', $field->forTemplate());
+        $this->assertStringNotContainsString('id="' . $field->ID() . $keySep . '2"', $field->forTemplate());
 
         $field->setValue(['one', 'two']);
-        $this->assertContains('id="' . $field->ID() . MultiValueTextField::KEY_SEP . '2"', $field->forTemplate());
+        $this->assertStringContainsString('id="' . $field->ID() . $keySep . '2"', $field->forTemplate());
     }
 }
