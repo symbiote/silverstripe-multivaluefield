@@ -2,12 +2,13 @@ jQuery(function($) {
 	function addNewField() {
 		var self = $(this);
 		var val = self.val();
+		var keySep = '__';
 
 		// check to see if the one after us is there already - if so, we don't need a new one
 		var li = $(this).closest('li').next('li');
 
 		if (!val) {
-			// lets also clean up if needbe
+			// lets also clean up if need be
 			var nextText = li.find('input.mventryfield');
 			var detach = true;
 
@@ -32,11 +33,16 @@ jQuery(function($) {
 
 			// Assign the new inputs a unique ID, so that chosen picks up
 			// the correct container.
-			append.find("input, select, textarea").val("").attr("id", function() {
-				var pos = this.id.lastIndexOf("__");
-				var num = parseInt(this.id.substr(pos + 1));
+			append.find('input, select, textarea').val('').each(function () {
+				var pos = this.id.lastIndexOf(keySep);
+				if (pos !== -1) {
+					pos = pos + keySep.length;
 
-				return this.id.substr(0, pos + 1) + (num + 1).toString();
+					var maxId  = parseInt(this.id.substr(pos));
+					var nextId = maxId + 1;
+
+					this.id = this.id.substr(0, pos) + nextId; // nextId auto-converted to string here
+				}
 			});
 
 			append.appendTo(self.parents("ul.multivaluefieldlist"));
