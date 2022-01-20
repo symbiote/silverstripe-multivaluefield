@@ -18,10 +18,10 @@ class MultiValueFieldTest extends SapphireTest
 
     public function testUpdate()
     {
-        $obj          = new MultiValueFieldTest_DataObject();
+        $obj = new MultiValueFieldTest_DataObject();
         $obj->MVField = ['One', 'Two'];
         $obj->write();
-        $obj          = MultiValueFieldTest_DataObject::get()->byID($obj->ID);
+        $obj = MultiValueFieldTest_DataObject::get()->byID($obj->ID);
         $obj->MVField = ['Three'];
         $obj->write();
         $this->assertEquals(['Three'], $obj->obj('MVField')->getValues());
@@ -29,20 +29,20 @@ class MultiValueFieldTest extends SapphireTest
 
     public function testSetArrayAsProperty()
     {
-        $obj          = new MultiValueFieldTest_DataObject();
+        $obj = new MultiValueFieldTest_DataObject();
         $obj->MVField = ['One', 'Two'];
         $obj->write();
-        $obj          = MultiValueFieldTest_DataObject::get()->byID($obj->ID);
+        $obj = MultiValueFieldTest_DataObject::get()->byID($obj->ID);
         $this->assertNotNull($obj->MVField);
         $this->assertEquals(['One', 'Two'], $obj->obj('MVField')->getValues());
     }
 
     public function testSetSerialisedStringAsProperty()
     {
-        $obj          = new MultiValueFieldTest_DataObject();
+        $obj = new MultiValueFieldTest_DataObject();
         $obj->MVField = serialize(['One', 'Two']);
         $obj->write();
-        $obj          = MultiValueFieldTest_DataObject::get()->byID($obj->ID);
+        $obj = MultiValueFieldTest_DataObject::get()->byID($obj->ID);
         $this->assertNotNull($obj->MVField);
 
         $this->assertEquals(['One', 'Two'], $obj->obj('MVField')->getValues());
@@ -50,10 +50,10 @@ class MultiValueFieldTest extends SapphireTest
 
     public function testSetJsonStringAsProperty()
     {
-        $obj          = new MultiValueFieldTest_DataObject();
+        $obj = new MultiValueFieldTest_DataObject();
         $obj->MVField = json_encode(['One', 'Two']);
         $obj->write();
-        $obj          = MultiValueFieldTest_DataObject::get()->byID($obj->ID);
+        $obj = MultiValueFieldTest_DataObject::get()->byID($obj->ID);
         $this->assertNotNull($obj->MVField);
 
         $this->assertEquals(['One', 'Two'], $obj->obj('MVField')->getValues());
@@ -63,13 +63,9 @@ class MultiValueFieldTest extends SapphireTest
     {
 
         $field = new MultiValueField();
-
         $field->setValue(['one' => 'one']);
-
         $this->assertEquals(['one' => 'one'], $field->getValue());
-
         $field->setValue([]);
-
         $this->assertEquals([], $field->getValue());
     }
 
