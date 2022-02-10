@@ -8,21 +8,23 @@ import:
 jobs:
   fast_finish: true
   include:
-    - php: 7.3
+    - php: 7.4
       env:
         - DB=MYSQL
         - PDO=1
         - REQUIRE_INSTALLER="4.x-dev"
         - PHPUNIT_TEST=1
         - PHPCS_TEST=1
-    - php: 7.4
+    - php: 8.0
       env:
         - DB=MYSQL
         - REQUIRE_INSTALLER="4.x-dev"
         - PHPUNIT_COVERAGE_TEST=1
-    - php: 8.0
+    - php: 8.1.0
       env:
         - DB=MYSQL
         - REQUIRE_INSTALLER="4.x-dev"
         - PHPUNIT_TEST=1
         - COMPOSER_INSTALL_ARG=--ignore-platform-reqs
+  allow_failures:
+    - php: 8.1.0
