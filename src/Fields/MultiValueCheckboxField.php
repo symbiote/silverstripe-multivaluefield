@@ -49,7 +49,7 @@ class MultiValueCheckboxField extends CheckboxSetField
 
             if ($this->storeKeys && is_array($values)) {
                 // use the keys instead, as that's how we've stored things
-                $values = array_keys($values);
+                $values = array_keys($values ?? []);
             }
         }
 
@@ -77,8 +77,8 @@ class MultiValueCheckboxField extends CheckboxSetField
                         }
                     }
                 } elseif ($values && is_string($values)) {
-                    $items = explode(',', $values);
-                    $items = str_replace('{comma}', ',', $items);
+                    $items = explode(',', $values ?? '');
+                    $items = str_replace('{comma}', ',', $items ?? '');
                 }
             }
         } else {
@@ -86,8 +86,8 @@ class MultiValueCheckboxField extends CheckboxSetField
             if (is_a($values, 'DataObjectSet') || is_array($values)) {
                 $items = $values;
             } else {
-                $items = explode(',', $values);
-                $items = str_replace('{comma}', ',', $items);
+                $items = explode(',', $values ?? '');
+                $items = str_replace('{comma}', ',', $items ?? '');
             }
         }
 
@@ -117,15 +117,15 @@ class MultiValueCheckboxField extends CheckboxSetField
 
                     $odd        = ($odd + 1) % 2;
                     $extraClass = $odd ? 'odd' : 'even';
-                    $extraClass .= ' val'.str_replace(' ', '', $key);
-                    $itemID     = $this->id().'_'.preg_replace('/[^a-zA-Z0-9]+/', '', $key);
+                    $extraClass .= ' val'.str_replace(' ', '', $key ?? '');
+                    $itemID     = $this->id().'_'.preg_replace('/[^a-zA-Z0-9]+/', '', $key ?? '');
                     $checked    = '';
                 if (isset($items)) {
-                    $checked = (in_array($key, $items) || in_array($key, $this->defaultItems))
+                    $checked = (in_array($key, $items ?? []) || in_array($key, $this->defaultItems ?? []))
                         ? ' checked="checked"' : '';
                 }
 
-                    $disabled = ($this->disabled || in_array($key, $this->disabledItems))
+                    $disabled = ($this->disabled || in_array($key, $this->disabledItems ?? []))
                         ? $disabled = ' disabled="disabled"'
                 : '';
                     $options .= "<li class=\"$extraClass\"><input id=\"$itemID\" name=\"$this->name[$key]\""
@@ -220,7 +220,7 @@ class MultiValueCheckboxField extends CheckboxSetField
             $filtered = [];
             foreach ($this->value as $item) {
                 if ($item) {
-                    $filtered[] = str_replace(",", "{comma}", $item);
+                    $filtered[] = str_replace(",", "{comma}", $item ?? '');
                 }
             }
 
@@ -271,7 +271,7 @@ class MultiValueCheckboxField extends CheckboxSetField
                 // Items is an array or single piece of string (including comma seperated string)
             } else {
                 if (!is_array($items)) {
-                    $items = preg_split('/ *, */', trim($items));
+                    $items = preg_split('/ *, */', trim($items ?? ''));
                 }
 
                 foreach ($items as $item) {

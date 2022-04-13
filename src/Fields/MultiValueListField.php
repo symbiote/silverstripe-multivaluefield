@@ -42,7 +42,7 @@ class MultiValueListField extends MultiValueTextField
 
         foreach ($this->source as $index => $title) {
             $attrs = ['value' => $index];
-            if (in_array($index, $this->value)) {
+            if (in_array($index, $this->value ?? [])) {
                 $attrs['selected'] = 'selected';
             }
             $options .= HTML::createTag('option', $attrs, Convert::raw2xml($title));

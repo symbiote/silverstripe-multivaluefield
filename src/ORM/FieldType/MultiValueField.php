@@ -99,12 +99,12 @@ class MultiValueField extends DBComposite
     {
         $value = null;
         // if we're not deserialised yet, do so
-        if (is_string($data) && strlen($data) > 1) {
+        if (is_string($data) && strlen($data ?? '') > 1) {
             // are we json encoded?
             if ($data[1] === ':') {
-                $value = \unserialize($data);
+                $value = \unserialize($data ?? '');
             } else {
-                $value = \json_decode($data, true);
+                $value = \json_decode($data ?? '', true);
             }
         }
         return $value;
@@ -155,7 +155,7 @@ class MultiValueField extends DBComposite
      */
     public function Implode($separator = ', ')
     {
-        return implode($separator, $this->getValue());
+        return implode($separator ?? '', $this->getValue());
     }
 
     public function __toString()
@@ -170,7 +170,7 @@ class MultiValueField extends DBComposite
     public function ItemByKey()
     {
         $values = $this->getValue();
-        if (array_keys($values) == range(0, count($values) - 1)) {
+        if (array_keys($values ?? []) == range(0, count($values ?? []) - 1)) {
             $values = [];
         }
         return new ArrayData($values);

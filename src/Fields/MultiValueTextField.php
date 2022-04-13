@@ -62,11 +62,11 @@ class MultiValueTextField extends FormField
         // add an empty row
         if (!$this->readonly) {
             // assume next pos equals to the number of existing fields which gives index+1 in a zero-indexed list
-            $attributes['id'] = $this->id().MultiValueTextField::KEY_SEP.count($fields);
+            $attributes['id'] = $this->id().MultiValueTextField::KEY_SEP.count($fields ?? []);
             $fields[] = $this->createInput($attributes);
         }
 
-        if (count($fields)) {
+        if (count($fields ?? [])) {
             return '<ul id="'.$this->id().'" class="multivaluefieldlist '.$this->extraClass().'"><li>'.implode(
                 '</li><li>',
                 $fields
@@ -99,7 +99,7 @@ class MultiValueTextField extends FormField
         if (is_array($v)) {
             // we've been set directly via the post - lets prune any empty values
             foreach ($v as $key => $val) {
-                if (!strlen($val)) {
+                if (!strlen($val ?? '')) {
                     unset($v[$key]);
                 }
             }
