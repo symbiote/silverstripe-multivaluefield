@@ -148,7 +148,7 @@ class KeyValueField extends MultiValueTextField
             $options .= HTML::createTag('option', $attrs, Convert::raw2xml($title));
         }
 
-        if (count($values)) {
+        if (count($values ?? [])) {
             $attrs = [
                 'class' => 'text mventryfield mvdropdown '.($this->extraClass() ? $this->extraClass() : ''),
                 'id' => $this->id().MultiValueTextField::KEY_SEP.$number,
@@ -189,7 +189,7 @@ class KeyValueField extends MultiValueTextField
                 $newVal = [];
 
                 for ($i = 0, $c = count($v['key']); $i < $c; $i++) {
-                    if (strlen($v['key'][$i]) && strlen($v['val'][$i])) {
+                    if (strlen($v['key'][$i] ?? '') && strlen($v['val'][$i] ?? '')) {
                         $newVal[$v['key'][$i]] = $v['val'][$i];
                     }
                 }
