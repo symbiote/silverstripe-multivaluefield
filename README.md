@@ -1,6 +1,6 @@
 # SilverStripe MultiValueField module
 
-[![Build Status](https://travis-ci.org/symbiote/silverstripe-multivaluefield.svg?branch=master)](https://travis-ci.org/symbiote/silverstripe-multivaluefield)
+[![CI](https://github.com/symbiote/silverstripe-multivaluefield/actions/workflows/ci.yml/badge.svg)](https://github.com/symbiote/silverstripe-multivaluefield/actions/workflows/ci.yml)
 [![SilverStripe supported module](https://img.shields.io/badge/silverstripe-supported-0071C4.svg)](https://www.silverstripe.org/software/addons/silverstripe-commercially-supported-module-list/)
 
 Notes:
