@@ -1,12 +1,12 @@
-# SilverStripe MultiValueField module
+# Silverstripe MultiValueField module
 
 [![CI](https://github.com/symbiote/silverstripe-multivaluefield/actions/workflows/ci.yml/badge.svg)](https://github.com/symbiote/silverstripe-multivaluefield/actions/workflows/ci.yml)
-[![SilverStripe supported module](https://img.shields.io/badge/silverstripe-supported-0071C4.svg)](https://www.silverstripe.org/software/addons/silverstripe-commercially-supported-module-list/)
+[![Silverstripe supported module](https://img.shields.io/badge/silverstripe-supported-0071C4.svg)](https://www.silverstripe.org/software/addons/silverstripe-commercially-supported-module-list/)
 
 Notes:
 
-* The SilverStripe 2.4 compatible version of the module is still available in the ss24 branch
-* The SilverStripe 3.x compatible versions are still available in the 2.x branches. (see version info)
+* The Silverstripe 2.4 compatible version of the module is still available in the ss24 branch
+* The Silverstripe 3.x compatible versions are still available in the 2.x branches. (see version info)
 
 A database field type that allows the storage of multiple discrete values in
 a single database field. This also provides form fields for entering multiple
@@ -28,11 +28,11 @@ module) are aware of the field type and will index accordingly.
 
 ## Version info
 
-This version of MultiValueField supports SilverStripe 4.0.0
+This version of MultiValueField supports Silverstripe 4.0.0
 
-Older versions of SilverStripe are supported on minor version branches below
+Older versions of Silverstripe are supported on minor version branches below
 
-* [SilverStripe 3.1+ compatible version](https://github.com/symbiote/silverstripe-multivaluefield/tree/2.4)
+* [Silverstripe 3.1+ compatible version](https://github.com/symbiote/silverstripe-multivaluefield/tree/2.4)
 
 ## Installation
 
@@ -72,14 +72,13 @@ $kvf->setValueFieldPlaceholder('Value');
 $kvf->setKeyFieldPlaceholder('Label');
 ```
 
-
 ## Maintainer Contacts
 
 * Marcus Nyeholt <marcus@symbiote.com.au>
 
 ## Requirements
 
-* SilverStripe 4.0
+* Silverstripe 4.0
 
 ## Contributing
 
