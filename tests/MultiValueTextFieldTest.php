@@ -11,7 +11,7 @@ use Symbiote\MultiValueField\Fields\MultiValueTextField;
 class MultiValueTextFieldTest extends SapphireTest
 {
     protected static $extra_dataobjects = [
-        'MultiValueFieldTest_DataObject'
+        MultiValueFieldTest_DataObject::class
     ];
 
     public function testAttributesGeneration()
