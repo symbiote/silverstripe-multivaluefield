@@ -13,7 +13,7 @@ use SilverStripe\CMS\Tests\Controllers\CMSBatchActionsTest;
 class MultiValueFieldTest extends SapphireTest
 {
     protected static $extra_dataobjects = [
-        'MultiValueFieldTest_DataObject'
+        MultiValueFieldTest_DataObject::class
     ];
 
     public function testUpdate()
