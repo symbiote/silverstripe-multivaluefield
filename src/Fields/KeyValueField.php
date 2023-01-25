@@ -80,11 +80,8 @@ class KeyValueField extends MultiValueTextField
 
     public function Field($properties = [])
     {
-        if (Controller::curr() instanceof ContentController) {
-            Requirements::javascript('silverstripe/admin: thirdparty/jquery/jquery.js');
-        }
-        Requirements::javascript('symbiote/silverstripe-multivaluefield: client/javascript/multivaluefield.js');
-        Requirements::css('symbiote/silverstripe-multivaluefield: client/css/multivaluefield.css');
+        Requirements::javascript('symbiote/silverstripe-multivaluefield: client/dist/js/multivaluefield.js');
+        Requirements::css('symbiote/silverstripe-multivaluefield: client/dist/styles/multivaluefield.css');
 
         $nameKey = $this->name.'[key][]';
         $nameVal = $this->name.'[val][]';
