@@ -24,7 +24,7 @@
     },
     "extra": {
         "expose": [
-            "client"
+            "client/dist"
         ],
         "installer-name": "multivaluefield"
     },
