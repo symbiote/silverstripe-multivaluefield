@@ -45,13 +45,16 @@ class MultiValueDropdownField extends MultiValueTextField
 
     public function Field($properties = [])
     {
-        if (Controller::curr() instanceof ContentController) {
-            Requirements::javascript('silverstripe/admin: thirdparty/jquery/jquery.js');
+        if (Controller::has_curr()
+            && (Controller::curr() instanceof ContentController)
+            && MultiValueTextField::config()->get('output_jquery_on_frontend')
+        ) {
+            Requirements::javascript('https://code.jquery.com/jquery-3.6.3.min.js');
         }
         Requirements::javascript('symbiote/silverstripe-multivaluefield: client/javascript/multivaluefield.js');
         Requirements::css('symbiote/silverstripe-multivaluefield: client/css/multivaluefield.css');
 
-        $name   = $this->name.'[]';
+        $name   = $this->name . '[]';
         $fields = [];
 
 
@@ -59,8 +62,9 @@ class MultiValueDropdownField extends MultiValueTextField
             foreach ($this->value as $i => $v) {
                 if ($this->readonly) {
                     $fieldAttr = [
-                        'class' => 'mventryfield  mvdropdownReadonly '.($this->extraClass() ? $this->extraClass() : ''),
-                        'id' => $this->id().MultiValueTextField::KEY_SEP.$i,
+                        'class' => 'mventryfield  mvdropdownReadonly '
+                            . ($this->extraClass() ? $this->extraClass() : ''),
+                        'id' => $this->id() . MultiValueTextField::KEY_SEP . $i,
                         'name' => $name,
                         'tabindex' => $this->getAttribute('tabindex')
                     ];
@@ -77,10 +81,10 @@ class MultiValueDropdownField extends MultiValueTextField
             $fields[] = $this->createSelectList($i + 1, $name, $this->source);
         }
 
-        return '<ul id="'.$this->id().'" class="multivaluefieldlist '.$this->extraClass().'"><li>'.implode(
+        return '<ul id="' . $this->id() . '" class="multivaluefieldlist ' . $this->extraClass() . '"><li>' . implode(
             '</li><li>',
             $fields
-        ).'</li></ul>';
+        ) . '</li></ul>';
     }
 
     public function Type()
@@ -95,7 +99,7 @@ class MultiValueDropdownField extends MultiValueTextField
             [
                 'selected' => $selected == '' ? 'selected' : '',
                 'value' => ''
-                ],
+            ],
             ''
         );
 
@@ -108,8 +112,8 @@ class MultiValueDropdownField extends MultiValueTextField
         }
 
         $attrs = [
-            'class' => 'mventryfield mvdropdown '.($this->extraClass() ? $this->extraClass() : ''),
-            'id' => $this->id().MultiValueTextField::KEY_SEP.$number,
+            'class' => 'mventryfield mvdropdown ' . ($this->extraClass() ? $this->extraClass() : ''),
+            'id' => $this->id() . MultiValueTextField::KEY_SEP . $number,
             'name' => $name,
             'tabindex' => $this->getAttribute('tabindex')
         ];
