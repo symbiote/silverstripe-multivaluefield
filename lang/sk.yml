@@ -1,0 +1,3 @@
+sk:
+  MultiValueCheckboxField:
+    NoOptions: 'Žiadne dostupné možnosti'

@@ -1,0 +1,3 @@
+sv:
+  MultiValueCheckboxField:
+    NoOptions: 'Inga tillgängliga val'

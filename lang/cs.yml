@@ -1,0 +1,3 @@
+cs:
+  MultiValueCheckboxField:
+    NoOptions: 'Není k dispozici žádná možnost'
