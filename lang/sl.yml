@@ -1,0 +1,3 @@
+sl:
+  MultiValueCheckboxField:
+    NoOptions: 'Nobena izmed možnosti ni na voljo'

@@ -1,0 +1,3 @@
+da:
+  MultiValueCheckboxField:
+    NoOptions: 'Ingen tilgængelige muligheder'
