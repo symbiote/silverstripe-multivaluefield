@@ -1,0 +1,3 @@
+fi_FI:
+  MultiValueCheckboxField:
+    NoOptions: 'Ei vaihtoehtoja tarjolla'
