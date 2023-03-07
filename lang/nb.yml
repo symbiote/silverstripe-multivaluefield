@@ -1,0 +1,3 @@
+nb:
+  MultiValueCheckboxField:
+    NoOptions: 'Ingen valg tilgjengelig'

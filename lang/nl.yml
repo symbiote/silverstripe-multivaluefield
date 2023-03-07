@@ -1,0 +1,3 @@
+nl:
+  MultiValueCheckboxField:
+    NoOptions: 'Geen keuze mogelijk'

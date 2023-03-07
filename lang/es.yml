@@ -1,0 +1,3 @@
+es:
+  MultiValueCheckboxField:
+    NoOptions: 'No hay opciones disponibles'
