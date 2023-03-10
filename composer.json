@@ -16,7 +16,7 @@
     ],
     "require": {
         "php": "^7.4 || ^8.0",
-        "silverstripe/framework": "4.13.0-beta1"
+        "silverstripe/framework": "4.13.x-dev"
     },
     "require-dev": {
         "phpunit/phpunit": "^9.5",
