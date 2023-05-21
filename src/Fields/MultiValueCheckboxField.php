@@ -209,6 +209,25 @@ class MultiValueCheckboxField extends CheckboxSetField
     }
 
     /**
+     * Load the value from the dataobject into this field
+     *
+     * @param DataObject|DataObjectInterface $record
+     */
+    public function loadFrom(DataObjectInterface $record)
+    {
+        $fieldName = $this->getName();
+        if (empty($fieldName) || empty($record)) {
+            return;
+        }
+
+        if ($record->hasField($fieldName)) {
+            $value = $record->$fieldName;
+
+            parent::setValue($value);
+        }
+    }
+
+    /**
      * Return the CheckboxSetField value as a string
      * selected item keys.
      *
