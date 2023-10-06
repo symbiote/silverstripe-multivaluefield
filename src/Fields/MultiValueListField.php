@@ -27,13 +27,16 @@ class MultiValueListField extends MultiValueTextField
 
     public function Field($properties = [])
     {
-        if (Controller::curr() instanceof ContentController) {
-            Requirements::javascript('silverstripe/admin: thirdparty/jquery/jquery.js');
+        if (Controller::has_curr()
+            && (Controller::curr() instanceof ContentController)
+            && MultiValueTextField::config()->get('output_jquery_on_frontend')
+        ) {
+            Requirements::javascript('https://code.jquery.com/jquery-3.6.3.min.js');
         }
         Requirements::javascript('symbiote/silverstripe-multivaluefield: client/javascript/multivaluefield.js');
         Requirements::css('symbiote/silverstripe-multivaluefield: client/css/multivaluefield.css');
 
-        $name = $this->name.'[]';
+        $name = $this->name . '[]';
 
         $options = '';
         if (!$this->value) {
@@ -49,7 +52,7 @@ class MultiValueListField extends MultiValueTextField
         }
 
         $attrs = [
-            'class' => 'mventryfield mvlistbox '.($this->extraClass() ? $this->extraClass() : ''),
+            'class' => 'mventryfield mvlistbox ' . ($this->extraClass() ? $this->extraClass() : ''),
             'id' => $this->id(),
             'name' => $name,
             'tabindex' => $this->getAttribute('tabindex'),
