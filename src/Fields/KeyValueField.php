@@ -83,8 +83,8 @@ class KeyValueField extends MultiValueTextField
         Requirements::javascript('symbiote/silverstripe-multivaluefield: client/dist/js/multivaluefield.js');
         Requirements::css('symbiote/silverstripe-multivaluefield: client/dist/styles/multivaluefield.css');
 
-        $nameKey = $this->name.'[key][]';
-        $nameVal = $this->name.'[val][]';
+        $nameKey = $this->name . '[key][]';
+        $nameVal = $this->name . '[val][]';
         $fields  = [];
         $keyFieldPlaceholder = $this->getKeyFieldPlaceholder();
         $valueFieldPlaceholder = $this->getValueFieldPlaceholder();
@@ -93,20 +93,20 @@ class KeyValueField extends MultiValueTextField
             foreach ($this->value as $i => $v) {
                 if ($this->readonly) {
                     $fieldAttr = [
-                        'class' => 'mventryfield  mvkeyvalReadonly '.($this->extraClass() ? $this->extraClass() : ''),
-                        'id' => $this->id().MultiValueTextField::KEY_SEP.$i,
+                        'class' => 'mventryfield  mvkeyvalReadonly ' . ($this->extraClass() ? $this->extraClass() : ''),
+                        'id' => $this->id() . MultiValueTextField::KEY_SEP . $i,
                         'name' => $nameKey,
                         'tabindex' => $this->getAttribute('tabindex')
                     ];
 
                     $keyField        = HTML::createTag('span', $fieldAttr, Convert::raw2xml($i));
-                    $fieldAttr['id'] = $this->id().MultiValueTextField::KEY_SEP.$v;
+                    $fieldAttr['id'] = $this->id() . MultiValueTextField::KEY_SEP . $v;
                     $valField        = HTML::createTag('span', $fieldAttr, Convert::raw2xml($v));
-                    $fields[]        = $keyField.$valField;
+                    $fields[]        = $keyField . $valField;
                 } else {
                     $keyField = $this->createSelectList($i, $nameKey, $this->sourceKeys, $i, $keyFieldPlaceholder);
                     $valField = $this->createSelectList($i, $nameVal, $this->sourceValues, $v, $valueFieldPlaceholder);
-                    $fields[] = $keyField.' '.$valField;
+                    $fields[] = $keyField . ' ' . $valField;
                 }
             }
         } else {
@@ -116,14 +116,12 @@ class KeyValueField extends MultiValueTextField
         if (!$this->readonly) {
             $keyField = $this->createSelectList('new', $nameKey, $this->sourceKeys, '', $keyFieldPlaceholder);
             $valField = $this->createSelectList('new', $nameVal, $this->sourceValues, '', $valueFieldPlaceholder);
-            $fields[] = $keyField.' '.$valField;
-//          $fields[] = $this->createSelectList('new', $name, $this->source);
+            $fields[] = $keyField . ' ' . $valField;
+            //          $fields[] = $this->createSelectList('new', $name, $this->source);
         }
 
-        return '<ul id="'.$this->id().'" class="multivaluefieldlist mvkeyvallist '.$this->extraClass().'"><li>'.implode(
-            '</li><li>',
-            $fields
-        ).'</li></ul>';
+        return '<ul id="' . $this->id() . '" class="multivaluefieldlist mvkeyvallist ' . $this->extraClass() . '"><li>'
+            . implode('</li><li>', $fields) . '</li></ul>';
     }
 
     protected function createSelectList($number, $name, $values, $selected = '', $placeholder = '')
@@ -133,7 +131,7 @@ class KeyValueField extends MultiValueTextField
             [
                 'selected' => $selected == '' ? 'selected' : '',
                 'value' => ''
-                ],
+            ],
             ''
         );
 
@@ -147,8 +145,8 @@ class KeyValueField extends MultiValueTextField
 
         if (count($values ?? [])) {
             $attrs = [
-                'class' => 'text mventryfield mvdropdown '.($this->extraClass() ? $this->extraClass() : ''),
-                'id' => $this->id().MultiValueTextField::KEY_SEP.$number,
+                'class' => 'text mventryfield mvdropdown ' . ($this->extraClass() ? $this->extraClass() : ''),
+                'id' => $this->id() . MultiValueTextField::KEY_SEP . $number,
                 'name' => $name,
                 'tabindex' => $this->getAttribute('tabindex')
             ];
@@ -160,8 +158,8 @@ class KeyValueField extends MultiValueTextField
             return HTML::createTag('select', $attrs, $options);
         } else {
             $attrs = [
-                'class' => 'text mventryfield mvtextfield '.($this->extraClass() ? $this->extraClass() : ''),
-                'id' => $this->id().MultiValueTextField::KEY_SEP.$number,
+                'class' => 'text mventryfield mvtextfield ' . ($this->extraClass() ? $this->extraClass() : ''),
+                'id' => $this->id() . MultiValueTextField::KEY_SEP . $number,
                 'value' => $selected,
                 'name' => $name,
                 'tabindex' => $this->getAttribute('tabindex'),
