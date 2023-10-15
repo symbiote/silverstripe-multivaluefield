@@ -30,7 +30,7 @@ class MultiValueListField extends MultiValueTextField
         Requirements::javascript('symbiote/silverstripe-multivaluefield: client/dist/js/multivaluefield.js');
         Requirements::css('symbiote/silverstripe-multivaluefield: client/dist/styles/multivaluefield.css');
 
-        $name = $this->name.'[]';
+        $name = $this->name . '[]';
 
         $options = '';
         if (!$this->value) {
@@ -46,7 +46,7 @@ class MultiValueListField extends MultiValueTextField
         }
 
         $attrs = [
-            'class' => 'mventryfield mvlistbox '.($this->extraClass() ? $this->extraClass() : ''),
+            'class' => 'mventryfield mvlistbox ' . ($this->extraClass() ? $this->extraClass() : ''),
             'id' => $this->id(),
             'name' => $name,
             'tabindex' => $this->getAttribute('tabindex'),

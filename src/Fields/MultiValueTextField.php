@@ -27,12 +27,12 @@ class MultiValueTextField extends FormField
         Requirements::javascript('symbiote/silverstripe-multivaluefield: client/dist/js/multivaluefield.js');
         Requirements::css('symbiote/silverstripe-multivaluefield: client/dist/styles/multivaluefield.css');
 
-        $name   = $this->name.'[]';
+        $name   = $this->name . '[]';
         $fields = [];
 
         $attributes = [
             'type' => 'text',
-            'class' => 'text mvtextfield mventryfield '.($this->extraClass() ? $this->extraClass() : ''),
+            'class' => 'text mvtextfield mventryfield ' . ($this->extraClass() ? $this->extraClass() : ''),
             // 'id' => $this->id(),
             'name' => $name,
             // 'value' => $this->Value(),
@@ -45,7 +45,7 @@ class MultiValueTextField extends FormField
         $fieldAttr = $attributes;
         if ($this->value) {
             foreach ($this->value as $i => $v) {
-                $fieldAttr['id']    = $this->id().MultiValueTextField::KEY_SEP.$i;
+                $fieldAttr['id']    = $this->id() . MultiValueTextField::KEY_SEP . $i;
                 $fieldAttr['value'] = $v;
                 if ($this->readonly) {
                     unset($fieldAttr['value']);
@@ -59,17 +59,15 @@ class MultiValueTextField extends FormField
         // add an empty row
         if (!$this->readonly) {
             // assume next pos equals to the number of existing fields which gives index+1 in a zero-indexed list
-            $attributes['id'] = $this->id().MultiValueTextField::KEY_SEP.count($fields ?? []);
+            $attributes['id'] = $this->id() . MultiValueTextField::KEY_SEP . count($fields ?? []);
             $fields[] = $this->createInput($attributes);
         }
 
         if (count($fields ?? [])) {
-            return '<ul id="'.$this->id().'" class="multivaluefieldlist '.$this->extraClass().'"><li>'.implode(
-                '</li><li>',
-                $fields
-            ).'</li></ul>';
+            return '<ul id="' . $this->id() . '" class="multivaluefieldlist ' . $this->extraClass() . '"><li>'
+            . implode('</li><li>', $fields) . '</li></ul>';
         } else {
-            return '<div id="'.$this->id().'" class="multivaluefieldlist '.$this->extraClass().'"></div>';
+            return '<div id="' . $this->id() . '" class="multivaluefieldlist ' . $this->extraClass() . '"></div>';
         }
     }
 
