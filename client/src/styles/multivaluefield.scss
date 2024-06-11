@@ -1,6 +1,6 @@
 ul.multivaluefieldlist {
-  margin: 0px;
-  padding: 0px;
+  margin: 0;
+  padding: 0;
 }
 
 .multivaluefieldlist > li {
@@ -9,7 +9,7 @@ ul.multivaluefieldlist {
   list-style-type: none;
 }
 
-.multivaluefieldlist > li::after {
+.multivaluefieldlist > li:after {
   content: '↕';
   cursor: pointer;
 }
