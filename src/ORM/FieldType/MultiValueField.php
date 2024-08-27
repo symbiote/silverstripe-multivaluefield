@@ -2,10 +2,13 @@
 
 namespace Symbiote\MultiValueField\ORM\FieldType;
 
+use SilverStripe\Forms\FormField;
 use SilverStripe\ORM\FieldType\DBComposite;
 use SilverStripe\ORM\FieldType\DBVarchar;
 use SilverStripe\ORM\ArrayList;
 use SilverStripe\View\ArrayData;
+use SilverStripe\View\ViewableData;
+use Symbiote\MultiValueField\Fields\MultiValueTextField;
 
 /**
  * A DB field that serialises an array before writing it to the db, and returning the array
@@ -15,24 +18,16 @@ use SilverStripe\View\ArrayData;
  */
 class MultiValueField extends DBComposite
 {
-    /**
-     * @param array
-     */
-    private static $composite_db = array(
+    private static array $composite_db = [
         "Value" => "Text",
-    );
+    ];
 
-    /**
-     *
-     * @var boolean
-     */
-    protected $changed = false;
+    protected bool $changed = false;
 
     /**
      * Returns the value of this field.
-     * @return mixed
      */
-    public function getValue()
+    public function getValue(): mixed
     {
         $value = $this->value;
         if (is_null($value)) {
@@ -42,7 +37,7 @@ class MultiValueField extends DBComposite
         return $this->value;
     }
 
-    public function getValues()
+    public function getValues(): mixed
     {
         return $this->getValue();
     }
@@ -51,14 +46,9 @@ class MultiValueField extends DBComposite
      * Set the value on the field. Ensures the underlying composite field
      * logic that looks for Value will trigger if the value set is
      *
-     *
      * For a multivalue field, this will deserialise the value if it is a string
-     *
-     * @param mixed $value
-     * @param array $record
-     * @return $this
      */
-    public function setValue($value, $record = null, $markChanged = true)
+    public function setValue(mixed $value, null|array|ViewableData $record = null, bool $markChanged = true): static
     {
         $this->changed = $this->changed || $markChanged;
         if (!is_null($value)) {
@@ -90,14 +80,10 @@ class MultiValueField extends DBComposite
 
     /**
      * Unserialises data, depending on new or old format
-     *
-     * @param string $data
-     *
-     * @return array
      */
-    protected function unserializeData($data)
+    protected function unserializeData(mixed $data): mixed
     {
-        $value = null;
+        $value = [];
         // if we're not deserialised yet, do so
         if (is_string($data) && strlen($data ?? '') > 1) {
             // are we json encoded?
@@ -110,12 +96,7 @@ class MultiValueField extends DBComposite
         return $value;
     }
 
-    /**
-     * (non-PHPdoc).
-     *
-     * @see core/model/fieldtypes/DBField#prepValueForDB($value)
-     */
-    public function prepValueForDB($value)
+    public function prepValueForDB(mixed $value): mixed
     {
         if ($value instanceof MultiValueField) {
             $value = $value->getValue();
@@ -127,20 +108,20 @@ class MultiValueField extends DBComposite
         return parent::prepValueForDB($value);
     }
 
-    public function isChanged()
+    public function isChanged(): bool
     {
         return $this->changed;
     }
 
-    public function scaffoldFormField($title = null, $params = null)
+    public function scaffoldFormField(?string $title = null, array $params = []): FormField
     {
-        return new \Symbiote\MultiValueField\Fields\MultiValueTextField($this->name, $title);
+        return new MultiValueTextField($this->name, $title);
     }
 
     /**
      * Convert to a textual list of items.
      */
-    public function csv()
+    public function csv(): string
     {
         return $this->Implode(',');
     }
@@ -148,17 +129,13 @@ class MultiValueField extends DBComposite
     /**
      * Return all items separated by a separator, defaulting to a comma and
      * space.
-     *
-     * @param string $separator
-     *
-     * @return string
      */
-    public function Implode($separator = ', ')
+    public function Implode(string $separator = ', '): string
     {
         return implode($separator ?? '', $this->getValue());
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         if ($this->getValue()) {
             return $this->csv();
@@ -167,7 +144,7 @@ class MultiValueField extends DBComposite
         return '';
     }
 
-    public function ItemByKey()
+    public function ItemByKey(): ArrayData
     {
         $values = $this->getValue();
         if (array_keys($values ?? []) == range(0, count($values ?? []) - 1)) {
@@ -176,12 +153,7 @@ class MultiValueField extends DBComposite
         return new ArrayData($values);
     }
 
-    public function Items()
-    {
-        return $this->forTemplate();
-    }
-
-    public function forTemplate()
+    public function Items(): ArrayList
     {
         $items = [];
         $value = $this->getValue();
@@ -190,7 +162,7 @@ class MultiValueField extends DBComposite
                 $v = new DBVarchar('Value');
                 $v->setValue($item);
 
-                $obj     = new ArrayData([
+                $obj = new ArrayData([
                     'Value' => $v,
                     'Key' => $key,
                     'Title' => $item,
