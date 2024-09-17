@@ -15,7 +15,7 @@ values in a simple manner
 
 Within templates, the field can be iterated over as per a data object set.
 The property $Value is available as a Varchar type, and other typical
-properties such as $FirstLast etc are inherited from ViewableData.
+properties such as $FirstLast etc are inherited from ModelData.
 
 Data is stored in the database in a serialized PHP format. While this is not
 ideal for searching purposes, some external indexing engines (eg the Solr
