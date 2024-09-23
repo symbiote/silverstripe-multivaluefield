@@ -5,9 +5,9 @@ namespace Symbiote\MultiValueField\ORM\FieldType;
 use SilverStripe\Forms\FormField;
 use SilverStripe\ORM\FieldType\DBComposite;
 use SilverStripe\ORM\FieldType\DBVarchar;
-use SilverStripe\ORM\ArrayList;
-use SilverStripe\View\ArrayData;
-use SilverStripe\View\ViewableData;
+use SilverStripe\Model\List\ArrayList;
+use SilverStripe\Model\ArrayData;
+use SilverStripe\Model\ModelData;
 use Symbiote\MultiValueField\Fields\MultiValueTextField;
 
 /**
@@ -48,7 +48,7 @@ class MultiValueField extends DBComposite
      *
      * For a multivalue field, this will deserialise the value if it is a string
      */
-    public function setValue(mixed $value, null|array|ViewableData $record = null, bool $markChanged = true): static
+    public function setValue(mixed $value, null|array|ModelData $record = null, bool $markChanged = true): static
     {
         $this->changed = $this->changed || $markChanged;
         if (!is_null($value)) {
