@@ -1,7 +1,6 @@
 # Silverstripe MultiValueField module
 
 [![CI](https://github.com/symbiote/silverstripe-multivaluefield/actions/workflows/ci.yml/badge.svg)](https://github.com/symbiote/silverstripe-multivaluefield/actions/workflows/ci.yml)
-[![Silverstripe supported module](https://img.shields.io/badge/silverstripe-supported-0071C4.svg)](https://www.silverstripe.org/software/addons/silverstripe-commercially-supported-module-list/)
 
 A database field type that allows the storage of multiple discrete values in
 a single database field. This also provides form fields for entering multiple
